@@ -1,0 +1,1121 @@
+{
+ "version": 1,
+ "about": "지도에 보이는 관광지 안내(공식 출처로 확인한 내용만). 일정 날짜와 순서는 schedule.json이 기준이고, 여기서는 일정 항목 id로 장소를 이어 줘요. Google 장소 정보는 넣지 않아요(place ID만 예외).",
+ "links": {
+  "p3": {
+   "match": "Stanley Park, Vancouver",
+   "spots": [
+    "stanley-park"
+   ]
+  },
+  "p4": {
+   "match": "Gastown Steam Clock, Vancouver",
+   "spots": [
+    "gastown"
+   ]
+  },
+  "p5": {
+   "match": "Capilano Suspension Bridge Park",
+   "spots": [
+    "capilano"
+   ]
+  },
+  "p9": {
+   "match": "Sea to Sky Gondola, Squamish",
+   "spots": [
+    "sea-to-sky-gondola"
+   ]
+  },
+  "p12": {
+   "match": "Mount Robson",
+   "spots": [
+    "mount-robson"
+   ]
+  },
+  "p14": {
+   "match": "Maligne Canyon, Jasper",
+   "spots": [
+    "maligne-canyon"
+   ]
+  },
+  "p15": {
+   "match": "Maligne Lake Cruise",
+   "spots": [
+    "maligne-lake"
+   ]
+  },
+  "p18": {
+   "match": "Athabasca Falls",
+   "spots": [
+    "athabasca-falls"
+   ]
+  },
+  "p19": {
+   "match": "Columbia Icefield Glacier Adventure",
+   "spots": [
+    "columbia-icefield"
+   ]
+  },
+  "p20": {
+   "match": "Peyto Lake",
+   "spots": [
+    "weeping-wall",
+    "peyto-lake",
+    "crowfoot-glacier",
+    "bow-lake"
+   ]
+  },
+  "p23": {
+   "match": "Moraine Lake",
+   "spots": [
+    "moraine-lake"
+   ]
+  },
+  "p24": {
+   "match": "Lake Louise",
+   "spots": [
+    "lake-louise"
+   ]
+  },
+  "p25": {
+   "match": "Emerald Lake, Yoho National Park",
+   "spots": [
+    "emerald-lake",
+    "natural-bridge"
+   ]
+  },
+  "p27": {
+   "match": "Banff Gondola",
+   "spots": [
+    "banff-gondola"
+   ]
+  },
+  "p28": {
+   "match": "Surprise Corner, Banff",
+   "spots": [
+    "surprise-corner",
+    "bow-falls"
+   ]
+  },
+  "p29": {
+   "match": "Banff Upper Hot Springs",
+   "spots": [
+    "banff-upper-hot-springs"
+   ]
+  }
+ },
+ "routes": {
+  "p8": "드라이브 구간",
+  "p17": "드라이브 구간"
+ },
+ "spots": {
+  "stanley-park": {
+   "ko": "스탠리 파크",
+   "local": "Stanley Park",
+   "kind": "attraction",
+   "art": "forest",
+   "query": "Stanley Park, Vancouver, BC",
+   "lat": 49.299252,
+   "lng": -123.12094,
+   "coordSource": "https://www.wikidata.org/wiki/Q107542577",
+   "placeId": "",
+   "address": "",
+   "addressSource": "",
+   "about": "밴쿠버에서 가장 먼저 생기고 가장 큰 도시 공원이에요. 400헥타르의 숲과 바닷가 산책길이 있어요. 캐나다 국가 사적지예요.",
+   "facts": [
+    "1888년에 문을 열었어요. 그때 밴쿠버 인구는 6,065명이었어요.",
+    "브록턴 포인트(Brockton Point)의 토템폴 9개는 BC주에서 관광객이 가장 많이 찾는 곳이에요.",
+    "시월(Seawall)은 1917년에 짓기 시작해 1980년에 공원 한 바퀴가 완성됐어요."
+   ],
+   "sights": [
+    "브록턴 포인트 토템폴 9개",
+    "시월(Seawall) 바닷가 산책길",
+    "시와시 바위(Siwash Rock)·프로스펙트 포인트(Prospect Point)",
+    "로스트 라군(Lost Lagoon)"
+   ],
+   "tips": [
+    "공원은 오전 6시~밤 10시, 화장실은 해 뜰 때~해 질 때까지 열어요 (변동 가능).",
+    "시월은 바다 쪽이 걷는 길, 안쪽이 자전거 길이에요. 맑은 여름 주말엔 붐벼요.",
+    "공원을 도는 시월은 9km예요. 걸으면 2~3시간 걸려요."
+   ],
+   "sources": [
+    {
+     "title": "Stanley Park – City of Vancouver",
+     "url": "https://vancouver.ca/parks-recreation-culture/stanley-park.aspx",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "What to see in Stanley Park",
+     "url": "https://vancouver.ca/parks-recreation-culture/sites-landmarks-and-totem-poles.aspx",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "First Nations art and totem poles",
+     "url": "https://vancouver.ca/parks-recreation-culture/totems-and-first-nations-art.aspx",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Seawall in Vancouver",
+     "url": "https://vancouver.ca/parks-recreation-culture/seawall.aspx",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Story of Stanley Park",
+     "url": "https://vancouver.ca/parks-recreation-culture/stanley-park-story.aspx",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Dining in Stanley Park",
+     "url": "https://vancouver.ca/parks-recreation-culture/dining-in-stanley-park.aspx",
+     "checked": "2026-10-18"
+    }
+   ],
+   "food": {
+    "radius": 800,
+    "note": "토템폴 근처에 매점(계절 운영)과 브록턴 방문자 센터 간식·기념품점이 있어요. 프로스펙트 포인트 카페는 1년 내내 열어요 (변동 가능)."
+   }
+  },
+  "gastown": {
+   "ko": "개스타운 · 스팀 클락",
+   "local": "Gastown / Gastown Steam Clock",
+   "kind": "attraction",
+   "art": "city",
+   "query": "Gastown Steam Clock, Vancouver, BC",
+   "lat": 49.2843841,
+   "lng": -123.10889,
+   "coordSource": "https://www.wikidata.org/wiki/Q107352564",
+   "placeId": "",
+   "address": "305 Water St, Vancouver (Water St and Cambie St)",
+   "addressSource": "https://vancouver.ca/streets-transportation/sidewalk-fixtures-and-amenities.aspx",
+   "about": "밴쿠버의 첫 시내 중심가였던 오래된 동네예요. 돌길 양옆으로 벽돌 건물이 이어져 있어요. 1977년에 만든 증기 시계(Steam Clock)가 유명해요.",
+   "facts": [
+    "1867년 '개시 잭(Gassy Jack)' 존 데이턴이 연 술집 하나에서 동네가 시작됐어요.",
+    "2009년에 캐나다 국가 사적지가 됐어요.",
+    "증기 시계는 1977년 레이 손더스(Ray Saunders)가 보도의 증기 구멍을 가리려고 만들었어요."
+   ],
+   "sights": [
+    "증기 시계 (워터·캠비 스트리트 모퉁이)",
+    "돌길과 벽돌 건물이 이어진 워터 스트리트(Water Street)",
+    "메이플 트리 스퀘어(Maple Tree Square) — 개시 잭의 첫 술집 자리"
+   ],
+   "tips": [
+    "증기 시계는 증기로 휘파람 소리를 내 시간을 알려요."
+   ],
+   "sources": [
+    {
+     "title": "Gastown – Destination Vancouver",
+     "url": "https://www.destinationvancouver.com/neighbourhoods/gastown",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Gastown BIA",
+     "url": "https://gastown.org/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "The Steam Clock gets its own getaway (Gastown BIA, 2014)",
+     "url": "https://gastown.org/the-steam-clock-gets-its-own-getaway-this-fall/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "The return of the Steam Clock (Gastown BIA, 2015)",
+     "url": "https://gastown.org/the-return-of-the-steam-clock/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Maple Tree Square (Gastown BIA, 2015)",
+     "url": "https://gastown.org/gastown-throwback-maple-tree-square-the-brynes-block/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Steam Clock report (City Council, 1999)",
+     "url": "https://council.vancouver.ca/990311/pe2.htm",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "City clocks – City of Vancouver",
+     "url": "https://vancouver.ca/streets-transportation/sidewalk-fixtures-and-amenities.aspx",
+     "checked": "2026-10-18"
+    }
+   ],
+   "food": {
+    "radius": 800,
+    "note": "칵테일 바, 카페, 식당이 많은 동네예요. 가게 목록은 gastown.org의 Explore에 있어요."
+   }
+  },
+  "capilano": {
+   "ko": "캐필라노 서스펜션 브릿지 파크",
+   "local": "Capilano Suspension Bridge Park",
+   "kind": "attraction",
+   "art": "bridge",
+   "query": "Capilano Suspension Bridge Park, North Vancouver, BC",
+   "lat": 49.3428,
+   "lng": -123.112,
+   "coordSource": "https://www.wikidata.org/wiki/Q862283",
+   "placeId": "",
+   "address": "3735 Capilano Road, North Vancouver, BC V7R 4J1",
+   "addressSource": "https://www.capbridge.com/",
+   "about": "북밴쿠버 숲속 협곡에 걸린 흔들다리 공원이에요. 다리는 길이 137m, 강물 위 70m 높이예요. 1889년부터 사람들이 찾아왔어요.",
+   "facts": [
+    "1888년 스코틀랜드 출신 토목기사 조지 그랜트 매케이(George Grant Mackay)가 협곡 끝에 오두막을 지으며 시작됐어요.",
+    "절벽길(Cliffwalk)은 길이 213m로, 협곡 위 최대 30층 높이에 붙어 있어요.",
+    "트리탑스(Treetops Adventure)는 흔들다리 7개로 숲 위 최대 33m를 걸어요."
+   ],
+   "sights": [
+    "캐필라노 흔들다리",
+    "절벽길(Cliffwalk)",
+    "트리탑스 어드벤처",
+    "원주민 문화 공간 키아팔라노(Kia'palano)"
+   ],
+   "tips": [
+    "보통 2~3시간 머물러요. 다리를 건너는 데 5~15분 걸려요.",
+    "다리는 출렁이고 계단이 있어요. 편한 신발을 신으세요. 비 오면 길이 미끄러워요.",
+    "이른 아침과 오후 2시 이후가 덜 붐벼요 (변동 가능)."
+   ],
+   "sources": [
+    {
+     "title": "Capilano Suspension Bridge Park",
+     "url": "https://www.capbridge.com/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Park Attractions",
+     "url": "https://www.capbridge.com/park-attractions/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "History & Culture",
+     "url": "https://www.capbridge.com/history-and-culture/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Park Safety & FAQ",
+     "url": "https://www.capbridge.com/faq/",
+     "checked": "2026-10-18"
+    }
+   ],
+   "food": {
+    "radius": 800,
+    "note": "공원 안에 클리프 하우스 레스토랑(The Cliff House Restaurant, 예약 안 받음), 로거스 그릴(Loggers' Grill), 온더고(On-the-Go)가 있어요 (변동 가능)."
+   }
+  },
+  "sea-to-sky-gondola": {
+   "ko": "씨 투 스카이 곤돌라",
+   "local": "Sea to Sky Gondola",
+   "kind": "attraction",
+   "art": "mountain",
+   "query": "Sea to Sky Gondola, Squamish, BC",
+   "lat": 49.675278,
+   "lng": -123.156944,
+   "coordSource": "https://www.wikidata.org/wiki/Q120484727",
+   "placeId": "",
+   "address": "36800 Highway 99, Squamish, BC",
+   "addressSource": "https://www.seatoskygondola.com/getting-here/",
+   "about": "바다와 산을 함께 내려다보는 곤돌라예요. 10~15분 타고 하우 사운드(Howe Sound) 위 885m의 정상 산장(Summit Lodge)에 올라요. 올라가며 섀넌 폭포와 스타와머스 치프(Stawamus Chief)가 보여요.",
+   "facts": [
+    "곤돌라 칸은 스위스 CWA, 곤돌라 설비는 오스트리아 도펠마이어(Doppelmayr)가 만들었어요. 한 칸에 8명까지 타요.",
+    "스카이 파일럿 흔들다리(Sky Pilot Suspension Bridge)는 길이 약 100m예요.",
+    "스피릿 전망대에서 이 땅에 살아온 스쿼미시 원주민(Sḵwx̱wú7mesh Nation)의 역사를 배울 수 있어요."
+   ],
+   "sights": [
+    "정상 산장 전망 데크",
+    "스카이 파일럿 흔들다리",
+    "스피릿 전망대(Spirit Viewing Platform)",
+    "치프 전망대(Chief Overlook) — 산장에서 약 800m, 걸어서 10~20분"
+   ],
+   "tips": [
+    "곤돌라는 입구가 평평해 휠체어도 타요. 흔들다리도 휠체어로 건널 수 있어요.",
+    "가기 전에 공식 사이트의 Daily Conditions와 날씨 카메라를 확인하세요.",
+    "표는 공식 사이트에서만 사세요. 온라인이 매표소보다 8달러 싸요 (변동 가능)."
+   ],
+   "sources": [
+    {
+     "title": "Sea to Sky Gondola",
+     "url": "https://www.seatoskygondola.com/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "The Gondola",
+     "url": "https://www.seatoskygondola.com/attractions/the-gondola/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Sky Pilot Suspension Bridge",
+     "url": "https://www.seatoskygondola.com/attractions/suspension-bridge/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Viewing Platforms",
+     "url": "https://www.seatoskygondola.com/attractions/viewing-platforms/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "FAQ",
+     "url": "https://www.seatoskygondola.com/faq/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Getting Here",
+     "url": "https://www.seatoskygondola.com/getting-here/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Dining",
+     "url": "https://www.seatoskygondola.com/facilities/dining-and-food/",
+     "checked": "2026-10-18"
+    }
+   ],
+   "food": {
+    "radius": 1500,
+    "note": "정상 산장에 스카이 파일럿 스모크하우스와 코파일럿 카페가 있고, 아래 탑승장에 더 프라게리(The Praguery)가 있어요 (변동 가능)."
+   }
+  },
+  "mount-robson": {
+   "ko": "롭슨산",
+   "local": "Mount Robson",
+   "kind": "train-view",
+   "art": "mountain",
+   "query": "Mount Robson, BC",
+   "lat": 53.110556,
+   "lng": -119.156667,
+   "coordSource": "https://www.wikidata.org/wiki/Q1161258",
+   "placeId": "",
+   "address": "",
+   "addressSource": "",
+   "about": "캐나다 로키에서 가장 높은 산이에요(3,954m). 직접 오르지 않고, 기차 창밖으로 보게 돼요. 꼭대기가 구름에 가려질 때가 많아요.",
+   "facts": [
+    "롭슨산 주립공원은 1913년에 생긴, BC주에서 두 번째로 오래된 주립공원이에요.",
+    "1990년에 유네스코 세계유산 로키산맥 지역에 포함됐어요.",
+    "원주민은 이 산을 '나선형 길의 산'이라는 뜻으로 불렀어요. 층층이 쌓인 모습 때문이에요."
+   ],
+   "sights": [
+    "롭슨산 정상 (3,954m)",
+    "프레이저강(Fraser River) 상류 골짜기",
+    "무스 호수(Moose Lake)"
+   ],
+   "tips": [
+    "기차가 좋은 경치를 지날 때 안내 방송을 해 줘요.",
+    "운이 좋아야 구름이 걷힌 정상을 볼 수 있어요.",
+    "공원 안은 서쪽 입구 안내소 말고는 휴대폰이 안 터져요. 이 구간에선 인터넷이 필요한 기능이 안 될 수 있어요."
+   ],
+   "sources": [
+    {
+     "title": "Mount Robson Park – BC Parks",
+     "url": "https://bcparks.ca/mount-robson-park/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "The Canadian: Layovers and landscapes – VIA Rail",
+     "url": "https://www.viarail.ca/en/blog/the-canadian-layovers-landscapes",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "10 Noteworthy Places Between Toronto and Vancouver – VIA Rail",
+     "url": "https://www.viarail.ca/en/blog/noteworthy-places-between-toronto-vancouver",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Riding the Rails to B.C.'s Robson Valley – VIA Rail",
+     "url": "https://www.viarail.ca/en/blog/rockies-meets-ranch-lands-riding-rails-bcs-robson-valley",
+     "checked": "2026-10-18"
+    }
+   ],
+   "food": {
+    "radius": 3000,
+    "note": ""
+   }
+  },
+  "maligne-canyon": {
+   "ko": "멀린 캐니언",
+   "local": "Maligne Canyon",
+   "kind": "attraction",
+   "art": "forest",
+   "query": "Maligne Canyon, Jasper National Park, AB",
+   "lat": 52.92076269,
+   "lng": -118.0005022,
+   "coordSource": "https://parks.canada.ca/pn-np/ab/jasper/visit/ouvert-fermee-open-closed",
+   "placeId": "",
+   "address": "",
+   "addressSource": "",
+   "about": "세찬 물살이 석회암을 깎아 만든 깊고 좁은 협곡이에요. 깊이는 50m가 넘고, 좁은 곳은 폭이 2m밖에 안 돼요. 2024년 산불 피해로 2026년 10월 현재 닫혀 있어요.",
+   "facts": [
+    "약 3억 6,500만 년 전 얕은 열대 바다에서 쌓인 석회암층(Palliser Formation)을 물이 깎아 만들었어요.",
+    "일부 지질학자는 협곡의 일부가 원래 깊은 동굴이었다고 봐요.",
+    "협곡을 흐르는 물의 상당 부분은 14km 떨어진 메디신 호수(Medicine Lake)에서 땅속 동굴을 지나 흘러와요."
+   ],
+   "sights": [
+    "(다시 열리면) 협곡을 건너는 다리 4개 — 다리마다 보이는 풍경이 달라요",
+    "폭포, 화석, 포트홀(물살이 바위를 깎은 구멍), 땅속 물이 솟는 샘",
+    "까마귀와 희귀한 검은칼새(black swift) 둥지",
+    "협곡의 지질 이야기를 알려 주는 안내판 산책로"
+   ],
+   "tips": [
+    "2026년 10월 현재 첫째 다리 주차장부터 다섯째 다리 갈림길까지 출입 금지예요. 2027년에 다시 열지는 아직 발표되지 않았어요 (변동 가능).",
+    "아래쪽 다섯째·여섯째 다리(Fifth/Sixth Bridge) 산책로와 피크닉장은 열려 있어요 (2026년 10월 기준, 변동 가능).",
+    "출발 전에 Parks Canada 'What's open' 페이지나 여행사에 꼭 확인하세요."
+   ],
+   "sources": [
+    {
+     "title": "Maligne Canyon – Parks Canada (modified 2026-05-06)",
+     "url": "https://parks.canada.ca/pn-np/ab/jasper/activ/itineraires-itineraries/canyon-Maligne",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Park recovery – Parks Canada (modified 2026-10-14)",
+     "url": "https://parks.canada.ca/pn-np/ab/jasper/gestion-management/serviceimmobilier-realty/retablissement-recovery/pc-recovery",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "What's open in Jasper National Park (modified 2026-10-13)",
+     "url": "https://parks.canada.ca/pn-np/ab/jasper/visit/ouvert-fermee-open-closed",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Area Closure: wildfire impacted area (issued 2026-08-13)",
+     "url": "https://parks.canada.ca/pn-np/ab/jasper/bulletins/76ECAE58-8A63-480C-8304-DC903837EEFD",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Trail conditions – Jasper National Park",
+     "url": "https://parks.canada.ca/pn-np/ab/jasper/activ/experience/sentiers-trails/etat-sentiers-trail-conditions",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Maligne Canyon Wilderness Kitchen – Pursuit",
+     "url": "https://www.banffjaspercollection.com/dining/maligne-canyon-wilderness-kitchen/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "10 Important Facts About Maligne Canyon – Tourism Jasper (2018)",
+     "url": "https://www.jasper.travel/blog/10-important-facts-about-maligne-canyon/",
+     "checked": "2026-10-18"
+    }
+   ],
+   "food": {
+    "radius": 1500,
+    "note": "협곡 앞 식당 멀린 캐니언 와일더니스 키친(Maligne Canyon Wilderness Kitchen)은 2024년 산불로 불타 문을 닫았어요. 다시 열지는 정해지지 않았어요."
+   }
+  },
+  "maligne-lake": {
+   "ko": "멀린 레이크 크루즈 · 스피릿 아일랜드",
+   "local": "Maligne Lake",
+   "kind": "attraction",
+   "art": "lake",
+   "query": "Maligne Lake, Jasper National Park, AB",
+   "lat": 52.72901,
+   "lng": -117.64086,
+   "coordSource": "https://www.banffjaspercollection.com/attractions/maligne-lake-cruise/location-hours/",
+   "placeId": "",
+   "address": "Maligne Lake Cruise, Improvement District No. 12, AB T0E 1E0",
+   "addressSource": "https://www.banffjaspercollection.com/attractions/maligne-lake-cruise/location-hours/",
+   "about": "캐나다 로키에서 가장 큰 자연 호수로, 길이가 22km예요. 유리창이 달린 따뜻한 배를 타고 14km를 가서 스피릿 아일랜드(Spirit Island)를 봐요. 섬은 길이 없어서 배로만 갈 수 있어요.",
+   "facts": [
+    "원주민은 이 호수를 '차바 임네(Chaba Imne, 비버 호수)'라고 불렀어요.",
+    "1907년 메리 섀퍼(Mary Schäffer)가 샘슨 비버(Samson Beaver)에게 받은 지도를 따라 탐험하고 글로 남겨 널리 알려졌어요.",
+    "스피릿 아일랜드는 스토니 나코다(Stoney Nakoda) 원주민에게 소중한 곳이라 섬에 내려 걸을 수 없어요."
+   ],
+   "sights": [
+    "스피릿 아일랜드 전망대 — 배에서 내려 짧은 숲길을 걸어가요 (자유 시간 15분)",
+    "배 위 가이드 설명: 호수 역사, 지질, 빙하, 동식물",
+    "호수를 둘러싼 눈과 빙하를 인 산들",
+    "호숫가 멀린 레이크 샬레(Maligne Lake Chalet) — 1927년 통나무집 식당, 국가 사적지"
+   ],
+   "tips": [
+    "호수는 재스퍼 시내보다 쌀쌀하고, 여름에도 눈이 올 수 있어요. 겉옷을 꼭 챙기세요.",
+    "클래식 크루즈는 약 1시간 30분이에요. 호수에 작은 배가 많으면 최대 15분 더 걸릴 수 있어요 (변동 가능).",
+    "화장실은 주차장과 레이크 하우스(Lake House)에 있어요."
+   ],
+   "sources": [
+    {
+     "title": "Maligne Lake – Parks Canada (modified 2026-03-11)",
+     "url": "https://parks.canada.ca/pn-np/ab/jasper/activ/itineraires-itineraries/lac-maligne",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Maligne Lake Cruise – Pursuit",
+     "url": "https://www.banffjaspercollection.com/attractions/maligne-lake-cruise/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "About the Cruise – Pursuit",
+     "url": "https://www.banffjaspercollection.com/attractions/maligne-lake-cruise/experience/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Location & Hours – Pursuit",
+     "url": "https://www.banffjaspercollection.com/attractions/maligne-lake-cruise/location-hours/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Dining at Maligne Lake – Pursuit",
+     "url": "https://www.banffjaspercollection.com/attractions/maligne-lake-cruise/dining/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Maligne Lake Cruise FAQs – Pursuit",
+     "url": "https://www.banffjaspercollection.com/attractions/maligne-lake-cruise/faqs/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "What's open in Jasper National Park (modified 2026-10-13)",
+     "url": "https://parks.canada.ca/pn-np/ab/jasper/visit/ouvert-fermee-open-closed",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Accessible park facilities – Jasper (modified 2026-05-19)",
+     "url": "https://parks.canada.ca/pn-np/ab/jasper/visit/accessible",
+     "checked": "2026-10-18"
+    }
+   ],
+   "food": {
+    "radius": 800,
+    "note": "호숫가에 레이크 하우스 카페(Lake House Café), 와플 헛(Waffle Hut), 멀린 레이크 샬레(Maligne Lake Chalet, 점심·저녁) 세 곳이 있어요 (변동 가능)."
+   }
+  },
+  "athabasca-falls": {
+   "ko": "애서배스카 폭포",
+   "local": "Athabasca Falls",
+   "kind": "attraction",
+   "art": "falls",
+   "query": "Athabasca Falls, Jasper National Park, AB",
+   "lat": 52.66443694444445,
+   "lng": -117.88376694444445,
+   "coordSource": "https://www.wikidata.org/wiki/Q739181",
+   "placeId": "",
+   "address": "Junction of Hwy 93 and 93A, 31 km south of Jasper",
+   "addressSource": "https://parks.canada.ca/pn-np/ab/jasper/activ/experience/sentiers-trails/glaciers-icefields",
+   "about": "재스퍼에서 남쪽으로 약 30km, 차로 20분 거리에 있는 폭포예요. 높이는 23m로 높지 않지만, 강물이 많아 로키 국립공원에서 가장 힘센 폭포 중 하나예요.",
+   "facts": [
+    "단단한 규암(quartzite) 아래 무른 석회암을 물이 깎아 포트홀과 짧은 협곡을 만들었어요.",
+    "1810년 탐험가 데이비드 톰프슨(David Thompson)이 이 강을 따라 태평양으로 가는 모피 교역로를 찾아 나섰어요.",
+    "애서배스카강은 컬럼비아 아이스필드 빙하에서 흘러나오고, 1989년 캐나다 유산 강(Canadian Heritage River)이 됐어요."
+   ],
+   "sights": [
+    "폭포 옆에서 강을 건너는 보행자 다리 (주 전망대)",
+    "폭포 위쪽 전망대에서 보는 커케슬린산(Mount Kerkeslin)과 강",
+    "폭포가 깎은 좁은 협곡과 소용돌이치는 청록색 물"
+   ],
+   "tips": [
+    "물보라 때문에 주변 바위가 미끄러워요. 난간 밖으로 나가지 마세요.",
+    "위쪽 전망대까지 150m 길은 가파르고 울퉁불퉁한 곳이 있어요. 주 전망대 다리는 짧은 계단 14개(한쪽 난간)를 올라가요.",
+    "아이스필드 파크웨이는 휴대폰이 거의 안 터져요. 5월~10월 초에는 컬럼비아 아이스필드에서만 조금 돼요 (변동 가능)."
+   ],
+   "sources": [
+    {
+     "title": "Athabasca Falls – Parks Canada (modified 2023-11-07)",
+     "url": "https://parks.canada.ca/pn-np/ab/jasper/activ/itineraires-itineraries/athabasca",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Icefields Parkway trails – Jasper National Park",
+     "url": "https://parks.canada.ca/pn-np/ab/jasper/activ/experience/sentiers-trails/glaciers-icefields",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Travelling the Icefields Parkway – Parks Canada (modified 2026-07-09)",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/visit/promenadedesglaciers-icefieldsparkway",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Accessible park facilities – Jasper (modified 2026-05-19)",
+     "url": "https://parks.canada.ca/pn-np/ab/jasper/visit/accessible",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "What's open in Jasper National Park (modified 2026-10-13)",
+     "url": "https://parks.canada.ca/pn-np/ab/jasper/visit/ouvert-fermee-open-closed",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Trail conditions – Jasper National Park",
+     "url": "https://parks.canada.ca/pn-np/ab/jasper/activ/experience/sentiers-trails/etat-sentiers-trail-conditions",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Park recovery – Parks Canada (modified 2026-10-14)",
+     "url": "https://parks.canada.ca/pn-np/ab/jasper/gestion-management/serviceimmobilier-realty/retablissement-recovery/pc-recovery",
+     "checked": "2026-10-18"
+    }
+   ],
+   "food": {
+    "radius": 3000,
+    "note": "아이스필드 파크웨이는 편의시설이 적어요. Parks Canada는 물과 음식을 챙겨 오라고 안내해요. 편의시설은 5월 초~10월 중순에만 열어요 (변동 가능)."
+   }
+  },
+  "columbia-icefield": {
+   "ko": "컬럼비아 아이스필드",
+   "local": "Columbia Icefield",
+   "kind": "attraction",
+   "art": "mountain",
+   "query": "Columbia Icefield Discovery Centre, AB",
+   "lat": 52.2204671991412,
+   "lng": -117.223804852108,
+   "coordSource": "https://parks.canada.ca/pn-np/ab/banff/visit/promenadedesglaciers-icefieldsparkway",
+   "placeId": "",
+   "address": "Columbia Icefield Glacier Discovery Centre, Icefields Parkway (Highway 93 N)",
+   "addressSource": "https://www.banffjaspercollection.com/attractions/columbia-icefield/location-hours/",
+   "about": "캐나다 로키에서 가장 큰 빙원이에요. 큰 설상차 아이스 익스플로러(Ice Explorer)를 타고 애서배스카 빙하(Athabasca Glacier)에 올라가 얼음 위를 직접 걸어요. 번개, 눈보라, 폭우, 강풍처럼 날씨가 나쁘면 투어가 멈출 수 있어요.",
+   "facts": [
+    "애서배스카 빙하는 125년 동안 계속 줄어들고 있어요. 2023년에는 지난 10년 중 가장 많이 녹았어요.",
+    "빙원 위 스노돔산(Mount Snowdome)의 물은 태평양·북극해·대서양 세 바다로 흘러가요. 북미에 두 곳뿐인 곳 중 하나예요.",
+    "1950년대 재스퍼 주민 빌 러디(Bill Ruddy)와 톰 매크레디(Tom McCready)가 처음 빙하 설상차 투어를 시작했고, 1969년부터 브루스터(Brewster)가 맡았어요."
+   ],
+   "sights": [
+    "아이스 익스플로러를 타고 빙하에 올라가 15~25분 얼음 위 걷기",
+    "유리 바닥 스카이워크(Skywalk) — 선왑타 계곡(Sunwapta Valley) 위 280m, 절벽 밖으로 35m 나간 전망대",
+    "센터 맞은편으로 보이는 애서배스카 빙하",
+    "센터 안 빙하 전시관(Glacier Gallery)의 'Meltdown! A Drop in Time' 전시"
+   ],
+   "tips": [
+    "빙하 위는 센터보다 약 15°C 더 추워요. 겹쳐 입고, 바닥이 미끄럽지 않은 운동화를 신으세요.",
+    "빙하와 스카이워크에는 화장실이 없어요. 센터에서 미리 다녀오세요.",
+    "한국어 오디오 투어 앱이 있어요. 개인 이어폰을 챙기세요 (변동 가능)."
+   ],
+   "sources": [
+    {
+     "title": "Columbia Icefield area and the Athabasca Glacier – Parks Canada (modified 2025-09-08)",
+     "url": "https://parks.canada.ca/pn-np/ab/jasper/activ/itineraires-itineraries/glacier-athabasca",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Glaciers and icefields – Jasper National Park (modified 2026-05-28)",
+     "url": "https://parks.canada.ca/pn-np/ab/jasper/nature/environment/ecosys/glaciers",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "A brief history of the Icefields Parkway – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/ab/jasper/activ/itineraires-itineraries/promenadedesglaciers-icefieldsparkway/pghistoire-iphistory",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Travelling the Icefields Parkway – Parks Canada (modified 2026-07-09)",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/visit/promenadedesglaciers-icefieldsparkway",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Accessible park facilities – Jasper (modified 2026-05-19)",
+     "url": "https://parks.canada.ca/pn-np/ab/jasper/visit/accessible",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Columbia Icefield – Pursuit",
+     "url": "https://www.banffjaspercollection.com/attractions/columbia-icefield/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Columbia Icefield Adventure – Pursuit",
+     "url": "https://www.banffjaspercollection.com/attractions/columbia-icefield-adventure/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Columbia Icefield Location & Hours – Pursuit",
+     "url": "https://www.banffjaspercollection.com/attractions/columbia-icefield/location-hours/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Columbia Icefield Dining – Pursuit",
+     "url": "https://www.banffjaspercollection.com/attractions/columbia-icefield/dining/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Columbia Icefield FAQs – Pursuit",
+     "url": "https://www.banffjaspercollection.com/attractions/columbia-icefield/faqs/",
+     "checked": "2026-10-18"
+    }
+   ],
+   "food": {
+    "radius": 800,
+    "note": "센터 안에 알티튜드(Altitude, 점심 뷔페 10:45~14:45), 셀프 식당 샬레(Chalet, 11:00~18:00), 스타벅스가 있어요. 시간은 2026년 기준이에요 (변동 가능)."
+   }
+  },
+  "weeping-wall": {
+   "ko": "눈물의 벽",
+   "local": "Weeping Wall",
+   "kind": "attraction",
+   "art": "mountain",
+   "query": "Weeping Wall, Icefields Parkway, AB",
+   "lat": 52.15451271,
+   "lng": -117.0096771,
+   "coordSource": "https://parks.canada.ca/pn-np/ab/banff/visit/promenadedesglaciers-icefieldsparkway",
+   "placeId": "",
+   "address": "Icefields Parkway (Hwy 93N), 109 km from Lake Louise / 124 km from Jasper",
+   "addressSource": "https://parks.canada.ca/pn-np/ab/banff/visit/promenadedesglaciers-icefieldsparkway",
+   "about": "아이스필드 파크웨이 길가에서 보는 높이 300m 절벽이에요. 봄과 초여름에 눈 녹은 물줄기 수십 개가 흘러내려 절벽이 우는 것처럼 보여요.",
+   "facts": [
+    "겨울에는 절벽에 얼음 모양(ice formations)이 생겨요.",
+    "밴프 국립공원 안에 있고, 레이크 루이스에서 109km, 재스퍼에서 124km 떨어져 있어요."
+   ],
+   "sights": [
+    "300m 절벽을 흘러내리는 계절 폭포들",
+    "강가까지 짧은 산책",
+    "주변 산 풍경"
+   ],
+   "tips": [
+    "아이스필드 파크웨이는 휴대폰이 거의 안 터져요. 5월~10월 초에는 컬럼비아 아이스필드에서만 조금 돼요 (변동 가능)."
+   ],
+   "sources": [
+    {
+     "title": "Travelling the Icefields Parkway – Parks Canada (modified 2026-07-09)",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/visit/promenadedesglaciers-icefieldsparkway",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Important bulletins – Banff National Park",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/bulletins",
+     "checked": "2026-10-18"
+    }
+   ],
+   "food": {
+    "radius": 3000,
+    "note": "아이스필드 파크웨이는 편의시설이 적어요. Parks Canada는 물과 음식을 챙겨 오라고 안내해요. 편의시설은 5월 초~10월 중순에만 열어요 (변동 가능)."
+   }
+  },
+  "peyto-lake": {
+   "ko": "페이토 호수",
+   "local": "Peyto Lake",
+   "kind": "attraction",
+   "art": "lake",
+   "query": "Peyto Lake viewpoint, Banff National Park, AB",
+   "lat": 51.7167906,
+   "lng": -116.498687,
+   "coordSource": "https://parks.canada.ca/pn-np/ab/banff/visit/promenadedesglaciers-icefieldsparkway",
+   "placeId": "",
+   "address": "Icefields Parkway (Hwy 93N), 43 km from Lake Louise / 190 km from Jasper",
+   "addressSource": "https://parks.canada.ca/pn-np/ab/banff/visit/promenadedesglaciers-icefieldsparkway",
+   "about": "높은 전망대에서 내려다보는 청록색 호수예요. 숲길을 잠깐 걸어 올라가면 사진으로 유명한 풍경이 펼쳐져요. 레이크 루이스에서 북쪽으로 43km예요.",
+   "facts": [
+    "빌 페이토(Bill Peyto)의 이름을 땄어요. 개척자이자 안내인으로, 1913년부터 밴프 국립공원의 첫 공원 관리인(warden) 중 한 명이었어요.",
+    "물빛은 페이토 빙하가 산을 갈아 만든 고운 돌가루(rock flour)가 햇빛을 굴절시켜서 생겨요.",
+    "이곳 보우 서밋(Bow Summit) 일대는 아이스필드 파크웨이에서 가장 높은 곳(2,070m)이에요."
+   ],
+   "sights": [
+    "전망대에서 내려다보는 청록색 호수",
+    "아고산대 숲길을 지나는 짧은 산책",
+    "더 걷고 싶으면 보우 서밋 전망대 — 우는토끼(pika), 마멋, 뇌조를 볼 수 있어요"
+   ],
+   "tips": [
+    "버스와 장애인 차량만 들어가는 위쪽 주차장에서 전망대까지 0.3km 평탄한 길이 있어요.",
+    "호숫가로 내려가는 Peyto Lake Trail은 가파르고 험한 숙련자용이에요. 전망대까지만 가세요.",
+    "여름에도 춥고 바람·비·눈이 올 수 있어요. 겉옷을 챙기세요."
+   ],
+   "sources": [
+    {
+     "title": "Travelling the Icefields Parkway – Parks Canada (modified 2026-07-09)",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/visit/promenadedesglaciers-icefieldsparkway",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Information for Commercial Vehicle Operators – Banff",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/visit/parkbus/louise/commerciaux-commercial",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Peyto Lake – Travel Alberta",
+     "url": "https://www.travelalberta.com/listings/peyto-lake-1483",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Peyto Lake – Banff & Lake Louise Tourism",
+     "url": "https://www.banfflakelouise.com/experiences/peyto-lake",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Important bulletins – Banff National Park",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/bulletins",
+     "checked": "2026-10-18"
+    }
+   ],
+   "food": {
+    "radius": 3000,
+    "note": "아이스필드 파크웨이는 편의시설이 적어요. Parks Canada는 물과 음식을 챙겨 오라고 안내해요. 편의시설은 5월 초~10월 중순에만 열어요 (변동 가능)."
+   }
+  },
+  "crowfoot-glacier": {
+   "ko": "까마귀발 빙하",
+   "local": "Crowfoot Glacier",
+   "kind": "attraction",
+   "art": "mountain",
+   "query": "Crowfoot Glacier viewpoint, Icefields Parkway, AB",
+   "lat": 51.66309903,
+   "lng": -116.4382433,
+   "coordSource": "https://parks.canada.ca/pn-np/ab/banff/visit/promenadedesglaciers-icefieldsparkway",
+   "placeId": "",
+   "address": "Icefields Parkway (Hwy 93N), 36 km from Lake Louise / 197 km from Jasper",
+   "addressSource": "https://parks.canada.ca/pn-np/ab/banff/visit/promenadedesglaciers-icefieldsparkway",
+   "about": "레이크 루이스에서 재스퍼 쪽으로 가다 처음 만나는 빙하 중 하나예요. 넓은 길가 주차장에서 내려 바로 볼 수 있어요.",
+   "facts": [
+    "100년 전에는 발가락 셋 달린 까마귀 발처럼 보였어요. 지금은 발가락 하나가 사라졌어요.",
+    "레이크 루이스에서 북쪽으로 36km, 보우 호수 바로 남쪽에 있어요."
+   ],
+   "sights": [
+    "길가 전망대에서 보는 까마귀발 모양 빙하",
+    "주변 산 풍경",
+    "북쪽으로 약 1km 거리의 보우 호수 전망대"
+   ],
+   "tips": [
+    "아이스필드 파크웨이는 휴대폰이 거의 안 터져요. 5월~10월 초에는 컬럼비아 아이스필드에서만 조금 돼요 (변동 가능)."
+   ],
+   "sources": [
+    {
+     "title": "Travelling the Icefields Parkway – Parks Canada (modified 2026-07-09)",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/visit/promenadedesglaciers-icefieldsparkway",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "The Lodge at Bow Lake (official site)",
+     "url": "https://lodgeatbowlake.com/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Important bulletins – Banff National Park",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/bulletins",
+     "checked": "2026-10-18"
+    }
+   ],
+   "food": {
+    "radius": 3000,
+    "note": "약 2.6km 북쪽 더 로지 앳 보우 레이크(The Lodge at Bow Lake)의 카페 프로비전 코(Provision Co.)에서 간식과 커피를 팔아요. 매일 오전 9시~오후 5시예요 (변동 가능)."
+   }
+  },
+  "bow-lake": {
+   "ko": "보우 호수",
+   "local": "Bow Lake",
+   "kind": "attraction",
+   "art": "lake",
+   "query": "Bow Lake, Banff National Park, AB",
+   "lat": 51.68230567426344,
+   "lng": -116.46214638580057,
+   "coordSource": "https://parks.canada.ca/pn-np/ab/banff/visit/promenadedesglaciers-icefieldsparkway",
+   "placeId": "",
+   "address": "Icefields Parkway (Hwy 93N), 39 km from Lake Louise (turn toward The Lodge at Bow Lake)",
+   "addressSource": "https://parks.canada.ca/pn-np/ab/banff/visit/promenadedesglaciers-icefieldsparkway",
+   "about": "레이크 루이스에서 북쪽으로 30분쯤 가면 나오는 빙하 호수예요. 아이스필드 파크웨이에서 손꼽히는 길가 풍경이에요. 호수 위 보우 빙하에서 녹은 물이 보우강이 되어 밴프로 흘러가요.",
+   "facts": [
+    "보우강(Bow River)은 보우 빙하 폭포(Bow Glacier Falls)에서 와프타 빙원(Wapta Icefield)의 녹은 물로 시작돼요.",
+    "호숫가의 더 로지 앳 보우 레이크(옛 이름 Num-Ti-Jah)는 1920년대에 탐험가 지미 심프슨(Jimmy Simpson)이 지었어요.",
+    "1950년대에 지미 심프슨은 이 로지를 방 16개짜리 숙소로 운영했어요."
+   ],
+   "sights": [
+    "빙하와 바위벽에 둘러싸인 청록색 호수",
+    "호숫가에서 보이는 보우 빙하(Bow Glacier)",
+    "호숫가를 따라 걷는 짧은 자갈길",
+    "남쪽 1.3km 길가 전망대와 호숫가 피크닉장 (여름만)"
+   ],
+   "tips": [
+    "여름엔 주차장 두 곳 모두 아주 붐벼요. 이른 아침이나 늦은 오후가 덜 붐벼요 (변동 가능)."
+   ],
+   "sources": [
+    {
+     "title": "Travelling the Icefields Parkway – Parks Canada (modified 2026-07-09)",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/visit/promenadedesglaciers-icefieldsparkway",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "A brief history of the Icefields Parkway – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/ab/jasper/activ/itineraires-itineraries/promenadedesglaciers-icefieldsparkway/pghistoire-iphistory",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Bow Lake – Banff & Lake Louise Tourism",
+     "url": "https://www.banfflakelouise.com/experiences/bow-lake",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "The Lodge at Bow Lake – Travel Alberta",
+     "url": "https://www.travelalberta.com/listings/the-lodge-at-bow-lake-27162",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "The Lodge at Bow Lake (official site)",
+     "url": "https://lodgeatbowlake.com/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Information for Commercial Vehicle Operators – Banff",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/visit/parkbus/louise/commerciaux-commercial",
+     "checked": "2026-10-18"
+    }
+   ],
+   "food": {
+    "radius": 800,
+    "note": "호숫가 더 로지 앳 보우 레이크(The Lodge at Bow Lake)의 카페 프로비전 코(Provision Co.)에서 간식·커피를 팔아요. 매일 오전 9시~오후 5시, 로지는 5월 29일~10월 중순 열어요 (변동 가능)."
+   }
+  },
+  "moraine-lake": {
+   "ko": "모레인 레이크",
+   "local": "Moraine Lake",
+   "kind": "attraction",
+   "art": "lake",
+   "query": "Moraine Lake, Banff National Park, AB",
+   "lat": null,
+   "lng": null,
+   "coordSource": "",
+   "placeId": "",
+   "address": "",
+   "addressSource": "",
+   "about": "",
+   "facts": [],
+   "sights": [],
+   "tips": [],
+   "sources": [],
+   "food": {
+    "radius": 3000,
+    "note": ""
+   }
+  },
+  "lake-louise": {
+   "ko": "레이크 루이스",
+   "local": "Lake Louise",
+   "kind": "attraction",
+   "art": "lake",
+   "query": "Lake Louise, Banff National Park, AB",
+   "lat": null,
+   "lng": null,
+   "coordSource": "",
+   "placeId": "",
+   "address": "",
+   "addressSource": "",
+   "about": "",
+   "facts": [],
+   "sights": [],
+   "tips": [],
+   "sources": [],
+   "food": {
+    "radius": 3000,
+    "note": ""
+   }
+  },
+  "emerald-lake": {
+   "ko": "에메랄드 레이크",
+   "local": "Emerald Lake",
+   "kind": "attraction",
+   "art": "lake",
+   "query": "Emerald Lake, Yoho National Park, BC",
+   "lat": null,
+   "lng": null,
+   "coordSource": "",
+   "placeId": "",
+   "address": "",
+   "addressSource": "",
+   "about": "",
+   "facts": [],
+   "sights": [],
+   "tips": [],
+   "sources": [],
+   "food": {
+    "radius": 3000,
+    "note": ""
+   }
+  },
+  "natural-bridge": {
+   "ko": "내추럴 브리지",
+   "local": "Natural Bridge",
+   "kind": "attraction",
+   "art": "falls",
+   "query": "Natural Bridge, Yoho National Park, BC",
+   "lat": null,
+   "lng": null,
+   "coordSource": "",
+   "placeId": "",
+   "address": "",
+   "addressSource": "",
+   "about": "",
+   "facts": [],
+   "sights": [],
+   "tips": [],
+   "sources": [],
+   "food": {
+    "radius": 3000,
+    "note": ""
+   }
+  },
+  "banff-gondola": {
+   "ko": "설퍼산 곤돌라",
+   "local": "Banff Gondola",
+   "kind": "attraction",
+   "art": "mountain",
+   "query": "Banff Gondola, Banff, AB",
+   "lat": null,
+   "lng": null,
+   "coordSource": "",
+   "placeId": "",
+   "address": "",
+   "addressSource": "",
+   "about": "",
+   "facts": [],
+   "sights": [],
+   "tips": [],
+   "sources": [],
+   "food": {
+    "radius": 3000,
+    "note": ""
+   }
+  },
+  "surprise-corner": {
+   "ko": "서프라이즈 코너",
+   "local": "Surprise Corner",
+   "kind": "attraction",
+   "art": "forest",
+   "query": "Surprise Corner, Banff, AB",
+   "lat": null,
+   "lng": null,
+   "coordSource": "",
+   "placeId": "",
+   "address": "",
+   "addressSource": "",
+   "about": "",
+   "facts": [],
+   "sights": [],
+   "tips": [],
+   "sources": [],
+   "food": {
+    "radius": 3000,
+    "note": ""
+   }
+  },
+  "bow-falls": {
+   "ko": "보우 폭포",
+   "local": "Bow Falls",
+   "kind": "attraction",
+   "art": "falls",
+   "query": "Bow Falls, Banff, AB",
+   "lat": null,
+   "lng": null,
+   "coordSource": "",
+   "placeId": "",
+   "address": "",
+   "addressSource": "",
+   "about": "",
+   "facts": [],
+   "sights": [],
+   "tips": [],
+   "sources": [],
+   "food": {
+    "radius": 3000,
+    "note": ""
+   }
+  },
+  "banff-upper-hot-springs": {
+   "ko": "밴프 어퍼 핫 스프링스",
+   "local": "Banff Upper Hot Springs",
+   "kind": "attraction",
+   "art": "mountain",
+   "query": "Banff Upper Hot Springs, Banff, AB",
+   "lat": null,
+   "lng": null,
+   "coordSource": "",
+   "placeId": "",
+   "address": "",
+   "addressSource": "",
+   "about": "",
+   "facts": [],
+   "sights": [],
+   "tips": [],
+   "sources": [],
+   "food": {
+    "radius": 3000,
+    "note": ""
+   }
+  }
+ }
+}

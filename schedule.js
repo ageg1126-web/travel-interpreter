@@ -104,6 +104,7 @@
     if (!trip.items.length) {
       list.innerHTML = '<div class="placeholder"><div class="ph-icon">' + svg('calendar') + '</div>'
         + '<p>아직 일정이 없어요.</p><p class="muted">오른쪽 아래 ＋ 버튼으로 항공편, 숙소, 관광 일정을 넣어 보세요.</p></div>';
+      $('dayStrip').innerHTML = '';
       tickClocks();
       return;
     }
@@ -115,6 +116,7 @@
     for (const date of dates) {
       const sec = document.createElement('section');
       sec.className = 'day' + (date === today ? ' today' : '');
+      sec.id = 'day-' + date;
       const h = document.createElement('h3');
       h.innerHTML = `<span>${daysBetween(first, date) + 1}일차</span><span class="muted"></span>`;
       h.lastChild.textContent = dayLabel(date);
@@ -122,19 +124,40 @@
       for (const it of sortDay(byDate[date])) sec.appendChild(itemEl(it));
       list.appendChild(sec);
     }
+    renderStrip(dates, today);
     tickClocks();
     scrollToToday();
+    document.dispatchEvent(new Event('tripchange'));
+  }
+
+  // Row of day buttons above the list; tapping one jumps to that day.
+  function renderStrip(dates, today) {
+    const strip = $('dayStrip');
+    strip.innerHTML = '';
+    for (const date of dates) {
+      const [y, m, d] = date.split('-').map(Number);
+      const b = document.createElement('button');
+      b.type = 'button';
+      if (date === today) b.className = 'today';
+      b.innerHTML = '<small></small><b></b>';
+      b.querySelector('small').textContent = WEEK[new Date(Date.UTC(y, m - 1, d)).getUTCDay()];
+      b.querySelector('b').textContent = d;
+      b.setAttribute('aria-label', dayLabel(date));
+      b.onclick = () => document.getElementById('day-' + date)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      strip.appendChild(b);
+    }
   }
 
   function scrollToToday() {
     const el = list.querySelector('.day.today');
     if (el && !list.closest('.tab').hidden) setTimeout(() => el.scrollIntoView({ block: 'start' }), 0);
   }
-  document.querySelector('.sidebar [data-tab=schedule]').addEventListener('click', scrollToToday);
+  document.querySelector('.tabbar [data-tab=schedule]').addEventListener('click', scrollToToday);
 
   function itemEl(it) {
     const el = document.createElement('div');
     el.className = 'item';
+    el.dataset.id = it.id;
     el.innerHTML = '<div class="ic"></div><div class="body"><div class="time"></div><div class="ttl"></div></div>';
     el.querySelector('.ic').innerHTML = svg(ICONS[it.type] || 'note');
     el.classList.add('t-' + (it.type || 'etc'));
@@ -219,6 +242,13 @@
     } catch {}
   };
 
-  load().then(render);
+  // Read-only view for the map screen: same plan, same "today", same order.
+  window.Trip = {
+    items: () => trip.items,
+    sortDay, todayIn, dayLabel, daysBetween,
+    currentTz: () => currentTz(),
+    ready: null,
+  };
+  window.Trip.ready = load().then(render);
   setInterval(tickClocks, 30000);
 })();

@@ -74,6 +74,8 @@
     wake = null;
   }
   $('showClose').onclick = hide;
+  // The map screen shows an address card the same way: { en, lines, ko }.
+  window.ShowCard = { show: ({ en, lines = [], ko }) => show({ en, ko, extra: () => lines }) };
   document.addEventListener('tabchange', hide);
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('showCard').hidden) hide(); });
 

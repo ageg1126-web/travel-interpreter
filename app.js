@@ -20,38 +20,36 @@ const orb = new VoiceOrb($('orb'));
 const heroOrb = new VoiceOrb($('heroOrb'));
 
 // ---------- screens ----------
+// The floating bar at the bottom has five places; cards, tools and settings
+// open from "더보기", so that button stays lit for them.
+const UNDER_MORE = ['more', 'cards', 'tools', 'settings'];
 function showTab(name) {
   document.querySelectorAll('.tab').forEach(t => { t.hidden = t.id !== 'tab-' + name; });
-  document.querySelectorAll('.sidebar [data-tab]').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+  const lit = UNDER_MORE.includes(name) ? 'more' : name;
+  document.querySelectorAll('.tabbar [data-tab]').forEach(b => {
+    b.classList.toggle('active', b.dataset.tab === lit);
+    if (b.dataset.tab === lit) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
+  });
   if (name !== 'interpret' && ctl.mode !== 'off') ctl.off();
   try { localStorage.setItem('app.tab', name); } catch {}
   document.dispatchEvent(new CustomEvent('tabchange', { detail: name }));
 }
-document.querySelectorAll('.sidebar [data-tab]').forEach(b => { b.onclick = () => { showTab(b.dataset.tab); closeSidebar(); }; });
-
-// ---------- sidebar ----------
-const sidebar = $('sidebar'), scrim = $('sideScrim');
-function openSidebar() { sidebar.classList.add('open'); scrim.hidden = false; }
-function closeSidebar() { sidebar.classList.remove('open'); scrim.hidden = true; }
-// Every screen gets the same menu button in its header.
-document.querySelectorAll('.tab > header').forEach(h => {
-  const b = document.createElement('button');
-  b.className = 'icon-btn menu-btn';
-  b.setAttribute('aria-label', '메뉴 열기');
-  b.innerHTML = icon('menu');
-  b.onclick = openSidebar;
-  h.prepend(b);
+document.querySelectorAll('.tabbar [data-tab]').forEach(b => { b.onclick = () => showTab(b.dataset.tab); });
+document.querySelectorAll('[data-back]').forEach(b => { b.onclick = () => showTab(b.dataset.back); });
+// 더보기 tiles: "tools:fx" opens the travel tools on that tool.
+document.querySelectorAll('[data-go]').forEach(b => {
+  b.onclick = () => {
+    const [tab, tool] = b.dataset.go.split(':');
+    showTab(tab);
+    if (tool) document.querySelector(`#toolNav [data-tool="${tool}"]`)?.click();
+  };
 });
-$('sideClose').onclick = closeSidebar;
-scrim.onclick = closeSidebar;
-document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeSidebar(); if (ctl.mode === 'interpret') ctl.stopInterpret(); } });
-// Swipe left on the open sidebar to close it.
-let touchX = null;
-sidebar.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
-sidebar.addEventListener('touchend', e => {
-  if (touchX !== null && touchX - e.changedTouches[0].clientX > 50) closeSidebar();
-  touchX = null;
+document.addEventListener('tabchange', e => {
+  if (e.detail !== 'more') return;
+  const r = window.FX?.rate?.('CAD');
+  if (r) $('moreFx').textContent = `1달러 ≈ ${Math.round(r).toLocaleString('ko-KR')}원`;
 });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && ctl.mode === 'interpret') ctl.stopInterpret(); });
 
 // ---------- settings (stored on this phone only) ----------
 const SETTINGS_KEY = 'interp.settings';
@@ -166,6 +164,10 @@ function layout() {
   els.mic.setAttribute('aria-label', on ? '마이크 끄기' : '마이크 켜기');
   els.mic.innerHTML = icon(on ? 'mic' : 'micoff');
   els.hero.classList.toggle('mic-off', !on);
+  $('micLabel').textContent = on ? '마이크 켜짐' : '마이크 꺼짐';
+  $('micLabel').parentElement.hidden = viewLog;
+  $('heroState').textContent = on ? 'AI 비서가 듣고 있어요' : '마이크를 켜면 AI 비서가 들어요';
+  $('heroState').classList.toggle('on', on);
   if (els.hero.hidden || ctl.mode === 'interpret') heroOrb.stop(); else heroOrb.start();
 }
 function heroCaption(q, a) {
@@ -265,6 +267,9 @@ function caption(src, dst, from) {
   els.stageSrc.textContent = src || '';
   els.stageDst.textContent = dst || '';
   els.stageSrc.dataset.lang = from || '';
+  const tag = $('stageTag');
+  tag.hidden = !from || !src;
+  tag.textContent = from === 'en' ? 'English → 한국어' : '한국어 → English';
 }
 
 // Interpret one utterance (translate only, never answer), show it, and record it.
@@ -315,8 +320,11 @@ const ctl = {
   userMuted: false,
   setMuted(m) {
     this.userMuted = m;
-    $('stageMute').classList.toggle('muted-on', m);
-    $('stageMute').innerHTML = icon(m ? 'micoff' : 'mic');
+    const mute = $('stageMute');
+    mute.classList.toggle('muted-on', m);
+    mute.querySelector('.b').innerHTML = icon(m ? 'micoff' : 'mic');
+    mute.querySelector('.l').textContent = m ? '다시 켜기' : '잠시 끄기';
+    mute.setAttribute('aria-label', m ? '마이크 다시 켜기' : '마이크 잠시 끄기');
     if (autoEngine.listener) autoEngine.listener.muted = m;
     liveEngine.session?.setMuted(m);
     if (m) { basicEngine.stop(); this.status('마이크를 잠시 껐어요', 'idle'); }
