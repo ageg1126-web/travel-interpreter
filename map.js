@@ -187,9 +187,9 @@
   }
   function pinEl(x, color, label) {
     const el = document.createElement('div');
-    el.className = 'mp' + (x.n === st.sel && st.day !== 'all' ? ' sel' : '');
+    el.className = 'mp' + (x.n === st.sel && st.day !== 'all' ? ' sel' : '') + (st.day === 'all' ? ' dot' : '');
     el.style.setProperty('--c', color || 'var(--primary)');
-    el.innerHTML = `<div class="h">${label ?? x.n}</div><div class="t"></div><div class="nm">${esc(x.s.ko)}</div>`;
+    el.innerHTML = `<div class="h">${label ?? x.n}</div><div class="t"></div><div class="nm">${esc(x.s.ko.split(' · ')[0])}</div>`;
     return el;
   }
   function drawPins() {
@@ -206,7 +206,7 @@
       m.n = x.n;
       markers.push(m); bounds.extend({ lat: x.s.lat, lng: x.s.lng }); count++;
     }
-    if (count > 1) gmap.fitBounds(bounds, { top: 150, bottom: 300, left: 50, right: 90 });
+    if (count > 1) gmap.fitBounds(bounds, st.day === 'all' ? { top: 110, bottom: 130, left: 30, right: 80 } : { top: 150, bottom: 300, left: 50, right: 90 });
     else if (count === 1) { gmap.setCenter(bounds.getCenter()); gmap.setZoom(13); }
   }
   function renderCards() {

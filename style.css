@@ -578,3 +578,8 @@ dialog.travel p { margin: 4px 0 0; font-size: 15.5px; line-height: 1.5; }
   display: inline-flex; align-items: center; gap: 5px; font-size: 15px; font-weight: 750; }
 .to-map .ico { width: 18px; height: 18px; }
 .privacy-link { display: block; text-align: center; color: var(--muted); font-size: 15px; font-weight: 650; padding: 10px; }
+
+.mp .nm { max-width: 150px; overflow: hidden; text-overflow: ellipsis; }
+.mp.dot .nm { display: none; }
+.mp.dot .h { width: 34px; height: 34px; font-size: 15px; }
+.car { align-items: flex-start; }
