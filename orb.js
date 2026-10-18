@@ -1,6 +1,7 @@
-// The voice orb: a perfect, slowly drifting cloudy sphere at rest. While
-// someone talks its edge breaks into sharp, pointed spikes of uneven length
-// that flicker with the voice, and each burst of sound shoots a cluster out.
+// The voice orb: a cloudy sphere whose uneven outline slowly breathes and
+// shifts even when it is quiet. While someone talks a few large, sharp spikes
+// jump out of the rim here and there, and each burst of sound pushes the
+// nearest ones out further.
 class VoiceOrb {
   // Each palette: top, middle, bottom of the sphere.
   static PALETTES = {
@@ -11,7 +12,7 @@ class VoiceOrb {
     idle: [[150, 154, 162], [200, 203, 208], [236, 237, 240]],
   };
 
-  static SPIKES = 44;
+  static SPIKES = 16;
 
   constructor(canvas, { calm = false } = {}) {
     this.canvas = canvas;
@@ -81,33 +82,48 @@ class VoiceOrb {
 
     ctx.clearRect(0, 0, W, W);
 
-    // Edge: perfectly round at rest; a ring of sharp teeth with sound.
+    // Edge: an uneven rim that slowly shifts; large sharp spikes jump out with sound.
     const scale = 1 + lv * 0.04 + this.flash * 0.03 + (this.state === 'thinking' ? 0.015 * Math.sin(t * 3) : 0);
     const r0 = R * scale;
     for (const k of this.kicks) k.life -= dt * 3;
     this.kicks = this.kicks.filter(k => k.life > 0);
     const K = this.spikes.length, step = (Math.PI * 2) / K;
-    const rot = d * 0.15; // the ring turns slowly so it never looks stamped
+    const rot = d * 0.15; // the ring turns slowly so spikes never jump in the same places
+    // The uneven rim: a few slow, overlapping bulges that never line up.
+    const rim = a => r0 * (1 - lv * 0.02) * (1 + 0.055 * (
+      0.50 * Math.sin(2 * a + 0.7 + t * 0.31)
+      + 0.36 * Math.sin(3 * a + 2.1 - t * 0.23)
+      + 0.24 * Math.sin(4 * a + 4.0 + t * 0.43)
+      + 0.16 * Math.sin(6 * a + 1.3 - t * 0.37)));
+    const at = (a, r) => ctx.lineTo(cx + r * Math.cos(a), cx + r * Math.sin(a));
+    const arc = (from, to) => {
+      for (let j = 0; j <= 6; j++) { const a = from + (to - from) * (j / 6); at(a, rim(a)); }
+    };
     ctx.save();
     ctx.beginPath();
+    ctx.moveTo(cx + rim(rot) * Math.cos(rot), cx + rim(rot) * Math.sin(rot));
     for (let i = 0; i < K; i++) {
       const sp = this.spikes[i];
-      // Every ~60–110 ms each spike picks a new length; long ones are rare.
-      if (t > sp.next) { sp.to = Math.pow(Math.random(), 1.6); sp.next = t + 0.06 + Math.random() * 0.05; }
-      sp.v += (sp.to - sp.v) * 0.45;
-      const a0 = rot + i * step, tip = a0 + step * 0.5;
-      // One side of the ring is spikier than the other, and that side wanders.
-      const env = 0.55 + 0.45 * Math.sin(tip * 2 + d * 1.7);
-      let len = lv * (0.05 + 0.3 * sp.v * env);
+      // Only some spikes are out at any moment; each re-rolls every ~0.1–0.2 s.
+      if (t > sp.next) {
+        sp.to = Math.random() < 0.4 ? 0.45 + 0.55 * Math.random() : 0;
+        sp.next = t + 0.1 + Math.random() * 0.1;
+      }
+      sp.v += (sp.to - sp.v) * 0.5;
+      const a0 = rot + i * step, a1 = a0 + step, tip = a0 + step * 0.5;
+      let len = lv * 0.42 * sp.v;
       for (const k of this.kicks) {
         const da = Math.atan2(Math.sin(tip - k.a), Math.cos(tip - k.a));
-        len += k.h * k.life * Math.exp(-(da * da) / 0.05) * (0.6 + 0.4 * sp.v);
+        len += k.h * k.life * Math.exp(-(da * da) / 0.25) * sp.v;
       }
-      const rv = r0 * (1 - lv * 0.03), rt = r0 * (1 + Math.min(len, 0.36));
-      const vx = cx + rv * Math.cos(a0), vy = cx + rv * Math.sin(a0);
-      i ? ctx.lineTo(vx, vy) : ctx.moveTo(vx, vy);
-      // At rest len is 0 and these points just trace the circle.
-      ctx.lineTo(cx + rt * Math.cos(tip), cx + rt * Math.sin(tip));
+      len = Math.min(len, 0.3);
+      // Spikes snap in and out; tiny leftovers would only look like bumps.
+      if (len < 0.08) { arc(a0, a1); continue; }
+      // A sharp tooth across the middle of this slot, the uneven rim on either side.
+      const w = step * 0.26;
+      arc(a0, tip - w);
+      at(tip, rim(tip) * (1 + len));
+      arc(tip + w, a1);
     }
     ctx.closePath();
     ctx.clip();
@@ -145,7 +161,7 @@ class VoiceOrb {
   }
 
   kick(h) {
-    this.kicks.push({ a: Math.random() * Math.PI * 2, life: 1, h: 0.12 + h * 0.18 });
+    this.kicks.push({ a: Math.random() * Math.PI * 2, life: 1, h: 0.12 + h * 0.15 });
     this.flash = Math.min(1, this.flash + h * 0.5);
   }
 }
