@@ -1,0 +1,42 @@
+{
+  "packageId": "io.github.ageg1126web.travelhelper",
+  "host": "ageg1126-web.github.io",
+  "name": "여행 도우미",
+  "launcherName": "여행 도우미",
+  "display": "standalone",
+  "themeColor": "#F5F3EF",
+  "themeColorDark": "#0F1115",
+  "navigationColor": "#F5F3EF",
+  "navigationColorDark": "#0F1115",
+  "navigationDividerColor": "#F5F3EF",
+  "navigationDividerColorDark": "#0F1115",
+  "backgroundColor": "#F5F3EF",
+  "enableNotifications": false,
+  "startUrl": "/travel-interpreter/",
+  "iconUrl": "http://localhost:8765/icon-512.png",
+  "maskableIconUrl": "http://localhost:8765/icon-512.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "./release.keystore",
+    "alias": "travelhelper"
+  },
+  "appVersionName": "1.0.0",
+  "appVersionCode": 1,
+  "shortcuts": [],
+  "generatorApp": "bubblewrap-cli",
+  "fallbackType": "customtabs",
+  "features": {},
+  "alphaDependencies": {
+    "enabled": false
+  },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "minSdkVersion": 21,
+  "orientation": "portrait",
+  "fingerprints": [],
+  "additionalTrustedOrigins": [],
+  "retainedBundles": [],
+  "displayOverride": [],
+  "appVersion": "1.0.0"
+}
