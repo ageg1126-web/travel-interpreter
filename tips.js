@@ -1,4 +1,5 @@
-// Tip and sales tax calculator for restaurants and shops in BC and Alberta.
+// Tip and sales tax calculator for restaurants and shops in BC and Alberta,
+// with prices in Canadian or US dollars.
 // Tax: GST 5% everywhere; BC adds 7% PST on most goods (restaurant food is exempt).
 // Tip: a share of the pre-tax price, 18% being the usual default.
 (() => {
@@ -9,7 +10,8 @@
     AB: { meal: [['GST', 5]], shop: [['GST', 5]] },
   };
   const TIPS = [0, 15, 18, 20];
-  let place = 'BC', kind = 'meal', tip = 18, people = 1;
+  let place = 'BC', kind = 'meal', tip = 18, people = 1, cur = 'CAD';
+  try { if (localStorage.getItem('tip.cur') === 'USD') cur = 'USD'; } catch {}
 
   // Default the region from today's place in the trip (Vancouver = BC, otherwise Alberta).
   try {
@@ -19,7 +21,7 @@
     if (tz === 'America/Edmonton') place = 'AB';
   } catch {}
 
-  const dollars = n => '$' + n.toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const dollars = n => (cur === 'USD' ? 'US$' : 'C$') + n.toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   const won = n => Math.round(n).toLocaleString('ko-KR') + '원';
 
   function renderTips() {
@@ -45,6 +47,9 @@
   function update() {
     document.querySelectorAll('#tipPlace button').forEach(b => b.classList.toggle('on', b.dataset.place === place));
     document.querySelectorAll('#tipKind button').forEach(b => b.classList.toggle('on', b.dataset.kind === kind));
+    document.querySelectorAll('#tipCur button').forEach(b => b.classList.toggle('on', b.dataset.cur === cur));
+    $('tipSym').textContent = cur === 'USD' ? 'US$' : 'C$';
+    $('tipLabel').textContent = `메뉴 가격 합계 (세금 전, ${cur === 'USD' ? '미국 달러' : '캐나다 달러'})`;
     $('tipRow').hidden = kind !== 'meal';
     $('tipPeople').textContent = people;
 
@@ -53,7 +58,7 @@
     const taxTotal = taxes.reduce((a, t) => a + t[2], 0);
     const tipAmt = kind === 'meal' ? price * tip / 100 : 0;
     const total = price + taxTotal + tipAmt;
-    const rate = window.FX?.rate('CAD') || 0;
+    const rate = window.FX?.rate(cur) || 0;
 
     sum.innerHTML = '';
     row('메뉴 가격', dollars(price));
@@ -81,6 +86,9 @@
   });
   document.querySelectorAll('#tipPlace button').forEach(b => { b.onclick = () => { place = b.dataset.place; update(); }; });
   document.querySelectorAll('#tipKind button').forEach(b => { b.onclick = () => { kind = b.dataset.kind; update(); }; });
+  document.querySelectorAll('#tipCur button').forEach(b => {
+    b.onclick = () => { cur = b.dataset.cur; try { localStorage.setItem('tip.cur', cur); } catch {} update(); };
+  });
   $('tipMinus').onclick = () => { people = Math.max(1, people - 1); update(); };
   $('tipPlus').onclick = () => { people = Math.min(10, people + 1); update(); };
   document.addEventListener('fxchange', update);

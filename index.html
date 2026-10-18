@@ -162,13 +162,17 @@
         <button type="button" data-place="BC">밴쿠버</button>
         <button type="button" data-place="AB">로키·캘거리</button>
       </div>
+      <div class="seg" id="tipCur" aria-label="통화">
+        <button type="button" data-cur="CAD" class="on">캐나다 달러</button>
+        <button type="button" data-cur="USD">미국 달러</button>
+      </div>
       <div class="seg" id="tipKind" aria-label="종류">
         <button type="button" data-kind="meal" class="on">식당</button>
         <button type="button" data-kind="shop">쇼핑</button>
       </div>
       <div class="fx-box">
-        <label class="fx-label" for="tipInput">메뉴 가격 합계 (세금 전)</label>
-        <div class="fx-input"><span>$</span><input id="tipInput" type="text" inputmode="decimal" placeholder="0" autocomplete="off"></div>
+        <label class="fx-label" for="tipInput" id="tipLabel">메뉴 가격 합계 (세금 전)</label>
+        <div class="fx-input"><span id="tipSym">C$</span><input id="tipInput" type="text" inputmode="decimal" placeholder="0" autocomplete="off"></div>
       </div>
       <div id="tipRow">
         <div class="fx-label tip-title">팁</div>
