@@ -3,6 +3,8 @@
 (() => {
   const STORE = 'trip.schedule';
   const TYPES = { activity: '🎯', flight: '✈️', hotel: '🏨', meal: '🍽️', move: '🚌', etc: '📝' };
+  const ICONS = { activity: 'mountain', flight: 'plane', hotel: 'bed', meal: 'meal', move: 'bus', etc: 'note' };
+  const svg = n => `<svg class="ico" aria-hidden="true"><use href="#i-${n}"/></svg>`;
   const WEEK = ['일', '월', '화', '수', '목', '금', '토'];
   const $ = id => document.getElementById(id);
   const list = $('schedList'), dialog = $('itemDialog'), form = $('itemForm');
@@ -22,7 +24,7 @@
     try { local = JSON.parse(localStorage.getItem(STORE) || 'null'); } catch {}
     try {
       const res = await fetch('schedule.json', { cache: 'no-store' });
-      if (res.ok) shared = await res.json();
+      if (res.ok) { shared = await res.json(); window.__sharedTrip = shared; }
     } catch {}
     if (local?.modified) {
       trip = local;
@@ -100,7 +102,7 @@
       list.appendChild(n);
     }
     if (!trip.items.length) {
-      list.innerHTML = '<div class="placeholder" style="height:100%"><div class="ph-icon">🗓️</div>'
+      list.innerHTML = '<div class="placeholder"><div class="ph-icon">' + svg('calendar') + '</div>'
         + '<p>아직 일정이 없어요.</p><p class="muted">오른쪽 아래 ＋ 버튼으로 항공편, 숙소, 관광 일정을 넣어 보세요.</p></div>';
       tickClocks();
       return;
@@ -134,7 +136,8 @@
     const el = document.createElement('div');
     el.className = 'item';
     el.innerHTML = '<div class="ic"></div><div class="body"><div class="time"></div><div class="ttl"></div></div>';
-    el.querySelector('.ic').textContent = TYPES[it.type] || '📝';
+    el.querySelector('.ic').innerHTML = svg(ICONS[it.type] || 'note');
+    el.classList.add('t-' + (it.type || 'etc'));
     el.querySelector('.time').textContent = it.time || '';
     if (!it.time) el.querySelector('.time').hidden = true;
     el.querySelector('.ttl').textContent = it.title;
@@ -145,7 +148,8 @@
       a.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(it.place);
       a.target = '_blank';
       a.rel = 'noopener';
-      a.textContent = '📍 ' + it.place;
+      a.innerHTML = svg('pin');
+      a.append(it.place);
       a.onclick = e => e.stopPropagation();
       body.appendChild(a);
     }

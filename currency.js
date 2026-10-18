@@ -70,8 +70,8 @@
   }
 
   function renderDirection() {
-    $('fxFromLabel').textContent = from === 'CAD' ? '🇨🇦 캐나다 달러' : '🇰🇷 원';
-    $('fxToLabel').textContent = from === 'CAD' ? '🇰🇷 원' : '🇨🇦 캐나다 달러';
+    $('fxFromLabel').textContent = from === 'CAD' ? '캐나다 달러 CAD' : '원 KRW';
+    $('fxToLabel').textContent = from === 'CAD' ? '원 KRW' : '캐나다 달러 CAD';
     $('fxFromSym').textContent = from === 'CAD' ? '$' : '₩';
     const q = $('fxQuick');
     q.innerHTML = '';
