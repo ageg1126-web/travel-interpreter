@@ -1,6 +1,6 @@
 // The voice orb: a perfect, slowly drifting cloudy sphere at rest. While
-// someone talks its edge snaps into sharp, irregular waves, every burst of
-// sound kicks out a spike, and small sparks fly off the rim.
+// someone talks its edge breaks into sharp, pointed spikes of uneven length
+// that flicker with the voice, and each burst of sound shoots a cluster out.
 class VoiceOrb {
   // Each palette: top, middle, bottom of the sphere.
   static PALETTES = {
@@ -10,6 +10,8 @@ class VoiceOrb {
     speaking: [[30, 70, 180], [96, 150, 245], [214, 230, 255]],
     idle: [[150, 154, 162], [200, 203, 208], [236, 237, 240]],
   };
+
+  static SPIKES = 44;
 
   constructor(canvas, { calm = false } = {}) {
     this.canvas = canvas;
@@ -23,9 +25,10 @@ class VoiceOrb {
     this.raf = null;
     this.last = 0;
     this.prevTarget = 0;
-    this.kicks = [];   // short-lived spikes on the edge: {a, life, h}
-    this.sparks = [];  // particles flying off the rim
+    this.kicks = [];   // short-lived bursts on the edge: {a, life, h}
     this.flash = 0;
+    // Pointed spikes around the rim; each one jumps to a new random length.
+    this.spikes = Array.from({ length: VoiceOrb.SPIKES }, () => ({ v: 0, to: 0, next: 0 }));
     // Soft cloud puffs that float inside the sphere.
     this.puffs = Array.from({ length: 7 }, (_, i) => ({
       x: Math.cos(i * 2.4) * 0.45, y: -0.15 + Math.sin(i * 1.7) * 0.5, r: 0.38 + (i % 3) * 0.14,
@@ -64,15 +67,12 @@ class VoiceOrb {
     this.level += (target - this.level) * (target > this.level ? 0.55 : 0.16);
     const lv = this.calm ? this.level * 0.6 : this.level;
 
-    // A sudden rise in loudness (a syllable hitting) kicks the edge and throws sparks.
+    // A sudden rise in loudness (a syllable hitting) shoots a cluster of long spikes.
     const rise = target - this.prevTarget;
     this.prevTarget = target;
-    if (rise > 0.08 && target > 0.15 && this.kicks.length < 6) this.kick(Math.min(1, target + rise));
-    if (lv > 0.25 && Math.random() < lv * 0.5) this.spark(lv);
+    if (rise > 0.08 && target > 0.15 && this.kicks.length < 5) this.kick(Math.min(1, target + rise));
     this.flash = Math.max(0, this.flash - dt * 4);
-
-    // Wave phases run faster the louder it is, so loud speech looks electric.
-    this.drift += dt * (0.8 + lv * 9);
+    this.drift += dt * (0.3 + lv * 2);
     const d = this.drift;
 
     const pal = VoiceOrb.PALETTES[this.state] || VoiceOrb.PALETTES.listening;
@@ -81,31 +81,33 @@ class VoiceOrb {
 
     ctx.clearRect(0, 0, W, W);
 
-    // Edge: perfectly round at rest; irregular, large waves with sound.
-    const amp = lv * 0.13;
-    const scale = 1 + lv * 0.05 + this.flash * 0.03 + (this.state === 'thinking' ? 0.015 * Math.sin(t * 3) : 0);
-    const N = 220;
-    for (const k of this.kicks) k.life -= dt * 3.2;
+    // Edge: perfectly round at rest; a ring of sharp teeth with sound.
+    const scale = 1 + lv * 0.04 + this.flash * 0.03 + (this.state === 'thinking' ? 0.015 * Math.sin(t * 3) : 0);
+    const r0 = R * scale;
+    for (const k of this.kicks) k.life -= dt * 3;
     this.kicks = this.kicks.filter(k => k.life > 0);
+    const K = this.spikes.length, step = (Math.PI * 2) / K;
+    const rot = d * 0.15; // the ring turns slowly so it never looks stamped
     ctx.save();
     ctx.beginPath();
-    for (let i = 0; i <= N; i++) {
-      const a = (i / N) * Math.PI * 2;
-      const w = 0.42 * Math.sin(2 * a + d * 1.3) * Math.sin(d * 0.7 + 1)
-              + 0.30 * Math.sin(3 * a - d * 1.9 + 2)
-              + 0.18 * Math.sin(5 * a + d * 2.6) * Math.cos(d * 1.1)
-              + 0.10 * Math.sin(7 * a - d * 3.4 + 4)
-              + 0.12 * lv * Math.sin(11 * a + d * 5.1)
-              + 0.08 * lv * Math.sin(17 * a - d * 7.3 + 1);
-      // Sharpen the peaks so the edge looks crackly rather than wobbly.
-      let e = Math.sign(w) * Math.pow(Math.abs(w), 0.6);
+    for (let i = 0; i < K; i++) {
+      const sp = this.spikes[i];
+      // Every ~60–110 ms each spike picks a new length; long ones are rare.
+      if (t > sp.next) { sp.to = Math.pow(Math.random(), 1.6); sp.next = t + 0.06 + Math.random() * 0.05; }
+      sp.v += (sp.to - sp.v) * 0.45;
+      const a0 = rot + i * step, tip = a0 + step * 0.5;
+      // One side of the ring is spikier than the other, and that side wanders.
+      const env = 0.55 + 0.45 * Math.sin(tip * 2 + d * 1.7);
+      let len = lv * (0.05 + 0.3 * sp.v * env);
       for (const k of this.kicks) {
-        const da = Math.atan2(Math.sin(a - k.a), Math.cos(a - k.a));
-        e += k.h * k.life * k.life * Math.exp(-(da * da) / 0.012);
+        const da = Math.atan2(Math.sin(tip - k.a), Math.cos(tip - k.a));
+        len += k.h * k.life * Math.exp(-(da * da) / 0.05) * (0.6 + 0.4 * sp.v);
       }
-      const r = R * scale * (1 + amp * e);
-      const x = cx + r * Math.cos(a), y = cx + r * Math.sin(a);
-      i ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
+      const rv = r0 * (1 - lv * 0.03), rt = r0 * (1 + Math.min(len, 0.36));
+      const vx = cx + rv * Math.cos(a0), vy = cx + rv * Math.sin(a0);
+      i ? ctx.lineTo(vx, vy) : ctx.moveTo(vx, vy);
+      // At rest len is 0 and these points just trace the circle.
+      ctx.lineTo(cx + rt * Math.cos(tip), cx + rt * Math.sin(tip));
     }
     ctx.closePath();
     ctx.clip();
@@ -140,41 +142,10 @@ class VoiceOrb {
     if (this.flash > 0) { ctx.fillStyle = `rgba(255,255,255,${this.flash * 0.22})`; ctx.fillRect(0, 0, W, W); }
     ctx.restore();
 
-    // Sparks fly off the rim and fade.
-    if (this.sparks.length) {
-      ctx.save();
-      for (const sp of this.sparks) {
-        sp.life -= dt / sp.ttl;
-        sp.dist += dt * sp.v;
-        if (sp.life <= 0) continue;
-        const r0 = R * scale * (1 + sp.dist), r1 = r0 + R * 0.06 * sp.life;
-        const ca = Math.cos(sp.a), sa = Math.sin(sp.a);
-        ctx.strokeStyle = rgb(sp.deep ? 0 : 1, sp.life);
-        ctx.lineWidth = Math.max(1, W * 0.007 * sp.life);
-        ctx.lineCap = 'round';
-        ctx.beginPath();
-        ctx.moveTo(cx + r0 * ca, cx + r0 * sa);
-        ctx.lineTo(cx + r1 * ca, cx + r1 * sa);
-        ctx.stroke();
-      }
-      ctx.restore();
-      this.sparks = this.sparks.filter(sp => sp.life > 0 && sp.dist < 0.36);
-    }
   }
 
   kick(h) {
-    this.kicks.push({ a: Math.random() * Math.PI * 2, life: 1, h: 0.9 + h * 0.8 });
-    this.flash = Math.min(1, this.flash + h * 0.6);
-    const n = 3 + Math.round(h * 4);
-    for (let i = 0; i < n; i++) this.spark(h);
-  }
-
-  spark(lv) {
-    if (this.calm || this.sparks.length > 40) return;
-    this.sparks.push({
-      a: Math.random() * Math.PI * 2, dist: 0.04 + Math.random() * 0.06,
-      v: 0.35 + Math.random() * 0.5 + lv * 0.4, ttl: 0.35 + Math.random() * 0.35,
-      life: 1, deep: Math.random() < 0.5,
-    });
+    this.kicks.push({ a: Math.random() * Math.PI * 2, life: 1, h: 0.12 + h * 0.18 });
+    this.flash = Math.min(1, this.flash + h * 0.5);
   }
 }
