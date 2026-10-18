@@ -6,6 +6,7 @@
 const LiveInterpreter = (() => {
   const BASE = 'https://api.openai.com/v1/realtime/translations';
   const HANGUL = /[가-힣]/;
+  const IDLE_MS = 2 * 60e3;
 
   async function clientSecret(key, language) {
     const res = await fetch(BASE + '/client_secrets', {
@@ -102,6 +103,8 @@ const LiveInterpreter = (() => {
     ac.createMediaStreamSource(stream).connect(micAnalyser);
 
     let closed = false, muted = false, timer = null, failed = false;
+    // Last time anyone spoke (a transcript arrived) or the phone was speaking.
+    let lastActive = performance.now();
     const sessions = [];
     const finish = s => {
       const dst = s.outText.trim();
@@ -110,6 +113,7 @@ const LiveInterpreter = (() => {
     };
     const events = {
       onText(s) {
+        lastActive = performance.now();
         if (s.outText.trim()) handlers.onCaption(sentencesIn(s.inText, s.from).slice(-160), s.outText.trim(), s.from);
         else {
           const src = sentencesIn(s.inText, s.from);
@@ -133,7 +137,6 @@ const LiveInterpreter = (() => {
       throw e;
     }
 
-    let lastActive = performance.now();
     let gateUntil = { en: 0, ko: 0 };
     timer = setInterval(() => {
       const now = performance.now();
@@ -154,9 +157,10 @@ const LiveInterpreter = (() => {
       if (speaking) { handlers.onState('speaking'); handlers.onLevel(out); }
       else if (!muted && micLv > 0.12) { handlers.onState('hearing'); handlers.onLevel(micLv); }
       else { handlers.onState(muted ? 'idle' : 'listening'); handlers.onLevel(muted ? 0 : micLv); }
-      if (speaking || micLv > 0.12) lastActive = now;
-      // Billing runs while sessions are open, so close them after a long silence.
-      if (now - lastActive > 5 * 60e3) handlers.onIdle();
+      if (speaking) lastActive = now;
+      // Billing runs while sessions are open, so close them after 2 minutes
+      // without speech (background noise alone doesn't count as speech).
+      if (now - lastActive > IDLE_MS) handlers.onIdle();
     }, 50);
 
     return {
