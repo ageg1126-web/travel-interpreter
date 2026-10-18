@@ -6,17 +6,25 @@ const Assistant = (() => {
     '규칙:',
     '1. 반드시 한국어로만 답합니다. 영어 단어는 꼭 필요한 고유명사(지명, 메뉴 이름 등)만 괄호로 덧붙입니다.',
     '2. 소리로 읽어 드리므로 짧고 쉬운 존댓말로 1~3문장으로 답합니다. 목록, 표, 기호, 이모지는 쓰지 않습니다.',
-    '3. 아래 여행 일정과 현재 시각을 근거로 답합니다. 모르는 것이나 확실하지 않은 것은 지어내지 말고 "확실하지 않아요"라고 말한 뒤 가이드나 여행사에 확인하도록 안내합니다.',
-    '4. 위급 상황(아픔, 길 잃음, 분실)에는 911 또는 동행 가이드에게 바로 연락하도록 먼저 안내합니다.',
+    '3. 아래 여행 일정, 현재 시각, 환율 정보를 우선 근거로 답합니다. 환율을 물으면 아래 환율 숫자로 바로 계산해서 답합니다.',
+    '4. 일정에 없는 일반적인 질문(팁 문화, 날씨 경향, 음식, 교통, 쇼핑, 캐나다 생활 상식 등)은 아는 지식으로 친절하게 답합니다. 정말 알 수 없는 실시간 정보(오늘 정확한 운행 상황, 특정 가게 영업 여부 등)만 확실하지 않다고 짧게 말하고, 대신 도움이 되는 방법을 알려 드립니다.',
+    '5. 위급 상황(아픔, 길 잃음, 분실)에는 911 또는 동행 가이드에게 바로 연락하도록 먼저 안내합니다.',
   ].join('\n');
 
-  function context() {
+  async function context() {
     let trip = null;
     try { trip = JSON.parse(localStorage.getItem('trip.schedule') || 'null'); } catch {}
     trip = trip || window.__sharedTrip || null;
     const now = new Date();
     const fmt = tz => now.toLocaleString('ko-KR', { timeZone: tz, dateStyle: 'full', timeStyle: 'short' });
     const lines = [`현재 시각: 밴쿠버 ${fmt('America/Vancouver')}, 캘거리·밴프 ${fmt('America/Edmonton')}, 한국 ${fmt('Asia/Seoul')}`];
+    try {
+      const fx = await window.FX?.get();
+      if (fx?.rate) {
+        const when = fx.manual ? '직접 입력한 환율' : fx.updated ? new Date(fx.updated).toLocaleDateString('ko-KR') + ' 기준' : '최근 기준';
+        lines.push(`환율(${when}): 캐나다 1달러 = ${Math.round(fx.rate).toLocaleString('ko-KR')}원, 1만원 = ${(10000 / fx.rate).toFixed(2)} 캐나다 달러. 미국 달러가 아니라 캐나다 달러 기준입니다.`);
+      } else lines.push('환율: 지금 불러오지 못했습니다. 여행 도구의 환율 계산기를 확인하도록 안내합니다.');
+    } catch {}
     if (trip?.items?.length) {
       lines.push(`여행: ${trip.title || ''}. ${trip.notes || ''}`, '일정:');
       for (const it of [...trip.items].sort((a, b) => a.date.localeCompare(b.date))) {
@@ -32,20 +40,11 @@ const Assistant = (() => {
     return hangul > 0 && hangul * 2 >= latin;
   };
 
-  async function call(messages, key) {
-    const res = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + key },
-      body: JSON.stringify({ model: 'gpt-4o-mini', temperature: 0.3, max_tokens: 300, messages }),
-    });
-    const data = await res.json();
-    if (!res.ok) throw Object.assign(new Error(data?.error?.message || 'HTTP ' + res.status), { status: res.status });
-    return (data.choices?.[0]?.message?.content || '').trim();
-  }
+  const call = (messages, key) => AI.chat(messages, key);
 
   // turns: [{q, a}] recent conversation, oldest first.
   async function ask(question, key, turns = []) {
-    const messages = [{ role: 'system', content: RULES + '\n\n' + context() }];
+    const messages = [{ role: 'system', content: RULES + '\n\n' + await context() }];
     for (const t of turns.slice(-6)) messages.push({ role: 'user', content: t.q }, { role: 'assistant', content: t.a });
     messages.push({ role: 'user', content: question });
     let answer = await call(messages, key);

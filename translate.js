@@ -39,19 +39,11 @@ const Translator = (() => {
       name: 'openai',
       enabled: key => !!key,
       async run(text, from, to, key) {
-        const data = await fetchJson('https://api.openai.com/v1/chat/completions', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + key },
-          body: JSON.stringify({
-            model: 'gpt-4o-mini',
-            temperature: 0,
-            messages: [
-              { role: 'system', content: INTERPRETER_RULES(from, to) },
-              { role: 'user', content: `<speech>${text}</speech>` },
-            ],
-          }),
-        });
-        const out = data?.choices?.[0]?.message?.content?.trim().replace(/^<speech>|<\/speech>$/g, '').trim();
+        const raw = await AI.chat([
+          { role: 'system', content: INTERPRETER_RULES(from, to) },
+          { role: 'user', content: `<speech>${text}</speech>` },
+        ], key, { ms: 20000 });
+        const out = raw.replace(/^<speech>|<\/speech>$/g, '').trim();
         if (!out) throw new Error('empty');
         // Never pass on something that is not in the target language
         // (e.g. the model answering instead of interpreting).

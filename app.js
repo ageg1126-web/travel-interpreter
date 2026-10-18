@@ -11,14 +11,13 @@ const icon = (name, cls = '') => `<svg class="ico ${cls}" aria-hidden="true"><us
 const els = {
   log: $('log'), logHead: $('logHead'), notice: $('notice'),
   main: $('mainBtn'), logView: $('logView'), startBar: $('startBar'), logBtn: $('logBtn'), stage: $('stage'), stageMode: $('stageMode'), status: $('liveStatus'),
-  stageSrc: $('stageSrc'), stageDst: $('stageDst'), dock: $('dock'), hero: $('interpHero'),
-  aiStatus: $('aiStatus'), aiTitle: $('aiTitle'), aiToggle: $('aiToggle'),
-  optKey: $('optKey'), keyState: $('keyState'), optSpeak: $('optSpeak'),
+  stageSrc: $('stageSrc'), stageDst: $('stageDst'), hero: $('interpHero'), mic: $('micBtn'),
+  heroQ: $('heroQ'), heroA: $('heroA'),
+  optKey: $('optKey'), keyState: $('keyState'), optSpeak: $('optSpeak'), optVoice: $('optVoice'),
   optFont: $('optFont'), optRate: $('optRate'), optPause: $('optPause'),
 };
 const orb = new VoiceOrb($('orb'));
-const miniOrb = new VoiceOrb($('miniOrb'), { calm: true });
-const heroOrb = new VoiceOrb($('heroOrb'), { calm: true });
+const heroOrb = new VoiceOrb($('heroOrb'));
 
 // ---------- screens ----------
 function showTab(name) {
@@ -60,7 +59,7 @@ function loadSettings() {
   try {
     const s = JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}');
     if ('speak' in s) els.optSpeak.checked = s.speak;
-    for (const k of ['font', 'rate', 'pause']) if (s[k]) els['opt' + k[0].toUpperCase() + k.slice(1)].value = s[k];
+    for (const k of ['font', 'rate', 'pause', 'voice']) if (s[k]) els['opt' + k[0].toUpperCase() + k.slice(1)].value = s[k];
     els.optKey.value = localStorage.getItem('interp.openaiKey') || '';
   } catch {}
   applySettings();
@@ -68,7 +67,7 @@ function loadSettings() {
 function saveSettings() {
   try {
     localStorage.setItem(SETTINGS_KEY, JSON.stringify({
-      speak: els.optSpeak.checked, font: els.optFont.value, rate: els.optRate.value, pause: els.optPause.value,
+      speak: els.optSpeak.checked, font: els.optFont.value, rate: els.optRate.value, pause: els.optPause.value, voice: els.optVoice.value,
     }));
     localStorage.setItem('interp.openaiKey', els.optKey.value.trim());
   } catch {}
@@ -88,7 +87,7 @@ function applySettings() {
     els.notice.hidden = true;
   }
 }
-for (const el of [els.optSpeak, els.optFont, els.optRate, els.optPause, els.optKey]) {
+for (const el of [els.optSpeak, els.optVoice, els.optFont, els.optRate, els.optPause, els.optKey]) {
   el.addEventListener('change', () => { saveSettings(); applySettings(); });
   el.addEventListener('input', applySettings);
 }
@@ -151,20 +150,27 @@ function renderHistory(scroll = false) {
   if (scroll && els.log.lastChild) els.log.lastChild.scrollIntoView({ behavior: 'smooth', block: 'end' });
 }
 
-// Idle: only the orb in the middle and the start button. The record shows in
-// AI helper mode, or when opened from the header button.
+// Home: the orb in the middle, the mic switch and the start button at the
+// bottom. While the mic is on there, the Korean-only AI helper listens.
+// The record only shows under "원문 보기", and the mic is fully off there.
 let viewLog = false;
 function layout() {
-  const off = ctl.mode === 'off';
-  const showLog = !off || viewLog;
-  els.logView.hidden = !showLog;
-  els.hero.hidden = showLog;
-  els.startBar.hidden = !off;
-  els.dock.hidden = off;
-  els.logBtn.hidden = !off || !history.length;
-  els.logBtn.classList.toggle('active', viewLog);
-  document.body.classList.toggle('has-dock', !off);
+  els.logView.hidden = !viewLog;
+  els.hero.hidden = viewLog;
+  els.mic.hidden = viewLog;
+  els.logBtn.textContent = viewLog ? '닫기' : '원문 보기';
+  els.logBtn.setAttribute('aria-pressed', String(viewLog));
+  const on = ctl.mode === 'assistant';
+  els.mic.classList.toggle('on', on);
+  els.mic.setAttribute('aria-pressed', String(on));
+  els.mic.setAttribute('aria-label', on ? '마이크 끄기' : '마이크 켜기');
+  els.mic.innerHTML = icon(on ? 'mic' : 'micoff');
+  els.hero.classList.toggle('mic-off', !on);
   if (els.hero.hidden || ctl.mode === 'interpret') heroOrb.stop(); else heroOrb.start();
+}
+function heroCaption(q, a) {
+  els.heroQ.textContent = q || '';
+  els.heroA.textContent = a || '';
 }
 
 // ---------- helpers ----------
@@ -187,9 +193,51 @@ function pickVoice(lang) {
   }
   return voices.find(v => v.lang.toLowerCase().startsWith(lang));
 }
-function speak(text, lang) {
+// Speech out loud. With a key it uses OpenAI's natural voices (the same kind
+// of voice as ChatGPT); without one, or if that fails, the phone's own voice.
+const player = new Audio();
+let speakId = 0;
+function stopSpeaking() {
+  speakId++;
+  player.pause();
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+}
+async function openaiSpeak(text, lang, id) {
+  const rate = Number(els.optRate.value);
+  const pace = rate < 0.8 ? 'slowly and clearly' : rate > 1.05 ? 'a little briskly' : 'at a calm, natural pace';
+  const res = await fetch('https://api.openai.com/v1/audio/speech', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + apiKey() },
+    body: JSON.stringify({
+      model: 'gpt-4o-mini-tts',
+      voice: els.optVoice.value,
+      input: text,
+      response_format: 'mp3',
+      instructions: lang === 'ko'
+        ? `Speak natural, warm standard Korean (서울 표준어) ${pace}, like a friendly person talking face to face.`
+        : `Speak natural, friendly Canadian English ${pace}, like a local talking face to face.`,
+    }),
+  });
+  if (!res.ok) throw new Error('tts HTTP ' + res.status);
+  const blob = await res.blob();
+  if (id !== speakId) return;
+  const url = URL.createObjectURL(blob);
+  try {
+    await new Promise((resolve, reject) => {
+      player.onended = resolve;
+      player.onpause = resolve;
+      player.onerror = () => reject(new Error('play failed'));
+      player.src = url;
+      player.play().catch(reject);
+    });
+  } finally {
+    player.onended = player.onpause = player.onerror = null;
+    URL.revokeObjectURL(url);
+  }
+}
+function deviceSpeak(text, lang) {
   return new Promise(resolve => {
-    if (!els.optSpeak.checked || !('speechSynthesis' in window)) return resolve();
+    if (!('speechSynthesis' in window)) return resolve();
     speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
     u.lang = LANGS[lang].code;
@@ -201,6 +249,16 @@ function speak(text, lang) {
     u.onend = u.onerror = () => { clearTimeout(fallback); resolve(); };
     speechSynthesis.speak(u);
   });
+}
+async function speak(text, lang) {
+  if (!els.optSpeak.checked) return;
+  stopSpeaking();
+  const id = speakId;
+  if (apiKey() && els.optVoice.value !== 'device') {
+    try { return await openaiSpeak(text, lang, id); } catch (e) { console.warn('[tts]', e); }
+    if (id !== speakId) return;
+  }
+  return deviceSpeak(text, lang);
 }
 
 function caption(src, dst, from) {
@@ -234,8 +292,9 @@ async function interpretText(text, fallbackLang) {
 async function answerText(text) {
   const h = { kind: 'ai', at: Date.now(), q: text, a: '' };
   history.push(h);
-  renderHistory(true);
-  const turns = history.filter(x => x.kind === 'ai' && x.a && !x.failed && x !== h).map(x => ({ q: x.q, a: x.a }));
+  heroCaption(text, '');
+  // Only the recent conversation, so old failed answers don't steer new ones.
+  const turns = history.filter(x => x.kind === 'ai' && x.a && !x.failed && x !== h && Date.now() - x.at < 30 * 60e3).map(x => ({ q: x.q, a: x.a }));
   try {
     h.a = await Assistant.ask(text, apiKey(), turns);
   } catch (e) {
@@ -243,13 +302,13 @@ async function answerText(text) {
     h.failed = true;
   }
   saveHistory();
-  renderHistory(true);
+  heroCaption(text, h.a);
   return h.failed ? null : h.a;
 }
 
 // ---------- controller ----------
 // mode "interpret": full screen, Korean <-> English translation only.
-// mode "assistant": interpretation stopped, mic stays on, Korean only, AI answers in Korean.
+// mode "assistant": home screen with the mic on, Korean only, AI answers in Korean.
 // mode "off": nothing listening.
 const ctl = {
   mode: 'off',
@@ -264,19 +323,22 @@ const ctl = {
   },
   status(text, state = 'listening') {
     if (this.mode === 'interpret') { els.status.textContent = text; orb.setState(state); }
-    else if (this.mode === 'assistant') { els.aiStatus.textContent = text; miniOrb.setState(state); }
+    else if (this.mode === 'assistant') heroOrb.setState(state);
   },
-  setLevel(v) { orb.setLevel(v); miniOrb.setLevel(this.mode === 'assistant' ? v : 0); },
+  setLevel(v) { orb.setLevel(this.mode === 'interpret' ? v : 0); heroOrb.setLevel(this.mode === 'assistant' ? v : 0); },
 
   async startInterpret() {
     // iOS only allows speech output after a tap; a silent utterance unlocks it.
     if ('speechSynthesis' in window) speechSynthesis.speak(new SpeechSynthesisUtterance(''));
     const prev = this.mode;
     this.mode = 'interpret';
-    miniOrb.stop();
+    viewLog = false;
+    layout();
     els.stageMode.textContent = apiKey() ? '통역 중 · 한국어 ⇄ English' : '기본 모드 · 번갈아 듣기';
     caption('', '말씀하시면 그대로 통역해요');
     this.setMuted(false);
+    stopSpeaking();
+    autoEngine.dropQueue('assistant');
     heroOrb.stop();
     els.stage.hidden = false;
     document.body.classList.add('staged');
@@ -284,7 +346,7 @@ const ctl = {
     orb.start();
     this.status('듣고 있어요');
     try {
-      if (apiKey()) { if (prev === 'off') await autoEngine.start(); }
+      if (apiKey()) { if (prev === 'off' || !autoEngine.listener) await autoEngine.start(); }
       else await basicEngine.start();
     } catch (e) {
       console.warn(e);
@@ -293,68 +355,68 @@ const ctl = {
     }
   },
 
-  // "통역 중단": stop interpreting, but keep listening as the Korean-only AI helper.
+  // "통역 중단" (✕): back to the home screen with only the start button,
+  // and the mic stays on there for the Korean-only AI helper.
   async stopInterpret() {
     this.setMuted(false);
-    if ('speechSynthesis' in window) speechSynthesis.cancel();
+    stopSpeaking();
     basicEngine.stop();
     orb.stop();
     els.stage.hidden = true;
     document.body.classList.remove('staged');
+    heroCaption('', '');
     if (apiKey()) {
       this.mode = 'assistant';
       autoEngine.dropQueue('interpret');
+      layout();
       if (!autoEngine.listener) {
         try { await autoEngine.start(); } catch { return this.off(); }
       }
-      this.showDock();
-      this.status('한국어로 물어보세요');
+      this.status('listening');
     } else {
-      autoEngine.stop();
-      this.mode = 'off';
-      this.showDock();
-      els.aiStatus.textContent = 'AI 비서는 OpenAI 키가 있어야 써요';
+      this.off();
     }
-    renderHistory(true);
   },
 
   async startAssistant() {
     if (!apiKey()) { showTab('settings'); return; }
     this.mode = 'assistant';
-    try { await autoEngine.start(); } catch { alert('마이크를 켤 수 없어요.'); return this.off(); }
-    this.showDock();
-    this.status('한국어로 물어보세요');
+    layout();
+    try { await autoEngine.start(); } catch { alert('마이크를 켤 수 없어요. 브라우저 설정에서 이 사이트의 마이크 사용을 허용해 주세요.'); return this.off(); }
+    this.status('listening');
   },
 
   off() {
     this.mode = 'off';
     autoEngine.stop();
     basicEngine.stop();
-    if ('speechSynthesis' in window) speechSynthesis.cancel();
+    stopSpeaking();
     orb.stop();
     els.stage.hidden = true;
     document.body.classList.remove('staged');
-    this.showDock();
-    renderHistory();
-  },
-
-  showDock() {
-    const on = this.mode === 'assistant';
+    heroOrb.setState('idle');
+    heroOrb.setLevel(0);
     layout();
-    els.aiTitle.textContent = on ? 'AI 비서가 듣고 있어요' : 'AI 비서 꺼짐';
-    els.aiStatus.textContent = on ? '한국어로 물어보세요' : '마이크를 켜면 한국어로 물어볼 수 있어요';
-    els.aiToggle.querySelector('span').textContent = on ? '마이크 끄기' : 'AI 비서 켜기';
-    els.aiToggle.classList.toggle('on', on);
-    if (on) { miniOrb.setState('listening'); miniOrb.start(); } else miniOrb.stop();
-    if (!on) { const c = $('miniOrb'); c.getContext('2d').clearRect(0, 0, c.width, c.height); miniOrb.draw(0); }
   },
 };
 els.main.onclick = () => ctl.startInterpret();
-$('dockStart').onclick = () => ctl.startInterpret();
 $('stageStop').onclick = () => ctl.stopInterpret();
-els.logBtn.onclick = () => { viewLog = !viewLog; layout(); };
 $('stageMute').onclick = () => ctl.setMuted(!ctl.userMuted);
-els.aiToggle.onclick = () => (ctl.mode === 'assistant' ? ctl.off() : ctl.startAssistant());
+els.mic.onclick = () => (ctl.mode === 'assistant' ? ctl.off() : ctl.startAssistant());
+// "원문 보기": the record only, with no microphone at all.
+let micBeforeLog = false;
+els.logBtn.onclick = () => {
+  if (!viewLog) {
+    micBeforeLog = ctl.mode === 'assistant';
+    if (ctl.mode !== 'off') ctl.off();
+    viewLog = true;
+    renderHistory(true);
+  } else {
+    viewLog = false;
+    layout();
+    if (micBeforeLog) ctl.startAssistant();
+  }
+};
 
 // With a key: the mic stays open and each sentence is cut out and sent to
 // speech recognition with automatic language detection. Each clip remembers
@@ -488,7 +550,6 @@ const basicEngine = {
 
 loadSettings();
 renderHistory();
-ctl.showDock();
 try { const t = localStorage.getItem('app.tab'); if (t && $('tab-' + t)) showTab(t); } catch {}
 
 if ('serviceWorker' in navigator && location.protocol === 'https:') {

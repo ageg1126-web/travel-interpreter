@@ -5,7 +5,7 @@
   const input = $('fxInput'), output = $('fxOutput'), info = $('fxRateInfo'), manual = $('fxManual');
   const CACHE = 'fx.cadkrw';
   const QUICK = { CAD: [5, 10, 20, 50, 100], KRW: [10000, 50000, 100000, 500000] };
-  let rate = null, updated = null, from = 'CAD';
+  let rate = null, updated = null, from = 'CAD', lastTry = 0;
 
   const sources = [
     async () => {
@@ -32,6 +32,7 @@
   }
 
   async function loadRate() {
+    lastTry = Date.now();
     try {
       const c = JSON.parse(localStorage.getItem(CACHE) || 'null');
       if (c) { rate = c.rate; updated = c.updated; }
@@ -51,6 +52,13 @@
   }
 
   const currentRate = () => Number(manual.value.replace(/,/g, '')) || rate;
+  // Shared with the AI helper so it can answer "환율 얼마야?" with the real rate.
+  window.FX = {
+    async get() {
+      if (!rate || Date.now() - lastTry > 30 * 60e3) await loadRate();
+      return { rate: currentRate(), updated, manual: !!Number(manual.value.replace(/,/g, '')) };
+    },
+  };
   const won = n => Math.round(n).toLocaleString('ko-KR') + '원';
   const cad = n => '$' + n.toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
