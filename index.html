@@ -33,15 +33,51 @@
   </div>
 </section>
 
-<!-- 일정 (준비 중) -->
+<!-- 일정 -->
 <section class="tab" id="tab-schedule" hidden>
-  <header><h1>일정</h1></header>
-  <main class="placeholder">
-    <div class="ph-icon">🗓️</div>
-    <p>캐나다 여행 일정이 들어갈 자리예요.</p>
-    <p class="muted">일정이 정해지면 날짜별 계획, 숙소, 항공편을 여기서 볼 수 있게 할게요.</p>
-  </main>
+  <header>
+    <h1 id="tripTitle">캐나다 여행</h1>
+    <button id="shareTrip" class="text-btn">공유</button>
+  </header>
+  <div class="clocks">
+    <div><span class="muted small">캐나다</span><b id="clockCa">--:--</b><select id="tzSelect" aria-label="캐나다 시간대">
+      <option value="auto">일정에 맞춰 자동</option>
+      <option value="America/Vancouver">밴쿠버</option>
+      <option value="America/Edmonton">캘거리·밴프</option>
+      <option value="America/Toronto">토론토·몬트리올</option>
+      <option value="America/Halifax">핼리팩스</option>
+    </select></div>
+    <div><span class="muted small">한국</span><b id="clockKr">--:--</b><span id="dday" class="dday"></span></div>
+  </div>
+  <main id="schedList"></main>
+  <button id="addItem" class="fab" aria-label="일정 추가">＋</button>
 </section>
+
+<dialog id="itemDialog">
+  <form method="dialog" id="itemForm">
+    <h2 id="itemDialogTitle">일정 추가</h2>
+    <label class="field">날짜 <input type="date" name="date" required></label>
+    <label class="field">시간 <input type="time" name="time"></label>
+    <label class="field">종류
+      <select name="type">
+        <option value="activity">🎯 관광·일정</option>
+        <option value="flight">✈️ 항공</option>
+        <option value="hotel">🏨 숙소</option>
+        <option value="meal">🍽️ 식사</option>
+        <option value="move">🚌 이동</option>
+        <option value="etc">📝 기타</option>
+      </select>
+    </label>
+    <label class="field">제목 <input name="title" required placeholder="예: 나이아가라 폭포"></label>
+    <label class="field">장소·주소 <input name="place" placeholder="지도에서 바로 열 수 있어요"></label>
+    <label class="field">메모 <textarea name="memo" rows="3" placeholder="예약번호, 연락처 등"></textarea></label>
+    <div class="dialog-actions">
+      <button type="button" id="deleteItem" class="danger" hidden>삭제</button>
+      <button type="button" id="cancelItem" class="secondary">취소</button>
+      <button type="submit" class="primary">저장</button>
+    </div>
+  </form>
+</dialog>
 
 <!-- 여행 도구 (준비 중) -->
 <section class="tab" id="tab-tools" hidden>
@@ -87,5 +123,6 @@
 <script src="stt.js"></script>
 <script src="translate.js"></script>
 <script src="app.js"></script>
+<script src="schedule.js"></script>
 </body>
 </html>

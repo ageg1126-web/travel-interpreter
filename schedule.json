@@ -1,0 +1,324 @@
+{
+ "title": "엄마의 캐나다 로키 기차여행",
+ "timezone": "auto",
+ "timezones": {
+  "2027-07-18": "America/Vancouver",
+  "2027-07-19": "America/Vancouver",
+  "2027-07-20": "America/Edmonton",
+  "2027-07-21": "America/Edmonton",
+  "2027-07-22": "America/Edmonton",
+  "2027-07-23": "America/Edmonton",
+  "2027-07-24": "America/Edmonton",
+  "2027-07-25": "Asia/Seoul"
+ },
+ "notes": "링켄리브 견적서(6박 8일) 기준. 현지 사정에 따라 순서가 바뀔 수 있어요. 출국 전 캐나다 eTA(CAD 7) 온라인 신청 필요.",
+ "items": [
+  {
+   "id": "p1",
+   "date": "2027-07-18",
+   "time": "",
+   "type": "flight",
+   "title": "인천 18:45 출발 (대한항공 KE071)",
+   "place": "Incheon International Airport",
+   "memo": "한국 시간 18:45 출발 → 밴쿠버 현지 시간 12:50 도착.\n국제선 항공권은 상품에 포함되지 않아 따로 예약해요."
+  },
+  {
+   "id": "p2",
+   "date": "2027-07-18",
+   "time": "12:50",
+   "type": "move",
+   "title": "밴쿠버 도착 · 컨시어지 미팅",
+   "place": "Vancouver International Airport",
+   "memo": "시내까지 약 40분. 여행사 링켄리브 ☎ +82 2-508-8273 (한국 평일 10:00~17:00)"
+  },
+  {
+   "id": "p3",
+   "date": "2027-07-18",
+   "time": "",
+   "type": "activity",
+   "title": "스탠리 파크",
+   "place": "Stanley Park, Vancouver",
+   "memo": "도심 숲 405ha. 토템폴 광장, 해안 산책로 시월(Seawall)"
+  },
+  {
+   "id": "p4",
+   "date": "2027-07-18",
+   "time": "",
+   "type": "activity",
+   "title": "개스타운 · 스팀 클락",
+   "place": "Gastown Steam Clock, Vancouver",
+   "memo": "밴쿠버에서 가장 오래된 거리. 15분마다 증기 멜로디"
+  },
+  {
+   "id": "p5",
+   "date": "2027-07-18",
+   "time": "",
+   "type": "activity",
+   "title": "캐필라노 서스펜션 브릿지 파크",
+   "place": "Capilano Suspension Bridge Park",
+   "memo": "계곡 70m 위 137m 흔들다리, 트리톱 어드벤처"
+  },
+  {
+   "id": "p6",
+   "date": "2027-07-18",
+   "time": "",
+   "type": "meal",
+   "title": "석식: 특식 ① 3코스 디너 (퍼시픽 해산물)",
+   "place": "",
+   "memo": "중식 · 석식 포함"
+  },
+  {
+   "id": "p7",
+   "date": "2027-07-18",
+   "time": "",
+   "type": "hotel",
+   "title": "밴쿠버 4성급 호텔",
+   "place": "",
+   "memo": "호텔은 현지에서 배정"
+  },
+  {
+   "id": "p8",
+   "date": "2027-07-19",
+   "time": "",
+   "type": "activity",
+   "title": "씨 투 스카이 하이웨이",
+   "place": "Sea to Sky Highway",
+   "memo": "하우 사운드 피오르와 코스트 산맥 드라이브"
+  },
+  {
+   "id": "p9",
+   "date": "2027-07-19",
+   "time": "",
+   "type": "activity",
+   "title": "씨 투 스카이 곤돌라",
+   "place": "Sea to Sky Gondola, Squamish",
+   "memo": "해발 885m 정상 전망대, 출렁다리"
+  },
+  {
+   "id": "p10",
+   "date": "2027-07-19",
+   "time": "15:00",
+   "type": "move",
+   "title": "비아레일 The Canadian 탑승",
+   "place": "Pacific Central Station, Vancouver",
+   "memo": "점심 후 역 이동. 유리돔 전망칸에서 프레이저·톰슨 강 협곡"
+  },
+  {
+   "id": "p11",
+   "date": "2027-07-19",
+   "time": "",
+   "type": "hotel",
+   "title": "열차 1박: 슬리퍼 플러스 2인 객실",
+   "place": "",
+   "memo": "세면대·화장실 포함. 식당칸 디너"
+  },
+  {
+   "id": "p12",
+   "date": "2027-07-20",
+   "time": "",
+   "type": "meal",
+   "title": "식당칸 조식 · 롭슨산 조망",
+   "place": "Mount Robson",
+   "memo": "캐나디안 로키 최고봉 3,954m"
+  },
+  {
+   "id": "p13",
+   "date": "2027-07-20",
+   "time": "11:00",
+   "type": "move",
+   "title": "재스퍼역 도착 (예정)",
+   "place": "Jasper Station",
+   "memo": "열차는 지연될 수 있어요. 여기서부터 산악 시간대(밴쿠버보다 1시간 빠름)"
+  },
+  {
+   "id": "p14",
+   "date": "2027-07-20",
+   "time": "",
+   "type": "activity",
+   "title": "멀린 캐니언",
+   "place": "Maligne Canyon, Jasper",
+   "memo": "깊이 50m 석회암 협곡 다리 산책"
+  },
+  {
+   "id": "p15",
+   "date": "2027-07-20",
+   "time": "",
+   "type": "activity",
+   "title": "멀린 레이크 크루즈 · 스피릿 아일랜드",
+   "place": "Maligne Lake Cruise",
+   "memo": ""
+  },
+  {
+   "id": "p16",
+   "date": "2027-07-20",
+   "time": "",
+   "type": "hotel",
+   "title": "재스퍼 4성급 호텔",
+   "place": "",
+   "memo": ""
+  },
+  {
+   "id": "p17",
+   "date": "2027-07-21",
+   "time": "",
+   "type": "move",
+   "title": "아이스필드 파크웨이 (93번 도로)",
+   "place": "Icefields Parkway",
+   "memo": "재스퍼 → 밴프 232km"
+  },
+  {
+   "id": "p18",
+   "date": "2027-07-21",
+   "time": "",
+   "type": "activity",
+   "title": "애서배스카 폭포",
+   "place": "Athabasca Falls",
+   "memo": ""
+  },
+  {
+   "id": "p19",
+   "date": "2027-07-21",
+   "time": "",
+   "type": "activity",
+   "title": "컬럼비아 아이스필드 설상차",
+   "place": "Columbia Icefield Glacier Adventure",
+   "memo": "애서배스카 빙하 위를 직접 걸어요. 날씨에 따라 중단될 수 있음"
+  },
+  {
+   "id": "p20",
+   "date": "2027-07-21",
+   "time": "",
+   "type": "activity",
+   "title": "눈물의 벽 · 페이토 호수 · 까마귀발 빙하 · 보우 호수",
+   "place": "Peyto Lake",
+   "memo": ""
+  },
+  {
+   "id": "p21",
+   "date": "2027-07-21",
+   "time": "",
+   "type": "hotel",
+   "title": "밴프 4성급 호텔 (1박째)",
+   "place": "",
+   "memo": ""
+  },
+  {
+   "id": "p22",
+   "date": "2027-07-22",
+   "time": "",
+   "type": "move",
+   "title": "이른 아침 국립공원 셔틀",
+   "place": "Moraine Lake",
+   "memo": "개인차량 진입 금지라 셔틀로 이동"
+  },
+  {
+   "id": "p23",
+   "date": "2027-07-22",
+   "time": "",
+   "type": "activity",
+   "title": "모레인 레이크 (텐 피크스)",
+   "place": "Moraine Lake",
+   "memo": ""
+  },
+  {
+   "id": "p24",
+   "date": "2027-07-22",
+   "time": "",
+   "type": "activity",
+   "title": "레이크 루이스 산책 · 애프터눈 티",
+   "place": "Lake Louise",
+   "memo": "호숫가 호텔에서 애프터눈 티"
+  },
+  {
+   "id": "p25",
+   "date": "2027-07-22",
+   "time": "",
+   "type": "activity",
+   "title": "요호 국립공원 · 에메랄드 레이크 · 내추럴 브리지",
+   "place": "Emerald Lake, Yoho National Park",
+   "memo": ""
+  },
+  {
+   "id": "p26",
+   "date": "2027-07-22",
+   "time": "",
+   "type": "hotel",
+   "title": "밴프 4성급 호텔 (2박째)",
+   "place": "",
+   "memo": ""
+  },
+  {
+   "id": "p27",
+   "date": "2027-07-23",
+   "time": "",
+   "type": "activity",
+   "title": "설퍼산 곤돌라",
+   "place": "Banff Gondola",
+   "memo": "정상 2,281m 보드워크, 보우 밸리 360°"
+  },
+  {
+   "id": "p28",
+   "date": "2027-07-23",
+   "time": "",
+   "type": "activity",
+   "title": "서프라이즈 코너 · 보우 폭포",
+   "place": "Surprise Corner, Banff",
+   "memo": "밴프 스프링스 호텔과 보우 강 전망"
+  },
+  {
+   "id": "p29",
+   "date": "2027-07-23",
+   "time": "",
+   "type": "activity",
+   "title": "밴프 어퍼 핫 스프링스",
+   "place": "Banff Upper Hot Springs",
+   "memo": "해발 1,585m 노천 온천"
+  },
+  {
+   "id": "p30",
+   "date": "2027-07-23",
+   "time": "",
+   "type": "move",
+   "title": "캘거리로 이동",
+   "place": "Calgary",
+   "memo": "약 1시간 30분"
+  },
+  {
+   "id": "p31",
+   "date": "2027-07-23",
+   "time": "",
+   "type": "meal",
+   "title": "석식: 특식 ② 3코스 디너 (앨버타 비프)",
+   "place": "",
+   "memo": ""
+  },
+  {
+   "id": "p32",
+   "date": "2027-07-23",
+   "time": "",
+   "type": "hotel",
+   "title": "캘거리 4성급 호텔",
+   "place": "",
+   "memo": ""
+  },
+  {
+   "id": "p33",
+   "date": "2027-07-24",
+   "time": "",
+   "type": "flight",
+   "title": "캘거리 출발 · 귀국",
+   "place": "Calgary International Airport",
+   "memo": "항공편 미정. 추천안:\n1) 캘거리 12:00 → 밴쿠버 12:40, KE072 밴쿠버 14:50 → 인천 17:50(+1)\n2) WS86 캘거리 15:55 → 인천 18:45(+1) 직항\n3) 에어캐나다 캘거리 → 밴쿠버 → 인천\n(2026년 여름 시간표 기준)"
+  },
+  {
+   "id": "p34",
+   "date": "2027-07-25",
+   "time": "",
+   "type": "flight",
+   "title": "인천 도착 (저녁)",
+   "place": "",
+   "memo": ""
+  }
+ ],
+ "version": 1
+}
