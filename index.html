@@ -5,60 +5,86 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#d52b1e">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="통역">
-<title>여행 통역</title>
+<meta name="apple-mobile-web-app-title" content="여행 도우미">
+<title>여행 도우미</title>
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
-  <h1>여행 통역</h1>
-  <button id="settingsBtn" class="icon-btn" aria-label="설정">⚙︎</button>
-</header>
 
-<main>
-  <div id="unsupported" class="notice" hidden>
-    이 브라우저는 음성인식을 지원하지 않아요. 아이폰은 Safari, 안드로이드는 Chrome으로 열어 주세요.
+<!-- 통역 -->
+<section class="tab" id="tab-interpret">
+  <header><h1>통역</h1><span id="engineBadge" class="engine"></span></header>
+  <main>
+    <div id="notice" class="notice" hidden></div>
+    <ul id="log" aria-live="polite">
+      <li class="empty" id="emptyLog">아래 버튼을 누르면 계속 들으면서<br>한국어는 영어로, 영어는 한국어로 바로 통역해요.</li>
+    </ul>
+  </main>
+  <div class="dock">
+    <div id="liveStatus" class="live-status">대기 중</div>
+    <button id="mainBtn" class="main-btn" aria-pressed="false">
+      <span class="ring"></span>
+      <span id="mainIcon" class="mic">🎤</span>
+    </button>
+    <div id="mainLabel" class="main-label">통역 시작</div>
   </div>
+</section>
 
-  <ul id="log" aria-live="polite"></ul>
+<!-- 일정 (준비 중) -->
+<section class="tab" id="tab-schedule" hidden>
+  <header><h1>일정</h1></header>
+  <main class="placeholder">
+    <div class="ph-icon">🗓️</div>
+    <p>캐나다 여행 일정이 들어갈 자리예요.</p>
+    <p class="muted">일정이 정해지면 날짜별 계획, 숙소, 항공편을 여기서 볼 수 있게 할게요.</p>
+  </main>
+</section>
 
-  <div id="live" class="live" hidden>
-    <span id="liveLang" class="badge"></span>
-    <span id="liveText"></span>
-  </div>
-</main>
+<!-- 여행 도구 (준비 중) -->
+<section class="tab" id="tab-tools" hidden>
+  <header><h1>여행 도구</h1></header>
+  <main class="placeholder">
+    <div class="ph-icon">🧳</div>
+    <p>여행에 필요한 도구들이 들어갈 자리예요.</p>
+    <p class="muted">환율 계산, 자주 쓰는 영어 문장, 비상 연락처 같은 기능을 일정에 맞춰 추가할 예정이에요.</p>
+  </main>
+</section>
 
-<footer>
-  <div class="turn">
-    <button id="turnKo" class="turn-btn" data-lang="ko">🇰🇷 한국어로 말하기</button>
-    <button id="turnEn" class="turn-btn" data-lang="en">🇨🇦 Speak English</button>
-  </div>
-  <button id="mainBtn" class="main-btn">
-    <span id="mainIcon">🎤</span>
-    <span id="mainLabel">통역 시작</span>
-  </button>
-  <p id="hint" class="hint">버튼을 누르고 한국어로 말씀하세요. 번역 후에는 자동으로 상대방(영어) 차례로 바뀝니다.</p>
-</footer>
+<!-- 설정 -->
+<section class="tab" id="tab-settings" hidden>
+  <header><h1>설정</h1></header>
+  <main>
+    <div class="card">
+      <h2>자동 언어 감지 (OpenAI)</h2>
+      <p class="muted">키를 넣으면 누가 어떤 언어로 말하든 알아서 알아듣고 통역해요. 키는 이 휴대폰에만 저장돼요.</p>
+      <label class="field">API 키
+        <input type="password" id="optKey" placeholder="sk-..." autocomplete="off" autocapitalize="off" spellcheck="false">
+      </label>
+      <p id="keyState" class="muted small"></p>
+    </div>
+    <div class="card">
+      <h2>통역</h2>
+      <label class="row check"><input type="checkbox" id="optSpeak" checked> 번역 결과 소리로 읽어주기</label>
+      <label class="row">글자 크기 <input type="range" id="optFont" min="16" max="34" value="22"></label>
+      <label class="row">읽기 속도 <input type="range" id="optRate" min="0.6" max="1.2" step="0.1" value="0.9"></label>
+      <label class="row">말 끝 감지 (짧게 ↔ 길게) <input type="range" id="optPause" min="500" max="1500" step="100" value="800"></label>
+      <button type="button" id="clearBtn" class="secondary">대화 기록 지우기</button>
+    </div>
+  </main>
+</section>
 
-<dialog id="settings">
-  <form method="dialog">
-    <h2>설정</h2>
-    <label class="row"><input type="checkbox" id="optSpeak" checked> 번역 결과 소리로 읽어주기</label>
-    <label class="row"><input type="checkbox" id="optAlternate" checked> 번역 후 자동으로 상대 언어 듣기</label>
-    <label class="row">글자 크기
-      <input type="range" id="optFont" min="16" max="34" value="22">
-    </label>
-    <label class="row">말하기 속도
-      <input type="range" id="optRate" min="0.6" max="1.2" step="0.1" value="0.9">
-    </label>
-    <button type="button" id="clearBtn" class="secondary">대화 기록 지우기</button>
-    <button value="close" class="primary">닫기</button>
-  </form>
-</dialog>
+<nav class="tabbar">
+  <button data-tab="interpret" class="active"><span>🗣️</span>통역</button>
+  <button data-tab="schedule"><span>🗓️</span>일정</button>
+  <button data-tab="tools"><span>🧳</span>여행 도구</button>
+  <button data-tab="settings"><span>⚙️</span>설정</button>
+</nav>
 
+<script src="audio.js"></script>
+<script src="stt.js"></script>
 <script src="translate.js"></script>
 <script src="app.js"></script>
 </body>

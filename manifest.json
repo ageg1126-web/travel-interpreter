@@ -1,6 +1,6 @@
 {
-  "name": "여행 통역",
-  "short_name": "통역",
+  "name": "여행 도우미",
+  "short_name": "여행 도우미",
   "lang": "ko",
   "start_url": "./",
   "display": "standalone",

@@ -1,58 +1,79 @@
-const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+const $ = id => document.getElementById(id);
 const LANGS = {
-  ko: { code: 'ko-KR', label: '한국어', other: 'en', tts: ['ko-KR'] },
-  en: { code: 'en-US', label: 'English', other: 'ko', tts: ['en-CA', 'en-US', 'en-GB'] },
+  ko: { code: 'ko-KR', other: 'en', flag: '🇰🇷', tts: ['ko-KR'] },
+  en: { code: 'en-US', other: 'ko', flag: '🇨🇦', tts: ['en-CA', 'en-US', 'en-GB'] },
 };
 const HANGUL = /[ㄱ-ㆎ가-힣]/;
 const LATIN = /[A-Za-z]/;
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-const $ = id => document.getElementById(id);
 const els = {
-  log: $('log'), live: $('live'), liveLang: $('liveLang'), liveText: $('liveText'),
-  main: $('mainBtn'), mainIcon: $('mainIcon'), mainLabel: $('mainLabel'), hint: $('hint'),
-  turnKo: $('turnKo'), turnEn: $('turnEn'), settings: $('settings'),
-  optSpeak: $('optSpeak'), optAlternate: $('optAlternate'), optFont: $('optFont'), optRate: $('optRate'),
+  log: $('log'), empty: $('emptyLog'), notice: $('notice'), badge: $('engineBadge'),
+  main: $('mainBtn'), mainIcon: $('mainIcon'), mainLabel: $('mainLabel'), status: $('liveStatus'),
+  optKey: $('optKey'), keyState: $('keyState'), optSpeak: $('optSpeak'),
+  optFont: $('optFont'), optRate: $('optRate'), optPause: $('optPause'),
 };
 
-const state = { running: false, lang: 'ko', rec: null, busy: false };
+// ---------- tabs ----------
+function showTab(name) {
+  document.querySelectorAll('.tab').forEach(t => { t.hidden = t.id !== 'tab-' + name; });
+  document.querySelectorAll('.tabbar button').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+  if (name !== 'interpret' && interp.running) interp.stop();
+  try { localStorage.setItem('app.tab', name); } catch {}
+}
+document.querySelectorAll('.tabbar button').forEach(b => { b.onclick = () => showTab(b.dataset.tab); });
 
-// ---------- settings (per device) ----------
+// ---------- settings (stored on this phone only) ----------
 const SETTINGS_KEY = 'interp.settings';
 function loadSettings() {
   try {
     const s = JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}');
     if ('speak' in s) els.optSpeak.checked = s.speak;
-    if ('alternate' in s) els.optAlternate.checked = s.alternate;
-    if (s.font) els.optFont.value = s.font;
-    if (s.rate) els.optRate.value = s.rate;
+    for (const k of ['font', 'rate', 'pause']) if (s[k]) els['opt' + k[0].toUpperCase() + k.slice(1)].value = s[k];
+    els.optKey.value = localStorage.getItem('interp.openaiKey') || '';
   } catch {}
-  applyFont();
+  applySettings();
 }
 function saveSettings() {
   try {
     localStorage.setItem(SETTINGS_KEY, JSON.stringify({
-      speak: els.optSpeak.checked, alternate: els.optAlternate.checked,
-      font: els.optFont.value, rate: els.optRate.value,
+      speak: els.optSpeak.checked, font: els.optFont.value, rate: els.optRate.value, pause: els.optPause.value,
     }));
+    localStorage.setItem('interp.openaiKey', els.optKey.value.trim());
   } catch {}
 }
-function applyFont() { document.documentElement.style.setProperty('--font', els.optFont.value + 'px'); }
+function apiKey() { return els.optKey.value.trim(); }
+function applySettings() {
+  document.documentElement.style.setProperty('--font', els.optFont.value + 'px');
+  const key = apiKey();
+  els.keyState.textContent = key ? '✓ 키가 저장돼 있어요. 자동 언어 감지로 통역해요.' : '키가 없으면 기본 모드(한국어와 영어를 번갈아 듣기)로 동작해요.';
+  els.badge.textContent = key ? '자동 감지' : '기본 모드';
+  if (!key) {
+    els.notice.hidden = false;
+    els.notice.innerHTML = '지금은 <b>기본 모드</b>예요. 한국어와 영어를 번갈아 들어요. 순서 없이 자동으로 알아듣게 하려면 설정에서 OpenAI 키를 넣어 주세요.<br><button type="button" id="goSettings">설정 열기</button>';
+    $('goSettings').onclick = () => showTab('settings');
+  } else {
+    els.notice.hidden = true;
+  }
+}
+for (const el of [els.optSpeak, els.optFont, els.optRate, els.optPause, els.optKey]) {
+  el.addEventListener('change', () => { saveSettings(); applySettings(); });
+  el.addEventListener('input', applySettings);
+}
+$('clearBtn').onclick = () => { els.log.innerHTML = ''; els.log.appendChild(els.empty); };
 
-// ---------- language detection ----------
-// The browser recognizer listens in one language at a time, so we also check the
-// script of what it heard: Hangul means Korean, Latin-only means English.
-function detectLang(text, listenedAs) {
-  if (HANGUL.test(text)) return 'ko';
-  if (LATIN.test(text)) return 'en';
-  return listenedAs;
+// ---------- helpers ----------
+function detectLang(text, fallback) {
+  const hangul = (text.match(/[가-힣]/g) || []).length;
+  const latin = (text.match(/[A-Za-z]/g) || []).length;
+  if (hangul || latin) return hangul * 2 >= latin ? 'ko' : 'en';
+  return fallback;
 }
 
-// ---------- text to speech ----------
 let voices = [];
-function refreshVoices() { voices = speechSynthesis.getVoices(); }
 if ('speechSynthesis' in window) {
-  refreshVoices();
-  speechSynthesis.onvoiceschanged = refreshVoices;
+  voices = speechSynthesis.getVoices();
+  speechSynthesis.onvoiceschanged = () => { voices = speechSynthesis.getVoices(); };
 }
 function pickVoice(lang) {
   for (const code of LANGS[lang].tts) {
@@ -77,162 +98,194 @@ function speak(text, lang) {
   });
 }
 
-// ---------- conversation log ----------
 function addEntry(srcText, srcLang) {
+  els.empty.remove();
   const li = document.createElement('li');
   li.className = 'msg ' + srcLang;
-  li.innerHTML = '<div class="src"></div><div class="dst pending">번역 중… / Translating…</div>'
-    + '<div class="actions" hidden><button data-act="replay">🔊 다시 듣기</button></div>';
-  li.querySelector('.src').textContent = (srcLang === 'ko' ? '🇰🇷 ' : '🇨🇦 ') + srcText;
+  li.innerHTML = '<div class="src"></div><div class="dst pending">번역 중…</div>';
+  li.querySelector('.src').textContent = LANGS[srcLang].flag + ' ' + srcText;
   els.log.appendChild(li);
   li.scrollIntoView({ behavior: 'smooth', block: 'end' });
   return li;
 }
 function fillEntry(li, text, lang, failed) {
   const dst = li.querySelector('.dst');
-  dst.textContent = text;
+  dst.textContent = (failed ? '' : LANGS[lang].flag + ' ') + text;
   dst.classList.toggle('pending', !!failed);
   if (!failed) {
-    const actions = li.querySelector('.actions');
-    actions.hidden = false;
-    actions.querySelector('[data-act=replay]').onclick = () => speak(text, lang);
+    const b = document.createElement('button');
+    b.className = 'replay';
+    b.textContent = '🔊 다시 듣기';
+    b.onclick = () => speak(text, lang);
+    li.appendChild(b);
   }
   li.scrollIntoView({ behavior: 'smooth', block: 'end' });
 }
 
-// ---------- UI state ----------
-function render() {
-  const lang = state.lang;
-  els.turnKo.classList.toggle('active', lang === 'ko');
-  els.turnEn.classList.toggle('active', lang === 'en');
-  els.main.classList.toggle('en', lang === 'en');
-  els.main.classList.toggle('stopped', !state.running);
-  els.main.classList.toggle('listening', state.running && !state.busy);
-  if (!state.running) {
-    els.mainIcon.textContent = '🎤';
-    els.mainLabel.textContent = '통역 시작';
-    els.hint.textContent = '버튼을 누르고 말씀하세요. 번역 후에는 자동으로 상대방 차례로 바뀝니다.';
-  } else if (state.busy) {
-    els.mainIcon.textContent = '⏳';
-    els.mainLabel.textContent = '번역 중…';
-  } else {
-    els.mainIcon.textContent = '⏹';
-    els.mainLabel.textContent = lang === 'ko' ? '듣는 중 (한국어) · 멈추기' : 'Listening (English) · Stop';
-    els.hint.textContent = lang === 'ko'
-      ? '한국어로 말씀하세요. 영어가 들리면 자동으로 알아들어요.'
-      : 'Please speak in English. It will be translated into Korean.';
-  }
-}
-function showLive(text, lang) {
-  els.live.hidden = !text;
-  els.liveLang.textContent = lang === 'ko' ? 'KO' : 'EN';
-  els.liveLang.className = 'badge ' + lang;
-  els.liveText.textContent = text;
-}
-
-// ---------- speech recognition loop ----------
-function listen() {
-  if (!state.running) return;
-  const rec = new SR();
-  state.rec = rec;
-  rec.lang = LANGS[state.lang].code;
-  rec.interimResults = true;
-  rec.continuous = false;
-  rec.maxAlternatives = 1;
-  let finalText = '';
-
-  rec.onresult = e => {
-    let interim = '';
-    for (let i = e.resultIndex; i < e.results.length; i++) {
-      const r = e.results[i];
-      if (r.isFinal) finalText += r[0].transcript;
-      else interim += r[0].transcript;
-    }
-    showLive((finalText + interim).trim(), state.lang);
-  };
-  rec.onerror = e => {
-    if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
-      stop();
-      alert('마이크 권한이 필요해요. 브라우저 설정에서 이 사이트의 마이크를 허용해 주세요.');
-    } else if (e.error !== 'no-speech' && e.error !== 'aborted') {
-      console.warn('[speech] error', e.error);
-    }
-  };
-  rec.onend = async () => {
-    if (state.rec !== rec) return; // replaced by a manual turn switch
-    state.rec = null;
-    const text = finalText.trim();
-    showLive('', state.lang);
-    if (!state.running) return;
-    if (!text) return setTimeout(listen, 250); // silence: keep listening
-    await handleUtterance(text, state.lang);
-    if (state.running) listen();
-  };
-
-  try { rec.start(); } catch (e) { console.warn(e); setTimeout(listen, 500); }
-  render();
-}
-
-async function handleUtterance(text, listenedAs) {
-  const from = detectLang(text, listenedAs);
+// Translate one utterance, show it and read it out.
+async function interpretText(text, fallbackLang) {
+  const from = detectLang(text, fallbackLang);
   const to = LANGS[from].other;
-  state.busy = true; render();
   const li = addEntry(text, from);
   try {
-    const out = await Translator.translate(text, from, to);
+    const out = await Translator.translate(text, from, to, apiKey());
     fillEntry(li, out, to);
-    await speak(out, to);
+    return { out, to, from };
   } catch {
-    fillEntry(li, '번역하지 못했어요. 인터넷 연결을 확인해 주세요. / Translation failed.', to, true);
+    fillEntry(li, '번역하지 못했어요. 인터넷 연결을 확인해 주세요.', to, true);
+    return null;
   }
-  state.busy = false;
-  if (els.optAlternate.checked) state.lang = to;
-  render();
 }
 
-function start() {
-  state.running = true;
-  // iOS only allows speech output after a tap; a silent utterance unlocks it.
-  if ('speechSynthesis' in window) speechSynthesis.speak(new SpeechSynthesisUtterance(''));
-  listen();
-}
-function stop() {
-  state.running = false;
-  state.busy = false;
-  const rec = state.rec;
-  state.rec = null;
-  if (rec) rec.abort();
-  if ('speechSynthesis' in window) speechSynthesis.cancel();
-  showLive('', state.lang);
-  render();
-}
-function setTurn(lang) {
-  state.lang = lang;
-  if (state.running && !state.busy) {
-    const rec = state.rec;
-    state.rec = null;
-    if (rec) rec.abort();
-    listen();
-  }
-  render();
-}
+// ---------- interpreter controller ----------
+const interp = {
+  running: false,
+  status(text, hearing = false) {
+    els.status.textContent = text;
+    els.main.classList.toggle('hearing', hearing);
+  },
+  render() {
+    els.main.classList.toggle('on', this.running);
+    els.main.setAttribute('aria-pressed', String(this.running));
+    els.mainIcon.textContent = this.running ? '⏹' : '🎤';
+    els.mainLabel.textContent = this.running ? '통역 멈추기' : '통역 시작';
+    if (!this.running) { this.status('대기 중'); els.main.style.setProperty('--level', 0); }
+  },
+  async start() {
+    // iOS only allows speech output after a tap; a silent utterance unlocks it.
+    if ('speechSynthesis' in window) speechSynthesis.speak(new SpeechSynthesisUtterance(''));
+    this.running = true;
+    this.render();
+    try {
+      this.engine = apiKey() ? autoEngine : basicEngine;
+      await this.engine.start();
+    } catch (e) {
+      console.warn(e);
+      this.stop();
+      alert('마이크를 켤 수 없어요. 브라우저 설정에서 이 사이트의 마이크 사용을 허용해 주세요.');
+    }
+  },
+  stop() {
+    this.running = false;
+    this.engine?.stop();
+    if ('speechSynthesis' in window) speechSynthesis.cancel();
+    this.render();
+  },
+};
+els.main.onclick = () => (interp.running ? interp.stop() : interp.start());
 
-// ---------- wiring ----------
-if (!SR) {
-  $('unsupported').hidden = false;
-  els.main.disabled = true;
-}
-els.main.onclick = () => (state.running ? stop() : start());
-els.turnKo.onclick = () => setTurn('ko');
-els.turnEn.onclick = () => setTurn('en');
-$('settingsBtn').onclick = () => els.settings.showModal();
-$('clearBtn').onclick = () => { els.log.innerHTML = ''; };
-for (const el of [els.optSpeak, els.optAlternate, els.optFont, els.optRate]) {
-  el.addEventListener('change', () => { applyFont(); saveSettings(); });
-  el.addEventListener('input', applyFont);
-}
+// Auto mode: always listening, language detected per sentence by OpenAI.
+const autoEngine = {
+  queue: [], busy: false, listener: null,
+  async start() {
+    this.queue = [];
+    this.listener = new VoiceListener({
+      pauseMs: Number(els.optPause.value),
+      onLevel: lv => els.main.style.setProperty('--level', lv.toFixed(2)),
+      onSpeechStart: () => interp.status('듣고 있어요…', true),
+      onSegment: blob => {
+        if (!blob) return interp.status('말씀하시면 바로 통역해요');
+        this.queue.push(blob);
+        this.pump();
+      },
+    });
+    await this.listener.start();
+    interp.status('말씀하시면 바로 통역해요 (한국어 · English)');
+  },
+  async pump() {
+    if (this.busy) return;
+    this.busy = true;
+    while (this.queue.length && interp.running) {
+      const blob = this.queue.shift();
+      interp.status('알아듣는 중…');
+      let text = '';
+      try {
+        text = await STT.transcribe(blob, apiKey());
+      } catch (e) {
+        console.warn('[stt]', e);
+        interp.status(e.status === 401 ? 'API 키가 맞지 않아요. 설정을 확인해 주세요.' : '음성인식에 실패했어요. 인터넷을 확인해 주세요.');
+        continue;
+      }
+      if (!text || !(HANGUL.test(text) || LATIN.test(text))) continue;
+      interp.status('통역 중…');
+      const res = await interpretText(text, 'ko');
+      if (res && interp.running) {
+        // Stop listening while the phone speaks so it doesn't translate itself.
+        this.listener.muted = true;
+        interp.status('읽어주는 중…');
+        await speak(res.out, res.to);
+        await new Promise(r => setTimeout(r, 250));
+        this.listener.muted = false;
+      }
+    }
+    this.busy = false;
+    if (interp.running) interp.status('말씀하시면 바로 통역해요 (한국어 · English)');
+  },
+  stop() {
+    this.listener?.stop();
+    this.listener = null;
+    this.queue = [];
+  },
+};
+
+// Basic mode (no key): the browser recognizer hears one language at a time,
+// so it alternates Korean and English automatically after each translation.
+const basicEngine = {
+  lang: 'ko', rec: null,
+  start() {
+    if (!SR) throw new Error('no speech recognition');
+    this.listen();
+  },
+  listen() {
+    if (!interp.running) return;
+    const rec = new SR();
+    this.rec = rec;
+    rec.lang = LANGS[this.lang].code;
+    rec.interimResults = true;
+    rec.continuous = false;
+    let finalText = '';
+    interp.status(this.lang === 'ko' ? '한국어를 듣고 있어요' : 'Listening for English', true);
+    rec.onresult = e => {
+      let interim = '';
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        if (e.results[i].isFinal) finalText += e.results[i][0].transcript;
+        else interim += e.results[i][0].transcript;
+      }
+      interp.status((finalText + interim).trim() || '…', true);
+    };
+    rec.onerror = e => {
+      if (e.error === 'not-allowed' || e.error === 'service-not-allowed') {
+        interp.stop();
+        alert('마이크 권한이 필요해요. 브라우저 설정에서 이 사이트의 마이크를 허용해 주세요.');
+      }
+    };
+    rec.onend = async () => {
+      if (this.rec !== rec) return;
+      this.rec = null;
+      const text = finalText.trim();
+      if (!interp.running) return;
+      if (!text) { this.lang = LANGS[this.lang].other; return setTimeout(() => this.listen(), 200); }
+      interp.status('통역 중…');
+      const res = await interpretText(text, this.lang);
+      if (res && interp.running) {
+        interp.status('읽어주는 중…');
+        await speak(res.out, res.to);
+        this.lang = res.to;
+      }
+      this.listen();
+    };
+    try { rec.start(); } catch (e) { console.warn(e); setTimeout(() => this.listen(), 500); }
+  },
+  stop() {
+    const rec = this.rec;
+    this.rec = null;
+    rec?.abort();
+  },
+};
+
 loadSettings();
-render();
+interp.render();
+try { const t = localStorage.getItem('app.tab'); if (t && $('tab-' + t)) showTab(t); } catch {}
 
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
   navigator.serviceWorker.register('sw.js').catch(() => {});
