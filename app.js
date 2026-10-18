@@ -20,6 +20,7 @@ function showTab(name) {
   document.querySelectorAll('.tabbar button').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
   if (name !== 'interpret' && interp.running) interp.stop();
   try { localStorage.setItem('app.tab', name); } catch {}
+  document.dispatchEvent(new CustomEvent('tabchange', { detail: name }));
 }
 document.querySelectorAll('.tabbar button').forEach(b => { b.onclick = () => showTab(b.dataset.tab); });
 

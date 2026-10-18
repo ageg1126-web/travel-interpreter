@@ -33,6 +33,23 @@
   </div>
 </section>
 
+<!-- 카메라 번역 -->
+<section class="tab" id="tab-camera" hidden>
+  <header><h1>사진 번역</h1><label class="text-btn" for="camFile">앨범에서 고르기</label></header>
+  <input type="file" id="camFile" accept="image/*" hidden>
+  <div id="camNotice" class="notice cam-notice" hidden></div>
+  <div class="cam-view">
+    <video id="camVideo" playsinline muted autoplay></video>
+    <img id="camShot" alt="찍은 사진" hidden>
+    <div id="camHint" class="cam-hint">메뉴판, 표지판, 안내문을 화면에 맞추고 셔터를 눌러 주세요</div>
+  </div>
+  <div class="cam-controls">
+    <button id="camShutter" class="shutter" aria-label="찍어서 번역"></button>
+    <button id="camRetake" class="secondary retake" hidden>다시 찍기</button>
+  </div>
+  <main id="camResult" class="cam-result" hidden></main>
+</section>
+
 <!-- 일정 -->
 <section class="tab" id="tab-schedule" hidden>
   <header>
@@ -94,8 +111,8 @@
   <header><h1>설정</h1></header>
   <main>
     <div class="card">
-      <h2>자동 언어 감지 (OpenAI)</h2>
-      <p class="muted">키를 넣으면 누가 어떤 언어로 말하든 알아서 알아듣고 통역해요. 키는 이 휴대폰에만 저장돼요.</p>
+      <h2>OpenAI 키 (자동 통역 · 사진 번역)</h2>
+      <p class="muted">키를 넣으면 누가 어떤 언어로 말하든 알아서 알아듣고 통역하고, 사진 속 글자도 번역해요. 키는 이 휴대폰에만 저장돼요.</p>
       <label class="field">API 키
         <input type="password" id="optKey" placeholder="sk-..." autocomplete="off" autocapitalize="off" spellcheck="false">
       </label>
@@ -114,6 +131,7 @@
 
 <nav class="tabbar">
   <button data-tab="interpret" class="active"><span>🗣️</span>통역</button>
+  <button data-tab="camera"><span>📷</span>사진 번역</button>
   <button data-tab="schedule"><span>🗓️</span>일정</button>
   <button data-tab="tools"><span>🧳</span>여행 도구</button>
   <button data-tab="settings"><span>⚙️</span>설정</button>
@@ -124,5 +142,6 @@
 <script src="translate.js"></script>
 <script src="app.js"></script>
 <script src="schedule.js"></script>
+<script src="camera.js"></script>
 </body>
 </html>
