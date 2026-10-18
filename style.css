@@ -245,6 +245,22 @@ dialog h2 { margin: 0 0 4px; font-size: 20px; }
 .fx-quick { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 8px; }
 .fx-quick button { flex: 1 0 auto; border: 1px solid var(--border); background: var(--surface); color: var(--text);
                    border-radius: 999px; padding: 9px 12px; font-size: 14px; font-weight: 600; }
+.seg { display: flex; gap: 4px; padding: 4px; border-radius: 14px; background: var(--surface-2); border: 1px solid var(--border); margin-bottom: 12px; }
+.seg button { flex: 1; border: 0; background: none; color: var(--muted); font: inherit; font-size: 14px; font-weight: 600; padding: 9px 6px; border-radius: 10px; }
+.seg button.on { background: var(--surface); color: var(--text); box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+.fx-quick button.on { background: var(--text); color: var(--bg); border-color: var(--text); }
+.tip-title { margin-top: 14px; }
+.tip-title + .fx-quick { margin-top: 6px; }
+.tip-people { display: flex; align-items: center; justify-content: space-between; font-size: 15px; padding: 6px 0 10px; }
+.stepper { display: flex; align-items: center; gap: 14px; }
+.stepper button { width: 38px; height: 38px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 20px; }
+.stepper b { min-width: 1.5em; text-align: center; font-size: 18px; }
+.tip-sum { margin: 0; border-top: 1px solid var(--border); padding-top: 10px; display: grid; grid-template-columns: 1fr auto; gap: 8px 12px; font-size: 15px; }
+.tip-sum dt { color: var(--muted); }
+.tip-sum dd { margin: 0; text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+.tip-sum .total { font-size: 20px; font-weight: 800; color: var(--text); }
+.tip-sum dd.total { color: var(--accent); }
+.tip-sum .won { color: var(--muted); font-weight: 500; font-size: 14px; }
 .fx-manual summary { font-size: 13px; color: var(--muted); padding: 6px 0; cursor: pointer; }
 .fx-manual .row { border-top: 0; font-size: 15px; justify-content: flex-start; gap: 8px; }
 .fx-manual input { width: 100px; font: inherit; font-size: 16px; padding: 8px 10px; border-radius: 10px; border: 1px solid var(--border);

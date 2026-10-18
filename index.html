@@ -129,6 +129,10 @@
   <main>
     <div class="card">
       <div class="card-head"><svg class="ico tint" aria-hidden="true"><use href="#i-coins"/></svg><h2>환율 계산</h2></div>
+      <div class="seg" id="fxCur" role="tablist" aria-label="통화">
+        <button type="button" data-cur="CAD" class="on">캐나다 달러</button>
+        <button type="button" data-cur="USD">미국 달러</button>
+      </div>
       <div class="fx-box">
         <label class="fx-label" id="fxFromLabel" for="fxInput">캐나다 달러</label>
         <div class="fx-input"><span id="fxFromSym">$</span><input id="fxInput" type="text" inputmode="decimal" placeholder="0" autocomplete="off"></div>
@@ -142,13 +146,33 @@
       <p class="muted small" id="fxRateInfo">환율 불러오는 중…</p>
       <details class="fx-manual">
         <summary>환율 직접 입력</summary>
-        <label class="row">1 캐나다 달러 = <input id="fxManual" type="text" inputmode="decimal" placeholder="예: 1000"> 원</label>
+        <label class="row"><span id="fxManualLabel">1 캐나다 달러</span> = <input id="fxManual" type="text" inputmode="decimal" placeholder="예: 1000"> 원</label>
         <p class="muted small">비워 두면 인터넷 환율을 써요.</p>
       </details>
     </div>
-    <div class="card soon">
-      <div class="card-head"><svg class="ico tint" aria-hidden="true"><use href="#i-sparkle"/></svg><h2>곧 추가될 도구</h2></div>
-      <p class="muted">팁·세금 계산, 안내 카드 같은 도구가 이곳에 차례로 들어와요.</p>
+    <div class="card">
+      <div class="card-head"><svg class="ico tint" aria-hidden="true"><use href="#i-meal"/></svg><h2>팁·세금 계산</h2></div>
+      <div class="seg" id="tipPlace" aria-label="지역">
+        <button type="button" data-place="BC">밴쿠버</button>
+        <button type="button" data-place="AB">로키·캘거리</button>
+      </div>
+      <div class="seg" id="tipKind" aria-label="종류">
+        <button type="button" data-kind="meal" class="on">식당</button>
+        <button type="button" data-kind="shop">쇼핑</button>
+      </div>
+      <div class="fx-box">
+        <label class="fx-label" for="tipInput">메뉴 가격 합계 (세금 전)</label>
+        <div class="fx-input"><span>$</span><input id="tipInput" type="text" inputmode="decimal" placeholder="0" autocomplete="off"></div>
+      </div>
+      <div id="tipRow">
+        <div class="fx-label tip-title">팁</div>
+        <div class="fx-quick" id="tipPct"></div>
+      </div>
+      <div class="tip-people"><span>몇 명이 나눠 내요?</span>
+        <div class="stepper"><button type="button" id="tipMinus" aria-label="한 명 줄이기">−</button><b id="tipPeople">1</b><button type="button" id="tipPlus" aria-label="한 명 늘리기">+</button></div>
+      </div>
+      <dl class="tip-sum" id="tipSum"></dl>
+      <p class="muted small" id="tipNote"></p>
     </div>
   </main>
 </section>
@@ -205,5 +229,6 @@
 <script src="schedule.js"></script>
 <script src="camera.js"></script>
 <script src="currency.js"></script>
+<script src="tips.js"></script>
 </body>
 </html>

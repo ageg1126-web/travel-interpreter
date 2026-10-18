@@ -63,6 +63,7 @@ https://ageg1126-web.github.io/travel-interpreter/ (GitHub Pages, 저장소 `age
 - `stt.js` — OpenAI 음성인식
 - `orb.js` — 소리에 맞춰 움직이는 원 애니메이션
 - `ai.js` — 모든 기능이 쓰는 AI 모델 설정(gpt-6.1-sol, medium)
+- `tips.js` — 팁·세금 계산 (밴쿠버 BC주 / 로키·캘거리 앨버타주, 식당·쇼핑)
 - `assistant.js` — 통역 중단 후 한국어 AI 비서
 - `schedule.js`, `schedule.json` — 일정 화면과 여행 일정 데이터
 - `camera.js` — 사진 번역
