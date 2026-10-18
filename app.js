@@ -23,7 +23,9 @@ const heroOrb = new VoiceOrb($('heroOrb'));
 // The floating bar at the bottom has five places; cards, tools and settings
 // open from "더보기", so that button stays lit for them.
 const UNDER_MORE = ['more', 'cards', 'tools', 'settings'];
+let currentTab = 'interpret';
 function showTab(name) {
+  currentTab = name;
   document.querySelectorAll('.tab').forEach(t => { t.hidden = t.id !== 'tab-' + name; });
   const lit = UNDER_MORE.includes(name) ? 'more' : name;
   document.querySelectorAll('.tabbar [data-tab]').forEach(b => {
@@ -615,7 +617,47 @@ const basicEngine = {
 
 loadSettings();
 renderHistory();
-try { const t = localStorage.getItem('app.tab'); if (t && $('tab-' + t)) showTab(t); } catch {}
+// ---------- phone back button ----------
+// 통역 is home: the app always opens there, and back walks home step by step
+// (open window → previous screen → 통역). Back on 통역 itself closes the app.
+// While away from home one extra history entry is kept; back pops it and we
+// take one step instead of leaving the page.
+const SUB_OF = { cards: 'more', tools: 'more', settings: 'more' };
+const overlays = () => [$('foodPage'), $('spotPage')].filter(el => el && !el.hidden);
+const back = {
+  armed: false, eating: false,
+  atHome() {
+    return currentTab === 'interpret' && els.stage.hidden && !viewLog && $('showCard').hidden
+      && !document.querySelector('dialog[open]') && !overlays().length;
+  },
+  sync() {
+    if (this.atHome()) {
+      if (this.armed) { this.armed = false; this.eating = true; window.history.back(); }
+    } else if (!this.armed) { this.armed = true; window.history.pushState({ away: true }, ''); }
+  },
+  step() {
+    const dlg = document.querySelector('dialog[open]');
+    if (dlg) return dlg.close();
+    if (!$('showCard').hidden) return $('showClose').click();
+    if (!els.stage.hidden) return ctl.stopInterpret();
+    const top = overlays()[0];
+    if (top) return top.querySelector('[data-close]') ? top.querySelector('[data-close]').click() : (top.hidden = true);
+    if (viewLog) return els.logBtn.click();
+    if (currentTab !== 'interpret') return showTab(SUB_OF[currentTab] || 'interpret');
+  },
+};
+window.addEventListener('popstate', () => {
+  if (back.eating) { back.eating = false; return; }
+  back.armed = false;
+  back.step();
+  setTimeout(() => back.sync(), 0);
+});
+// Anything that opens or closes a screen goes through a tap, a tab change or a dialog closing.
+document.addEventListener('click', () => setTimeout(() => back.sync(), 0), true);
+document.addEventListener('tabchange', () => setTimeout(() => back.sync(), 0));
+document.addEventListener('keydown', () => setTimeout(() => back.sync(), 0));
+document.querySelectorAll('dialog').forEach(d => d.addEventListener('close', () => setTimeout(() => back.sync(), 0)));
+showTab('interpret');
 
 if ('serviceWorker' in navigator && location.protocol === 'https:') {
   navigator.serviceWorker.register('sw.js').catch(() => {});

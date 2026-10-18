@@ -23,7 +23,7 @@ a { color: var(--primary); font-weight: 650; }
 </head>
 <body>
 <main>
-<a class="back" href="./">← 앱으로 돌아가기</a>
+<a class="back" href="./" onclick="if (history.length > 1) { history.back(); return false; }">← 앱으로 돌아가기</a>
 <h1>개인정보 · 이용 안내</h1>
 <p class="sub">여행 도우미 · 2026년 10월 기준</p>
 
