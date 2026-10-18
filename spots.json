@@ -942,25 +942,88 @@
    }
   },
   "moraine-lake": {
-   "ko": "모레인 레이크",
+   "ko": "모레인 레이크 (텐 피크스)",
    "local": "Moraine Lake",
    "kind": "attraction",
    "art": "lake",
    "query": "Moraine Lake, Banff National Park, AB",
-   "lat": null,
-   "lng": null,
-   "coordSource": "",
+   "lat": 51.3281825,
+   "lng": -116.1816449,
+   "coordSource": "https://parks.canada.ca/pn-np/ab/banff/activ/nautiques-sports",
    "placeId": "",
-   "address": "",
-   "addressSource": "",
-   "about": "",
-   "facts": [],
-   "sights": [],
-   "tips": [],
-   "sources": [],
+   "address": "1 Moraine Lake Road, Lake Louise, AB T0L 1E0 (Moraine Lake Lodge 주소)",
+   "addressSource": "https://morainelake.com/day-visits/",
+   "about": "레이크 루이스 마을에서 약 14km 떨어진, 텐 피크스 계곡(Valley of the Ten Peaks)의 봉우리들에 둘러싸인 청록색 호수예요. 호수 끝 바위 언덕 '록파일(Rockpile)'에서 보는 경치가 가장 유명해요. 개인 차는 들어갈 수 없어서 셔틀이나 투어 차량으로 가요.",
+   "facts": [
+    "1899년 탐험가 월터 윌콕스(Walter Wilcox)가 바위 언덕에 올라 이 호수를 보고 '모레인 레이크'라는 이름을 붙였어요.",
+    "1969년 캐나다 은행의 'Scenes of Canada' 20달러 지폐에 실려 나라의 상징이 됐어요.",
+    "호수 높이는 해발 1,887m예요."
+   ],
+   "sights": [
+    "록파일(Rockpile) 순환길 — 0.7km, 약 30분. 호수와 텐 피크스가 한눈에 보여요",
+    "호숫가 산책길 — 편도 1.3km, 왕복 약 45분. 페이 산(Mount Fay)과 페이 빙하가 보여요",
+    "로지 선착장 카누 대여 (6월 중순~9월 중순, 선착순)"
+   ],
+   "tips": [
+    "개인 차량은 1년 내내 못 들어가요. Parks Canada 셔틀(예약 필수, 레이크 루이스 Park and Ride에서 출발)이나 허가받은 투어 차량만 다녀요. 2026년엔 6월 1일~10월 12일, 30분마다 운행했어요 (변동 가능).",
+    "호수엔 공공 편의시설이 거의 없어요. 화장실은 재래식(pit toilet)뿐이고, 휴대폰은 호수에서 약 5km 내려가야 터져요.",
+    "록파일 바위 위로는 올라가지 마시고, 정해진 길로만 다니세요."
+   ],
+   "sources": [
+    {
+     "title": "Visiting Lake Louise and Moraine Lake – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/visit/parkbus/louise",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Lake Louise and Moraine Lake (what to see) – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/visit/les10-top10/louise",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Hiking – Banff National Park (Lake Louise area trails) – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/activ/randonnee-hiking",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Water activities – Banff National Park – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/activ/nautiques-sports",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Fees – Banff National Park – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/visit/tarifs-fees",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Lake Louise hiking & biking guide 2023 (PDF map) – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/activ/~/~/-/media/d832bffcd28b4d9ba01f7af262c811b4.ashx",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Moraine Lake – Banff & Lake Louise Tourism",
+     "url": "https://www.banfflakelouise.com/experiences/moraine-lake",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Day Visits – Moraine Lake Lodge",
+     "url": "https://morainelake.com/day-visits/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Our History – Moraine Lake Lodge",
+     "url": "https://morainelake.com/our-history/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Dining – Moraine Lake Lodge",
+     "url": "https://morainelake.com/dining/",
+     "checked": "2026-10-18"
+    }
+   ],
    "food": {
-    "radius": 3000,
-    "note": ""
+    "radius": 800,
+    "note": "호숫가 Moraine Lake Lodge 옆 'Snowshoe Café'에서 커피·차·찬 음료·빵을 팔아요. 로지 식당(Walter Wilcox Dining Room)은 투숙객용이에요 (변동 가능)."
    }
   },
   "lake-louise": {
@@ -969,20 +1032,93 @@
    "kind": "attraction",
    "art": "lake",
    "query": "Lake Louise, Banff National Park, AB",
-   "lat": null,
-   "lng": null,
-   "coordSource": "",
+   "lat": 51.4167,
+   "lng": -116.2168,
+   "coordSource": "https://parks.canada.ca/pn-np/ab/banff/activ/nautiques-sports",
    "placeId": "",
-   "address": "",
-   "addressSource": "",
-   "about": "",
-   "facts": [],
-   "sights": [],
-   "tips": [],
-   "sources": [],
+   "address": "111 Lake Louise Drive, Lake Louise, AB T0L 1E0 (Fairmont Chateau Lake Louise)",
+   "addressSource": "https://www.fairmont.com/en/hotels/lake-louise/fairmont-chateau-lake-louise/dining/afternoon-tea.restaurant.html",
+   "about": "빅토리아 빙하(Victoria Glacier)와 높은 봉우리에 둘러싸인 청록색 호수예요. 호숫가에는 1890년부터 애프터눈 티를 이어 온 페어몬트 샤토 레이크 루이스 호텔이 있어요. 호숫가 산책길은 누구나 걷기 쉬운 길이에요.",
+   "facts": [
+    "레이크 루이스 마을은 1890년 캐나다 태평양 철도의 '래건 역(Laggan Station)'으로 시작했어요.",
+    "호수 높이는 해발 1,730m예요."
+   ],
+   "sights": [
+    "호숫가 산책길 — 편도 2.3km, 왕복 약 1시간. 호수 끝에서 물빛을 만드는 우윳빛 개울을 볼 수 있어요",
+    "빙하 물 위에 떠 있는 빨간 카누",
+    "페어뷰 전망대(Fairview Lookout) — 편도 1.2km, 왕복 약 45분. 짧지만 가파르고, 호수와 샤토가 함께 보여요",
+    "샤토의 Fairview 레스토랑 애프터눈 티 — 창밖으로 호수가 보여요"
+   ],
+   "tips": [
+    "애프터눈 티는 샤토의 Fairview 레스토랑에서 매일 오전 11:30~오후 2:30, 예약 필수예요 (변동 가능).",
+    "티 룸에서는 반바지, 찢어진 청바지, 운동복·등산복 차림을 삼가 달라고 해요.",
+    "여름엔 해 뜨기 전부터 해 질 때까지 주차장이 꽉 차요. 투어 차량이나 셔틀로 가는 게 좋아요. 호숫가 주차료는 2026년 하루 $42였어요 (변동 가능)."
+   ],
+   "sources": [
+    {
+     "title": "Lake Louise and Moraine Lake (what to see) – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/visit/les10-top10/louise",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Visiting Lake Louise and Moraine Lake – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/visit/parkbus/louise",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Hiking – Banff National Park (Lake Louise area trails) – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/activ/randonnee-hiking",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Water activities – Banff National Park – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/activ/nautiques-sports",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Fees – Banff National Park – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/visit/tarifs-fees",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Lake Louise hiking & biking guide 2023 (PDF map) – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/activ/~/~/-/media/d832bffcd28b4d9ba01f7af262c811b4.ashx",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Lake Louise – Banff & Lake Louise Tourism",
+     "url": "https://www.banfflakelouise.com/experiences/lake-louise",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Fairview – Afternoon Tea – Fairmont Chateau Lake Louise",
+     "url": "https://www.fairmont.com/en/hotels/lake-louise/fairmont-chateau-lake-louise/dining/afternoon-tea.restaurant.html",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Afternoon Tea (experience) – Fairmont Chateau Lake Louise",
+     "url": "https://www.fairmont.com/en/hotels/lake-louise/fairmont-chateau-lake-louise/experiences/afternoon-tea.html",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Dining – Fairmont Chateau Lake Louise",
+     "url": "https://www.fairmont.com/en/hotels/lake-louise/fairmont-chateau-lake-louise/dining.html",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Fairmont Chateau Lake Louise",
+     "url": "https://www.fairmont.com/en/hotels/lake-louise/fairmont-chateau-lake-louise.html",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Emerald Lake Lodge FAQ (Lake Louise naming story) – CRMR",
+     "url": "https://crmr.com/resorts/emerald-lake/faq/",
+     "checked": "2026-10-18"
+    }
+   ],
    "food": {
-    "radius": 3000,
-    "note": ""
+    "radius": 800,
+    "note": "샤토 안에 식당이 7곳 있어요. 여름엔 외부 방문객도 Louiza(예약 없이), Lakeview Lounge, 애프터눈 티(예약)에서 점심을 먹을 수 있어요 (변동 가능)."
    }
   },
   "emerald-lake": {
@@ -991,20 +1127,88 @@
    "kind": "attraction",
    "art": "lake",
    "query": "Emerald Lake, Yoho National Park, BC",
-   "lat": null,
-   "lng": null,
-   "coordSource": "",
+   "lat": 51.444,
+   "lng": -116.531,
+   "coordSource": "https://www.wikidata.org/wiki/Q316177",
    "placeId": "",
-   "address": "",
-   "addressSource": "",
-   "about": "",
-   "facts": [],
-   "sights": [],
-   "tips": [],
-   "sources": [],
+   "address": "#1 Emerald Lake Road, Field, BC (Emerald Lake Lodge)",
+   "addressSource": "https://crmr.com/resorts/emerald-lake/getting-here/",
+   "about": "BC주 요호 국립공원에 있는 보석 빛깔의 호수예요. 산봉우리와 빙하, 들꽃을 보며 호숫가를 한 바퀴 걸을 수 있어요. 필드(Field) 마을에서 서쪽으로 약 10km 떨어져 있어요.",
+   "facts": [
+    "1882년 철도를 놓던 시절, 가이드 톰 윌슨(Tom Wilson)이 이 호수를 바깥세상에 처음 알렸어요. 그 전부터 원주민들이 살아온 땅이에요.",
+    "호숫가의 Emerald Lake Lodge는 1902년 캐나다 태평양 철도(CPR)가 세웠어요.",
+    "물빛은 빙하가 만든 고운 돌가루에 햇빛이 비쳐서 생겨요. 7~8월 맑은 날 가장 선명해요."
+   ],
+   "sights": [
+    "호숫가 한 바퀴 길 — 5.2km, 약 2시간. 주차장에서 호수 뒤쪽 다리까지는 평평한 자갈길이에요",
+    "산과 빙하가 비치는 호수 위 대여 카누",
+    "호숫가 Emerald Lake Lodge"
+   ],
+   "tips": [
+    "주차장이 아주 좁아요. 다리 근처가 붐비니, 이른 아침이나 늦은 오후가 한가해요.",
+    "요호 국립공원의 모든 호수·강은 2027년 3월 31일까지 개인 보트·SUP·낚시가 금지예요. 현장 대여 카누는 탈 수 있어요 (변동 가능).",
+    "휴대폰이 잘 안 터져요. 로지는 휴대폰 신호가 없고 와이파이는 본관에만 있어요. 인터넷이 필요한 기능은 미리 준비하세요."
+   ],
+   "sources": [
+    {
+     "title": "Points of interest – Yoho National Park – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/bc/yoho/activ/places",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Hikes and walks – Yoho National Park – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/bc/yoho/activ/randonnee-hike/jour-day",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Water activity rules and regulations – Yoho National Park – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/bc/yoho/securite-safety/activ-aqua-regs",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Trail conditions report – Yoho National Park – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/bc/yoho/activ/randonnee-hike/etat-sentiers-trail-conditions",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Park Management Plan Annual Report 2025-2026 – Yoho – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/bc/yoho/gestion-mgmt/plandirecteur-mgmtplan/plan-2022/rapport-gestion-management-report-2025-26",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Yoho Visitor Guide 2025–2026 (PDF) – Parks Canada",
+     "url": "https://parks.canada.ca/-/media/pn-np/bc/yoho/wet4/visit/brochures/2025-yoho-visitor-guide.pdf",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Emerald Lake Lodge – CRMR",
+     "url": "https://crmr.com/resorts/emerald-lake/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Emerald Lake Lodge FAQ – CRMR",
+     "url": "https://crmr.com/resorts/emerald-lake/faq/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Emerald Lake Lodge Dining – CRMR",
+     "url": "https://crmr.com/resorts/emerald-lake/dining/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Getting to Emerald Lake Lodge – CRMR",
+     "url": "https://crmr.com/resorts/emerald-lake/getting-here/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Emerald Lake – Banff & Lake Louise Tourism",
+     "url": "https://www.banfflakelouise.com/experiences/emerald-lake",
+     "checked": "2026-10-18"
+    }
+   ],
    "food": {
-    "radius": 3000,
-    "note": ""
+    "radius": 1500,
+    "note": "Emerald Lake Lodge에 Mount Burgess Dining Room(아침 뷔페·저녁)과 Kicking Horse 바·라운지(11~22시)가 있어요. 여름엔 호숫가 'Cilantro on the Lake'와 테이크아웃 창구 'The Window'도 열어요 (2027년 5월 재개장 예정, 변동 가능)."
    }
   },
   "natural-bridge": {
@@ -1017,38 +1221,107 @@
    "lng": null,
    "coordSource": "",
    "placeId": "",
-   "address": "",
-   "addressSource": "",
-   "about": "",
-   "facts": [],
-   "sights": [],
-   "tips": [],
-   "sources": [],
+   "address": "Emerald Lake Road, Field, BC — 필드에서 서쪽 약 4km, Natural Bridge 주차장",
+   "addressSource": "https://parks.canada.ca/pn-np/bc/yoho/activ/randonnee-hike/jour-day",
+   "about": "키킹호스강(Kicking Horse River)이 자연이 만든 돌다리 아래로 세차게 흘러가는 곳이에요. 에메랄드 레이크로 가는 길, 필드 마을에서 약 4km 거리에 있어요. 멋진 바위 모양과 그 아래로 쏟아지는 물살을 가까이서 볼 수 있어요.",
+   "facts": [
+    "강 이름은 1858년 팰리서 탐험대의 의사 제임스 헥터(James Hector)가 짐말에 차여 크게 다칠 뻔한 일에서 왔어요.",
+    "키킹호스강은 '캐나다 유산 강(Canadian Heritage River)'으로 지정돼 있어요."
+   ],
+   "sights": [
+    "자연 돌다리 아래로 쏟아지는 강물",
+    "주차장 북쪽 끝에서 강을 따라 이어지는 옛 소방도로 산책길 (Kicking Horse Fire Road)"
+   ],
+   "tips": [
+    "바위 위는 위험해요. 꼭 표시된 길로만 다니세요.",
+    "요호 국립공원은 휴대폰이 잘 안 터지는 곳이 많아요."
+   ],
+   "sources": [
+    {
+     "title": "Points of interest – Yoho National Park – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/bc/yoho/activ/places",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Hikes and walks – Yoho National Park – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/bc/yoho/activ/randonnee-hike/jour-day",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Yoho Visitor Guide 2025–2026 (PDF) – Parks Canada",
+     "url": "https://parks.canada.ca/-/media/pn-np/bc/yoho/wet4/visit/brochures/2025-yoho-visitor-guide.pdf",
+     "checked": "2026-10-18"
+    }
+   ],
    "food": {
     "radius": 3000,
     "note": ""
    }
   },
   "banff-gondola": {
-   "ko": "설퍼산 곤돌라",
+   "ko": "설퍼산 곤돌라 (밴프 곤돌라)",
    "local": "Banff Gondola",
    "kind": "attraction",
    "art": "mountain",
    "query": "Banff Gondola, Banff, AB",
-   "lat": null,
-   "lng": null,
-   "coordSource": "",
+   "lat": 51.148006,
+   "lng": -115.555571,
+   "coordSource": "https://www.wikidata.org/wiki/Q125749525",
    "placeId": "",
-   "address": "",
-   "addressSource": "",
-   "about": "",
-   "facts": [],
-   "sights": [],
-   "tips": [],
-   "sources": [],
+   "address": "Mountain Avenue 끝, Banff, AB (설퍼산 아래)",
+   "addressSource": "https://www.banffjaspercollection.com/attractions/banff-gondola/hours-location/",
+   "about": "밴프 시내 옆 설퍼산(Sulphur Mountain)을 8분 만에 오르는 곤돌라예요. 위 정류장은 해발 2,281m이고, 여섯 개 산맥과 보우 밸리, 밴프 마을이 360°로 내려다보여요. 산마루 보드워크를 따라 샌슨 피크(Sanson's Peak)까지 걸을 수 있어요.",
+   "facts": [
+    "아래 정류장 1,583m에서 위 정류장 2,281m까지 698m를 올라가요. 4인승 곤돌라 40대가 다녀요.",
+    "처음 공사는 1958년 9월~1959년 7월, 다시 지은 건 1997년 11월~1998년 2월이에요.",
+    "노먼 샌슨(Norman Sanson)은 30년 동안 거의 매주 걸어 올라와 날씨를 쟀고, 1945년 84세까지 계속했어요."
+   ],
+   "sights": [
+    "360° 옥상 전망대",
+    "보드워크 끝 샌슨 피크 — 설퍼산 우주선 관측소(Cosmic Ray Station) 국가 사적지와 옛 기상 관측소",
+    "정상 해설 센터와 극장 (곤돌라 표에 포함)",
+    "멀리 보이는 미네완카 호수(Lake Minnewanka) — 밴프 국립공원에서 가장 큰 호수"
+   ],
+   "tips": [
+    "보드워크는 약 500m인데, 오르내리는 얕은 계단이 368개(편도)라 휠체어로는 못 가요. 건물과 곤돌라는 휠체어로 이용할 수 있어요.",
+    "정상은 아래보다 몇 도 더 추워요. 여름에도 겹쳐 입을 옷을 챙기세요.",
+    "표는 미리 사는 게 좋아요(환불 불가, 방문 48시간 전까지 온라인 변경). 마지막 탑승은 문 닫기 1시간 30분 전이에요 (변동 가능)."
+   ],
+   "sources": [
+    {
+     "title": "Banff Gondola – Pursuit (Banff Jasper Collection)",
+     "url": "https://www.banffjaspercollection.com/attractions/banff-gondola/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Banff Gondola Experience & technical information – Pursuit",
+     "url": "https://www.banffjaspercollection.com/attractions/banff-gondola/experience/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Banff Gondola FAQs – Pursuit",
+     "url": "https://www.banffjaspercollection.com/attractions/banff-gondola/faqs/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Banff Gondola Hours & Location – Pursuit",
+     "url": "https://www.banffjaspercollection.com/attractions/banff-gondola/hours-location/",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Ride the Banff Gondola – Banff & Lake Louise Tourism",
+     "url": "https://www.banfflakelouise.com/experiences/banff-gondola",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Hiking – Banff National Park (Sulphur Mountain Trail) – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/activ/randonnee-hiking",
+     "checked": "2026-10-18"
+    }
+   ],
    "food": {
-    "radius": 3000,
-    "note": ""
+    "radius": 1500,
+    "note": "정상에 Sky Bistro(고급 식당, 예약 권장), Northern Lights Alpine Kitchen(뷔페), Castle Mountain Coffee Co.(카페), Peak Patio(야외 테라스)가 있고, 아래 정류장엔 스타벅스가 있어요 (변동 가능)."
    }
   },
   "surprise-corner": {
@@ -1061,15 +1334,63 @@
    "lng": null,
    "coordSource": "",
    "placeId": "",
-   "address": "",
-   "addressSource": "",
-   "about": "",
-   "facts": [],
-   "sights": [],
-   "tips": [],
-   "sources": [],
+   "address": "Buffalo Street와 Tunnel Mountain Road 모퉁이, Banff, AB",
+   "addressSource": "https://banff.ca/1110/Surprise-Corner",
+   "about": "밴프 시내 남동쪽, 버펄로 스트리트(Buffalo Street) 끝에 있는 전망대예요. 보우 폭포와 '로키의 성'이라 불리는 페어몬트 밴프 스프링스 호텔, 설퍼산이 한눈에 보여요. 사진 찍기 좋은 곳으로 유명해요.",
+   "facts": [
+    "이름은 버펄로 스트리트에서 볼 때 갑자기 펼쳐지는 놀라운 경치에서 왔어요.",
+    "건너편 페어몬트 밴프 스프링스는 1888년부터 손님을 맞아 온 '로키의 성(Castle in the Rockies)'이에요.",
+    "후두스(Hoodoos) 전망대로 가는 트레일이 여기서 시작해요."
+   ],
+   "sights": [
+    "페어몬트 밴프 스프링스 호텔",
+    "보우 폭포 (Bow Falls)",
+    "설퍼산 (Sulphur Mountain)"
+   ],
+   "tips": [
+    "전망대(viewing platform)에서만 보세요. 보우 폭포 위 가파른 절벽에 들어가는 것은 엄격히 금지돼 있어요.",
+    "밴프 시내에서 걸어서 약 20분(1.6km)이에요. 보우강 산책길로 오면 센트럴 파크에서 1.4km, 25~30분이에요.",
+    "모퉁이에 작은 주차장이 있어요 (자리가 적어요)."
+   ],
+   "sources": [
+    {
+     "title": "Surprise Corner – Town of Banff",
+     "url": "https://banff.ca/1110/Surprise-Corner",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Bow River Trail – Town of Banff",
+     "url": "https://banff.ca/649/Bow-River-Trail",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Hiking – Banff National Park (Surprise Corner to Hoodoos) – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/activ/randonnee-hiking",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Surprise Corner – Banff & Lake Louise Tourism",
+     "url": "https://www.banfflakelouise.com/experiences/surprise-corner",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "8 of the Best Viewpoints in and Near Banff – Banff & Lake Louise Tourism (2023)",
+     "url": "https://www.banfflakelouise.com/blog/best-viewpoints-banff-minnewanka-loop",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Easy Sightseeing Walks and Hikes in Banff – Banff & Lake Louise Tourism (2021)",
+     "url": "https://www.banfflakelouise.com/blog/easy-sightseeing-walks-and-hikes-banff",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Fairmont Banff Springs",
+     "url": "https://www.fairmont.com/en/hotels/banff/fairmont-banff-springs.html",
+     "checked": "2026-10-18"
+    }
+   ],
    "food": {
-    "radius": 3000,
+    "radius": 1500,
     "note": ""
    }
   },
@@ -1079,20 +1400,50 @@
    "kind": "attraction",
    "art": "falls",
    "query": "Bow Falls, Banff, AB",
-   "lat": null,
-   "lng": null,
-   "coordSource": "",
+   "lat": 51.167966944,
+   "lng": -115.561486944,
+   "coordSource": "https://www.wikidata.org/wiki/Q37289",
    "placeId": "",
    "address": "",
    "addressSource": "",
-   "about": "",
-   "facts": [],
-   "sights": [],
-   "tips": [],
-   "sources": [],
+   "about": "밴프 시내에서 약 1km, 보우강(Bow River)이 바위 협곡을 지나 세차게 쏟아지는 폭포예요. 폭포 아래로는 강이 다시 잔잔해져 보우 밸리를 따라 흘러가요. 1950년대 할리우드 영화에도 나온 곳이에요.",
+   "facts": [
+    "1950년대 할리우드 영화 여러 편에 나왔어요. 마릴린 먼로가 나온 'River of No Return'도 그중 하나예요.",
+    "보우강은 프레리를 건너 허드슨만까지 흘러가요. 레이크 루이스에서부터 2,500km가 넘는 길이에요."
+   ],
+   "sights": [
+    "폭포 위 절벽길에서 내려다보는 폭포",
+    "강가 바위에 앉아 보는 래프팅 출발 모습",
+    "폭포 아래 잔잔해지는 보우강과 보우 밸리"
+   ],
+   "tips": [
+    "보우강 다리(Bow River Bridge)에서 강 남쪽 길로 1.2km, 20~25분 걸어가면 돼요."
+   ],
+   "sources": [
+    {
+     "title": "Bow Falls Trail – Town of Banff",
+     "url": "https://banff.ca/654/Bow-Falls-Trail",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Bow Falls – Banff & Lake Louise Tourism",
+     "url": "https://www.banfflakelouise.com/experiences/bow-falls",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Hiking – Banff National Park (Bow River Trail entry) – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/activ/randonnee-hiking",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Dining – Fairmont Banff Springs",
+     "url": "https://www.fairmont.com/en/hotels/banff/fairmont-banff-springs/dining.html",
+     "checked": "2026-10-18"
+    }
+   ],
    "food": {
-    "radius": 3000,
-    "note": ""
+    "radius": 800,
+    "note": "가까운 페어몬트 밴프 스프링스 호텔에 The Vermillion Room, STOCK Food & Drink, 1888 Chop House, Grapes 같은 식당이 있고, Rundle Bar에서 애프터눈 티도 해요 (변동 가능)."
    }
   },
   "banff-upper-hot-springs": {
@@ -1101,20 +1452,83 @@
    "kind": "attraction",
    "art": "mountain",
    "query": "Banff Upper Hot Springs, Banff, AB",
-   "lat": null,
-   "lng": null,
-   "coordSource": "",
+   "lat": 51.15112,
+   "lng": -115.56097,
+   "coordSource": "https://parks.canada.ca/pn-np/ab/banff/sources-banff-springs/localisation-directions",
    "placeId": "",
-   "address": "",
-   "addressSource": "",
-   "about": "",
-   "facts": [],
-   "sights": [],
-   "tips": [],
-   "sources": [],
+   "address": "Mountain Avenue 끝, Banff, AB (밴프 시내에서 남쪽 4km)",
+   "addressSource": "https://parks.canada.ca/pn-np/ab/banff/sources-banff-springs/localisation-directions",
+   "about": "설퍼산 중턱, 해발 1,585m에 있는 캐나다에서 가장 높은 곳의 온천이에요. 런들산과 캐스케이드산을 바라보며 37~40℃ 물에 몸을 담글 수 있어요. 1886년부터 사람들이 찾아온 곳이에요.",
+   "facts": [
+    "지금의 목욕탕 건물은 1932년 7월 1일 문을 열었고, 1995~1996년에 1932년 모습으로 복원됐어요. 연방 문화유산 건물이에요.",
+    "빗물과 눈 녹은 물이 런들산에서 땅속 3km 넘게 내려가 데워진 뒤, 설퍼산 단층을 따라 다시 솟아올라요.",
+    "물에는 황산염·칼슘·중탄산염·마그네슘·나트륨이 많이 들어 있어요."
+   ],
+   "sights": [
+    "노천탕에서 보는 런들산·캐스케이드산",
+    "온천 역사 전시",
+    "옛날 스타일 수영복 대여"
+   ],
+   "tips": [
+    "예약 없이 선착순이고, 표는 현장 매표소에서만 사요. 2026년 요금: 65세 이상 $17.25, 성인 $19.75(사물함 토큰 포함). 수영복 $5, 수건 $3 대여 (변동 가능).",
+    "물이 뜨거워요. 10분마다 쉬고 물을 드세요(깨지지 않는 병만 가능). 1~2시간 정도를 권해요. 심장병·당뇨 등이 있으면 미리 의사와 상의하세요.",
+    "매일 오전 10시~오후 10시, 마지막 입장 오후 9시 30분이에요. 큰 주차장에서 건물까지 약 200m 걸어 올라가요 (변동 가능)."
+   ],
+   "sources": [
+    {
+     "title": "Banff Upper Hot Springs – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/sources-banff-springs",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "The water – Banff Upper Hot Springs – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/sources-banff-springs/debit-flow",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "History – Banff Upper Hot Springs – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/sources-banff-springs/histoire-history",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Hours of operation – Banff Upper Hot Springs – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/sources-banff-springs/heures-hours",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Fees – Banff Upper Hot Springs – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/sources-banff-springs/tarifs-fees",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "FAQ – Banff Upper Hot Springs – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/sources-banff-springs/faq",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "How to get there – Banff Upper Hot Springs – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/sources-banff-springs/localisation-directions",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Facility accessibility – Banff Upper Hot Springs – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/sources-banff-springs/accessibilite-accessibility",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "What to see – Banff National Park – Parks Canada",
+     "url": "https://parks.canada.ca/pn-np/ab/banff/visit/les10-top10",
+     "checked": "2026-10-18"
+    },
+    {
+     "title": "Soak in the Banff Upper Hot Springs – Banff & Lake Louise Tourism",
+     "url": "https://www.banfflakelouise.com/experiences/banff-upper-hot-springs",
+     "checked": "2026-10-18"
+    }
+   ],
    "food": {
-    "radius": 3000,
-    "note": ""
+    "radius": 800,
+    "note": "온천 건물 안에 카페가 있어요(카페 음식은 카페나 피크닉 구역에서만 먹어요). 가까운 곤돌라 아래 정류장에 스타벅스가 있어요 (변동 가능)."
    }
   }
  }
