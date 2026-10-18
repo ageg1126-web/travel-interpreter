@@ -149,7 +149,12 @@
   </main>
 </section>
 
-<nav class="tabbar">
+<div id="sideScrim" class="side-scrim" hidden></div>
+<nav class="sidebar" id="sidebar" aria-label="메뉴">
+  <div class="side-head">
+    <div><div class="side-title">여행 도우미</div><div class="muted small">엄마의 캐나다 여행</div></div>
+    <button id="sideClose" class="icon-btn" aria-label="메뉴 닫기">✕</button>
+  </div>
   <button data-tab="interpret" class="active"><span>🗣️</span>통역</button>
   <button data-tab="camera"><span>📷</span>사진 번역</button>
   <button data-tab="schedule"><span>🗓️</span>일정</button>

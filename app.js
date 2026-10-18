@@ -17,12 +17,36 @@ const els = {
 // ---------- tabs ----------
 function showTab(name) {
   document.querySelectorAll('.tab').forEach(t => { t.hidden = t.id !== 'tab-' + name; });
-  document.querySelectorAll('.tabbar button').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+  document.querySelectorAll('.sidebar [data-tab]').forEach(b => b.classList.toggle('active', b.dataset.tab === name));
   if (name !== 'interpret' && interp.running) interp.stop();
   try { localStorage.setItem('app.tab', name); } catch {}
   document.dispatchEvent(new CustomEvent('tabchange', { detail: name }));
 }
-document.querySelectorAll('.tabbar button').forEach(b => { b.onclick = () => showTab(b.dataset.tab); });
+document.querySelectorAll('.sidebar [data-tab]').forEach(b => { b.onclick = () => { showTab(b.dataset.tab); closeSidebar(); }; });
+
+// ---------- sidebar ----------
+const sidebar = $('sidebar'), scrim = $('sideScrim');
+function openSidebar() { sidebar.classList.add('open'); scrim.hidden = false; }
+function closeSidebar() { sidebar.classList.remove('open'); scrim.hidden = true; }
+// Every screen gets the same ☰ button in its header.
+document.querySelectorAll('.tab > header').forEach(h => {
+  const b = document.createElement('button');
+  b.className = 'icon-btn menu-btn';
+  b.setAttribute('aria-label', '메뉴 열기');
+  b.textContent = '☰';
+  b.onclick = openSidebar;
+  h.prepend(b);
+});
+$('sideClose').onclick = closeSidebar;
+scrim.onclick = closeSidebar;
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSidebar(); });
+// Swipe left on the open sidebar to close it.
+let touchX = null;
+sidebar.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+sidebar.addEventListener('touchend', e => {
+  if (touchX !== null && touchX - e.changedTouches[0].clientX > 50) closeSidebar();
+  touchX = null;
+});
 
 // ---------- settings (stored on this phone only) ----------
 const SETTINGS_KEY = 'interp.settings';
