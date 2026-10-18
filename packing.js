@@ -1,5 +1,6 @@
-// Packing checklists for each stage of the trip. Ticks and added items stay on
-// this phone; the hotel checkout list can be reset for every hotel.
+// Packing checklists for each stage of the trip. Ticks, added items and
+// removed items stay on this phone; the hotel checkout list can be reset for
+// every hotel.
 (() => {
   const box = document.getElementById('packList');
   const KEY = 'pack.v1';
@@ -24,15 +25,20 @@
     ] },
   ];
 
-  let state = { checked: {}, custom: {} };
+  let state = { checked: {}, custom: {}, removed: {} };
   try { state = { ...state, ...JSON.parse(localStorage.getItem(KEY) || '{}') }; } catch {}
+  // Added items get ids that never change; older saves kept plain strings.
+  for (const [list, arr] of Object.entries(state.custom)) {
+    state.custom[list] = arr.map((it, i) => (typeof it === 'string' ? { id: list + ':c' + i, text: it } : it));
+  }
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch {} };
 
   function render() {
     box.innerHTML = '';
     for (const list of LISTS) {
       const items = [...list.items.map((t, i) => ({ id: list.id + ':' + i, text: t })),
-        ...(state.custom[list.id] || []).map((t, i) => ({ id: list.id + ':c' + i, text: t, custom: i }))];
+        ...(state.custom[list.id] || []).map(it => ({ ...it, custom: true }))].filter(it => !state.removed[it.id]);
+      const removedCount = list.items.filter((t, i) => state.removed[list.id + ':' + i]).length;
       const done = items.filter(it => state.checked[it.id]).length;
       const card = document.createElement('div');
       card.className = 'card pack';
@@ -64,22 +70,27 @@
         span.textContent = it.text;
         label.append(cb, span);
         li.appendChild(label);
-        if (it.custom !== undefined) {
-          const del = document.createElement('button');
-          del.className = 'icon-btn sm';
-          del.setAttribute('aria-label', '지우기');
-          del.innerHTML = '<svg class="ico" aria-hidden="true"><use href="#i-trash"/></svg>';
-          del.onclick = () => {
-            state.custom[list.id].splice(it.custom, 1);
-            // Custom ids shift after a delete, so clear their ticks.
-            Object.keys(state.checked).forEach(k => { if (k.startsWith(list.id + ':c')) delete state.checked[k]; });
-            save(); render();
-          };
-          li.appendChild(del);
-        }
+        const del = document.createElement('button');
+        del.className = 'icon-btn sm';
+        del.setAttribute('aria-label', it.text + ' 지우기');
+        del.innerHTML = '<svg class="ico" aria-hidden="true"><use href="#i-trash"/></svg>';
+        del.onclick = () => {
+          delete state.checked[it.id];
+          if (it.custom) state.custom[list.id] = state.custom[list.id].filter(c => c.id !== it.id);
+          else state.removed[it.id] = true;
+          save(); render();
+        };
+        li.appendChild(del);
         ul.appendChild(li);
       }
       card.appendChild(ul);
+      if (removedCount) {
+        const back = document.createElement('button');
+        back.className = 'text-btn pack-restore';
+        back.textContent = `지운 기본 항목 ${removedCount}개 되살리기`;
+        back.onclick = () => { list.items.forEach((t, i) => delete state.removed[list.id + ':' + i]); save(); render(); };
+        card.appendChild(back);
+      }
       const add = document.createElement('form');
       add.className = 'pack-add';
       add.innerHTML = '<input type="text" placeholder="항목 추가" aria-label="항목 추가"><button class="pill sm">추가</button>';
@@ -87,7 +98,7 @@
         e.preventDefault();
         const v = add.querySelector('input').value.trim();
         if (!v) return;
-        (state.custom[list.id] = state.custom[list.id] || []).push(v);
+        (state.custom[list.id] = state.custom[list.id] || []).push({ id: list.id + ':c' + Date.now().toString(36), text: v });
         save(); render();
       };
       card.appendChild(add);

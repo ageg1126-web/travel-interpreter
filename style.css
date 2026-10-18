@@ -333,6 +333,8 @@ dialog h2 { margin: 0 0 4px; font-size: 20px; }
 .pack-items input:checked + span { color: var(--faint); text-decoration: line-through; }
 .icon-btn.sm { width: 36px; height: 36px; }
 .icon-btn.sm .ico { width: 18px; height: 18px; }
+.pack-items .icon-btn { color: var(--faint); background: none; }
+.pack-restore { display: block; padding: 2px 0 10px; font-size: 14px; }
 .pack-add { display: flex; gap: 8px; }
 .pack-add input { flex: 1; min-width: 0; font: inherit; font-size: 15px; padding: 9px 12px; border-radius: 12px; border: 1px solid var(--border);
                   background: var(--surface-2); color: var(--text); }
