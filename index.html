@@ -96,13 +96,33 @@
   </form>
 </dialog>
 
-<!-- 여행 도구 (준비 중) -->
+<!-- 여행 도구 -->
 <section class="tab" id="tab-tools" hidden>
   <header><h1>여행 도구</h1></header>
-  <main class="placeholder">
-    <div class="ph-icon">🧳</div>
-    <p>여행에 필요한 도구들이 들어갈 자리예요.</p>
-    <p class="muted">환율 계산, 자주 쓰는 영어 문장, 비상 연락처 같은 기능을 일정에 맞춰 추가할 예정이에요.</p>
+  <main>
+    <div class="card fx">
+      <h2>💱 환율 계산</h2>
+      <div class="fx-box">
+        <label class="fx-label" id="fxFromLabel" for="fxInput">🇨🇦 캐나다 달러</label>
+        <div class="fx-input"><span id="fxFromSym">$</span><input id="fxInput" type="text" inputmode="decimal" placeholder="0" autocomplete="off"></div>
+      </div>
+      <button id="fxSwap" class="fx-swap" aria-label="방향 바꾸기">⇅</button>
+      <div class="fx-box out">
+        <div class="fx-label" id="fxToLabel">🇰🇷 원</div>
+        <div class="fx-output" id="fxOutput">0원</div>
+      </div>
+      <div class="fx-quick" id="fxQuick"></div>
+      <p class="muted small" id="fxRateInfo">환율 불러오는 중…</p>
+      <details class="fx-manual">
+        <summary>환율 직접 입력</summary>
+        <label class="row">1 캐나다 달러 = <input id="fxManual" type="text" inputmode="decimal" placeholder="예: 1000"> 원</label>
+        <p class="muted small">비워 두면 인터넷 환율을 써요.</p>
+      </details>
+    </div>
+    <div class="card soon">
+      <h2>🧰 앞으로 추가될 도구</h2>
+      <p class="muted">여기에 새로운 여행 도구가 차례로 들어올 예정이에요.</p>
+    </div>
   </main>
 </section>
 
@@ -143,5 +163,6 @@
 <script src="app.js"></script>
 <script src="schedule.js"></script>
 <script src="camera.js"></script>
+<script src="currency.js"></script>
 </body>
 </html>

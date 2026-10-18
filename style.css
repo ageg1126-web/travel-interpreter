@@ -125,3 +125,18 @@ dialog h2 { margin: 0 0 4px; font-size: 19px; }
 .cam-item .ko { font-size: calc(var(--font) * 0.85); font-weight: 600; margin-top: 2px; }
 .cam-item .note { font-size: 14px; color: var(--muted); margin-top: 4px; }
 .cam-loading { text-align: center; color: var(--muted); padding: 20px; font-size: 16px; }
+
+/* currency */
+.fx-box { background: var(--bg); border-radius: 14px; padding: 10px 14px; }
+.fx-label { font-size: 14px; color: var(--muted); display: block; }
+.fx-input { display: flex; align-items: baseline; gap: 6px; font-size: 34px; font-weight: 700; }
+.fx-input input { flex: 1; min-width: 0; border: 0; background: none; color: var(--text); font: inherit; padding: 0; outline: none; }
+.fx-output { font-size: 34px; font-weight: 700; color: var(--accent); word-break: break-all; }
+.fx-swap { display: block; margin: -6px auto; position: relative; z-index: 1; width: 44px; height: 44px; border-radius: 50%;
+           border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 22px; }
+.fx-quick { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 6px; }
+.fx-quick button { flex: 1 0 auto; border: 1px solid var(--border); background: transparent; color: var(--text);
+                   border-radius: 999px; padding: 8px 12px; font-size: 15px; }
+.fx-manual summary { font-size: 14px; color: var(--muted); padding: 6px 0; }
+.fx-manual input { width: 100px; font-size: 16px; padding: 6px 8px; border-radius: 8px; border: 1px solid var(--border);
+                   background: var(--bg); color: var(--text); }
