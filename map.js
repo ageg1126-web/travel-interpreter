@@ -80,8 +80,9 @@
   // ---------- screen ----------
   tab.innerHTML = `
     <div class="gmap" id="gmap" hidden></div>
-    <header class="map-head"><h1>지도</h1><button type="button" class="pill" id="mapToggle" hidden></button></header>
+    <header class="map-head"><button type="button" class="icon-btn menu-btn" id="mapHeadMenu" aria-label="메뉴 열기"><svg class="ico" aria-hidden="true"><use href="#i-menu"/></svg></button><h1>지도</h1><button type="button" class="pill" id="mapToggle" hidden></button></header>
     <nav class="map-days" id="mapDays" aria-label="날짜"></nav>
+    <button type="button" class="map-menu icon-btn glass" id="mapMenu" aria-label="메뉴 열기" hidden><svg class="ico" aria-hidden="true"><use href="#i-menu"/></svg></button>
     <div class="map-ctrl" id="mapCtrl" hidden>
       <div class="grp glass"><button type="button" id="mapList">${svg('note')}<span>목록</span></button></div>
       <div class="grp glass"><button type="button" id="mapZoomIn" aria-label="크게 보기"><b>＋</b><span>크게</span></button><button type="button" id="mapZoomOut" aria-label="작게 보기"><b>－</b><span>작게</span></button></div>
@@ -162,7 +163,7 @@
 
   function onAction(e) {
     const b = e.target.closest('button'); if (!b) return;
-    if (b.dataset.goto) { document.querySelector(`.tabbar [data-tab="more"]`).click(); document.querySelector(`[data-go="${b.dataset.goto}"]`)?.click(); return; }
+    if (b.dataset.goto) { showTab(b.dataset.goto); return; }
     if (b.id === 'mapRetry') { st.mapState = 'none'; start(); return; }
     if (b.dataset.search) { openOut(searchUrl(b.dataset.search)); return; }
     const c = b.closest('.sc'); if (!c) return;
@@ -242,6 +243,7 @@
       if (best && best !== st.sel) select(best, true);
     }, 140);
   }, { passive: true });
+  $('mapMenu').onclick = $('mapHeadMenu').onclick = () => window.openSidebar?.();
   $('mapZoomIn').onclick = () => gmap?.setZoom(gmap.getZoom() + 1);
   $('mapZoomOut').onclick = () => gmap?.setZoom(gmap.getZoom() - 1);
   $('mapList').onclick = () => { st.view = 'list'; if (st.day === 'all') { const p = pickToday(); st.day = p.date; } render(); };
@@ -429,7 +431,7 @@
     if (!st.day) { const p = pickToday(); st.day = p.date; st.note = p.note; st.dayIsToday = true; }
     const mapMode = st.view === 'map' && st.mapState === 'ready';
     tab.classList.toggle('mapmode', mapMode);
-    $('gmap').hidden = !mapMode; $('mapCtrl').hidden = !mapMode; $('mapCards').hidden = !mapMode;
+    $('gmap').hidden = !mapMode; $('mapCtrl').hidden = !mapMode; $('mapCards').hidden = !mapMode; $('mapMenu').hidden = !mapMode;
     $('mapMain').hidden = mapMode;
     $('mapToggle').hidden = mapMode || st.mapState !== 'ready' || !navigator.onLine;
     $('mapToggle').innerHTML = `${svg('pin')}지도 보기`;
@@ -474,7 +476,7 @@
         st.day = it.date; st.dayIsToday = false; st.note = '';
         const d = (build(), dayOf(it.date));
         st.sel = d?.stops.find(x => x.it.id === it.id)?.n || 1;
-        document.querySelector('.tabbar [data-tab="map"]').click();
+        showTab('map');
       };
       el.appendChild(b);
     });

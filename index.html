@@ -130,7 +130,7 @@
 
 <!-- 여행 도구 -->
 <section class="tab" id="tab-tools" hidden>
-  <header><button class="icon-btn round back-btn" data-back="more" aria-label="더보기로 돌아가기"><svg class="ico" aria-hidden="true"><use href="#i-back"/></svg></button><h1>여행 도구</h1></header>
+  <header><h1>여행 도구</h1></header>
   <nav class="tool-nav" id="toolNav" aria-label="도구">
     <button type="button" data-tool="fx"><svg class="ico" aria-hidden="true"><use href="#i-coins"/></svg>환율</button>
     <button type="button" data-tool="tip"><svg class="ico" aria-hidden="true"><use href="#i-meal"/></svg>팁·세금</button>
@@ -200,7 +200,7 @@
 
 <!-- 보여 주는 카드 -->
 <section class="tab" id="tab-cards" hidden>
-  <header><button class="icon-btn round back-btn" data-back="more" aria-label="더보기로 돌아가기"><svg class="ico" aria-hidden="true"><use href="#i-back"/></svg></button><h1>보여 주는 카드</h1><button id="cardInfoBtn" class="pill">내 정보</button></header>
+  <header><h1>보여 주는 카드</h1><button id="cardInfoBtn" class="pill">내 정보</button></header>
   <main>
     <p class="muted cards-lead">눌러서 크게 띄운 다음 화면을 상대방에게 보여 주세요.</p>
     <div id="cardList" class="show-list"></div>
@@ -260,41 +260,20 @@
   <main id="mapRoot"><div class="placeholder"><div class="ph-icon"><svg class="ico" aria-hidden="true"><use href="#i-map"/></svg></div><p>지도를 준비하고 있어요.</p></div></main>
 </section>
 
-<!-- 더보기 -->
-<section class="tab" id="tab-more" hidden>
-  <header><h1>더보기</h1></header>
-  <main>
-    <div class="bento">
-      <button type="button" class="bt big" data-go="cards"><span class="shape flower"><svg class="ico" aria-hidden="true"><use href="#i-card"/></svg></span>
-        <span><b>보여 주는 카드</b><small>호텔 주소, 알레르기, 911 요청을 영어로 크게 보여 드려요</small></span></button>
-      <button type="button" class="bt" data-go="tools:fx"><span class="shape"><svg class="ico" aria-hidden="true"><use href="#i-coins"/></svg></span>
-        <span><b>환율</b><small id="moreFx">달러 ↔ 원</small></span></button>
-      <button type="button" class="bt" data-go="tools:tip"><span class="shape"><svg class="ico" aria-hidden="true"><use href="#i-receipt"/></svg></span>
-        <span><b>팁·세금</b><small>식당 팁 바로 계산</small></span></button>
-      <button type="button" class="bt acc wide" data-go="tools:weather"><span class="shape flower"><svg class="ico" aria-hidden="true"><use href="#i-sun"/></svg></span>
-        <span><b>날씨와 옷차림</b><small>밴쿠버 · 재스퍼 · 밴프 · 캘거리</small></span></button>
-      <button type="button" class="bt" data-go="tools:pack"><span class="shape"><svg class="ico" aria-hidden="true"><use href="#i-bag"/></svg></span>
-        <span><b>짐 챙기기</b><small>빠진 것 없이 챙겨요</small></span></button>
-      <button type="button" class="bt" data-go="settings"><span class="shape plain"><svg class="ico" aria-hidden="true"><use href="#i-settings"/></svg></span>
-        <span><b>설정</b><small>키, 목소리, 글자 크기</small></span></button>
-    </div>
-  </main>
-</section>
-
 <!-- 설정 -->
 <section class="tab" id="tab-settings" hidden>
-  <header><button class="icon-btn round back-btn" data-back="more" aria-label="더보기로 돌아가기"><svg class="ico" aria-hidden="true"><use href="#i-back"/></svg></button><h1>설정</h1></header>
+  <header><h1>설정</h1></header>
   <main>
     <div class="card">
       <div class="card-head"><svg class="ico tint" aria-hidden="true"><use href="#i-key"/></svg><h2>OpenAI 키</h2></div>
       <p class="muted">자동 통역과 사진 번역에 쓰여요. 키는 이 휴대폰에만 저장돼요.</p>
-      <label class="field"><input type="password" id="optKey" placeholder="sk-..." autocomplete="off" autocapitalize="off" spellcheck="false"></label>
+      <label class="field"><input type="text" id="optKey" class="secret" name="openai-api-key" placeholder="sk-..." autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" data-1p-ignore data-lpignore="true"></label>
       <p id="keyState" class="muted small"></p>
     </div>
     <div class="card">
       <div class="card-head"><svg class="ico tint" aria-hidden="true"><use href="#i-map"/></svg><h2>Google 지도 키</h2></div>
       <p class="muted">지도 탭의 지도와 근처 음식점에 쓰여요. 키는 이 휴대폰에만 저장돼요.</p>
-      <label class="field"><input type="password" id="optMapKey" placeholder="AIza..." autocomplete="off" autocapitalize="off" spellcheck="false"></label>
+      <label class="field"><input type="text" id="optMapKey" class="secret" name="google-maps-key" placeholder="AIza..." autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" data-1p-ignore data-lpignore="true"></label>
       <label class="field" style="margin-top:10px">Map ID (있으면)<input id="optMapId" placeholder="번호 핀 지도용" autocomplete="off" autocapitalize="off" spellcheck="false"></label>
       <p id="mapKeyState" class="muted small"></p>
     </div>
@@ -321,12 +300,21 @@
   </main>
 </section>
 
-<nav class="tabbar glass" id="tabbar" aria-label="메뉴">
-  <button data-tab="interpret" class="active"><svg class="ico" aria-hidden="true"><use href="#i-interpret"/></svg><span>통역</span></button>
-  <button data-tab="camera"><svg class="ico" aria-hidden="true"><use href="#i-camera"/></svg><span>사진</span></button>
-  <button data-tab="schedule"><svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg><span>일정</span></button>
-  <button data-tab="map"><svg class="ico" aria-hidden="true"><use href="#i-map"/></svg><span>지도</span></button>
-  <button data-tab="more"><svg class="ico" aria-hidden="true"><use href="#i-grid"/></svg><span>더보기</span></button>
+<div id="sideScrim" class="side-scrim" hidden></div>
+<nav class="sidebar" id="sidebar" aria-label="메뉴">
+  <div class="side-head">
+    <img src="icon.svg" alt="" class="side-logo">
+    <div class="side-name"><div class="side-title">여행 도우미</div><div class="side-sub">엄빠의 캐나다 여행</div></div>
+    <button id="sideClose" class="icon-btn round" aria-label="메뉴 닫기"><svg class="ico" aria-hidden="true"><use href="#i-close"/></svg></button>
+  </div>
+  <button data-tab="interpret" class="active"><span class="side-ico"><svg class="ico" aria-hidden="true"><use href="#i-interpret"/></svg></span><span>통역</span></button>
+  <button data-tab="camera"><span class="side-ico"><svg class="ico" aria-hidden="true"><use href="#i-camera"/></svg></span><span>사진 번역</span></button>
+  <button data-tab="schedule"><span class="side-ico"><svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg></span><span>일정</span></button>
+  <button data-tab="map"><span class="side-ico"><svg class="ico" aria-hidden="true"><use href="#i-map"/></svg></span><span>지도</span></button>
+  <button data-tab="cards"><span class="side-ico"><svg class="ico" aria-hidden="true"><use href="#i-card"/></svg></span><span>보여 주는 카드</span></button>
+  <button data-tab="tools"><span class="side-ico"><svg class="ico" aria-hidden="true"><use href="#i-tools"/></svg></span><span>여행 도구</span></button>
+  <div class="side-sep"></div>
+  <button data-tab="settings"><span class="side-ico"><svg class="ico" aria-hidden="true"><use href="#i-settings"/></svg></span><span>설정</span></button>
 </nav>
 
 <script src="audio.js"></script>

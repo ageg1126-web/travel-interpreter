@@ -2,7 +2,9 @@
 // only for interpreting: it streams translated speech while the person is
 // still talking and never answers on its own. Two sessions share the mic: one
 // speaks English (for Korean speech), one speaks Korean (for English speech).
-// Each stays quiet for speech already in its own language.
+// A session that hears speech already in its own language just repeats it, so
+// each session's own transcript of what it heard decides: if that is in the
+// session's output language, its voice is muted and its text ignored.
 const LiveInterpreter = (() => {
   const BASE = 'https://api.openai.com/v1/realtime/translations';
   const HANGUL = /[가-힣]/;
@@ -29,6 +31,16 @@ const LiveInterpreter = (() => {
     return v;
   }
 
+  // Which language a transcript is in (null until there is enough to tell).
+  function langOf(text) {
+    const ko = (text.match(/[가-힣]/g) || []).length, en = (text.match(/[A-Za-z]/g) || []).length;
+    if (ko + en < 2) return null;
+    return ko * 2 >= en ? 'ko' : 'en';
+  }
+  // true: this session is repeating speech in its own language; false: it is
+  // translating; null: not known yet (kept quiet until it is).
+  const echoOf = s => { const l = langOf(s.inText); return l ? l === s.to : null; };
+
   const rms = analyser => {
     const buf = new Float32Array(analyser.fftSize);
     analyser.getFloatTimeDomainData(buf);
@@ -44,13 +56,14 @@ const LiveInterpreter = (() => {
   }
 
   async function openSession(key, to, track, ac, events) {
-    const s = { to, from: to === 'en' ? 'ko' : 'en', track, inText: '', outText: '', lastOut: 0, outLevel: 0, analyser: null };
+    const s = { to, from: to === 'en' ? 'ko' : 'en', track, inText: '', outText: '', lastOut: 0, outLevel: 0, analyser: null, echo: null };
     const secret = await clientSecret(key, to);
     const pc = new RTCPeerConnection();
     s.pc = pc;
     pc.addTrack(track, new MediaStream([track]));
     s.audio = new Audio();
     s.audio.autoplay = true;
+    s.audio.muted = true; // until we know it is translating, not repeating
     pc.ontrack = ({ streams }) => {
       s.audio.srcObject = streams[0];
       s.audio.play().catch(() => {});
@@ -108,12 +121,14 @@ const LiveInterpreter = (() => {
     const sessions = [];
     const finish = s => {
       const dst = s.outText.trim();
-      if (dst) handlers.onEntry({ from: s.from, to: s.to, src: sentencesIn(s.inText, s.from), dst });
+      if (dst && echoOf(s) === false) handlers.onEntry({ from: s.from, to: s.to, src: sentencesIn(s.inText, s.from), dst });
       s.outText = ''; s.inText = '';
     };
     const events = {
       onText(s) {
         lastActive = performance.now();
+        s.echo = echoOf(s);
+        if (s.echo !== false) return; // a repeat of the speaker's own words: show nothing from it
         if (s.outText.trim()) handlers.onCaption(sentencesIn(s.inText, s.from).slice(-160), s.outText.trim(), s.from);
         else {
           const src = sentencesIn(s.inText, s.from);
@@ -143,7 +158,10 @@ const LiveInterpreter = (() => {
       const micLv = Math.min(1, rms(micAnalyser) * 9);
       let speaking = false;
       for (const s of sessions) {
-        s.outLevel = s.analyser ? Math.min(1, rms(s.analyser) * 9) : 0;
+        s.echo = echoOf(s);
+        s.audio.muted = s.echo !== false;
+        // A muted repeat neither counts as the phone speaking nor blocks the mic.
+        s.outLevel = s.analyser && s.echo === false ? Math.min(1, rms(s.analyser) * 9) : 0;
         if (s.outLevel > 0.06) { speaking = true; gateUntil[s.to] = now + 450; }
         // A finished stretch of translation becomes one line in the record.
         if (s.outText && now - s.lastOut > 1600) finish(s);

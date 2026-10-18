@@ -152,7 +152,7 @@
     const el = list.querySelector('.day.today');
     if (el && !list.closest('.tab').hidden) setTimeout(() => el.scrollIntoView({ block: 'start' }), 0);
   }
-  document.querySelector('.tabbar [data-tab=schedule]').addEventListener('click', scrollToToday);
+  document.querySelector('.sidebar [data-tab=schedule]').addEventListener('click', scrollToToday);
 
   function itemEl(it) {
     const el = document.createElement('div');

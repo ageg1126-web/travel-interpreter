@@ -20,38 +20,43 @@ const orb = new VoiceOrb($('orb'));
 const heroOrb = new VoiceOrb($('heroOrb'));
 
 // ---------- screens ----------
-// The floating bar at the bottom has five places; cards, tools and settings
-// open from "더보기", so that button stays lit for them.
-const UNDER_MORE = ['more', 'cards', 'tools', 'settings'];
 let currentTab = 'interpret';
 function showTab(name) {
   currentTab = name;
   document.querySelectorAll('.tab').forEach(t => { t.hidden = t.id !== 'tab-' + name; });
-  const lit = UNDER_MORE.includes(name) ? 'more' : name;
-  document.querySelectorAll('.tabbar [data-tab]').forEach(b => {
-    b.classList.toggle('active', b.dataset.tab === lit);
-    if (b.dataset.tab === lit) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
+  document.querySelectorAll('.sidebar [data-tab]').forEach(b => {
+    b.classList.toggle('active', b.dataset.tab === name);
+    if (b.dataset.tab === name) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
   });
   if (name !== 'interpret' && ctl.mode !== 'off') ctl.off();
   try { localStorage.setItem('app.tab', name); } catch {}
   document.dispatchEvent(new CustomEvent('tabchange', { detail: name }));
 }
-document.querySelectorAll('.tabbar [data-tab]').forEach(b => { b.onclick = () => showTab(b.dataset.tab); });
-document.querySelectorAll('[data-back]').forEach(b => { b.onclick = () => showTab(b.dataset.back); });
-// 더보기 tiles: "tools:fx" opens the travel tools on that tool.
-document.querySelectorAll('[data-go]').forEach(b => {
-  b.onclick = () => {
-    const [tab, tool] = b.dataset.go.split(':');
-    showTab(tab);
-    if (tool) document.querySelector(`#toolNav [data-tool="${tool}"]`)?.click();
-  };
+document.querySelectorAll('.sidebar [data-tab]').forEach(b => { b.onclick = () => { showTab(b.dataset.tab); closeSidebar(); }; });
+
+// ---------- side menu (☰) ----------
+const sidebar = $('sidebar'), scrim = $('sideScrim');
+function openSidebar() { sidebar.classList.add('open'); scrim.hidden = false; }
+function closeSidebar() { sidebar.classList.remove('open'); scrim.hidden = true; }
+// Every screen gets the same menu button in its header.
+document.querySelectorAll('.tab > header').forEach(h => {
+  const b = document.createElement('button');
+  b.className = 'icon-btn menu-btn';
+  b.setAttribute('aria-label', '메뉴 열기');
+  b.innerHTML = icon('menu');
+  b.onclick = openSidebar;
+  h.prepend(b);
 });
-document.addEventListener('tabchange', e => {
-  if (e.detail !== 'more') return;
-  const r = window.FX?.rate?.('CAD');
-  if (r) $('moreFx').textContent = `1달러 ≈ ${Math.round(r).toLocaleString('ko-KR')}원`;
+$('sideClose').onclick = closeSidebar;
+scrim.onclick = closeSidebar;
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeSidebar(); if (ctl.mode === 'interpret') ctl.stopInterpret(); } });
+// Swipe left on the open menu to close it.
+let touchX = null;
+sidebar.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+sidebar.addEventListener('touchend', e => {
+  if (touchX !== null && touchX - e.changedTouches[0].clientX > 50) closeSidebar();
+  touchX = null;
 });
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && ctl.mode === 'interpret') ctl.stopInterpret(); });
 
 // ---------- settings (stored on this phone only) ----------
 const SETTINGS_KEY = 'interp.settings';
@@ -69,15 +74,20 @@ function saveSettings() {
     localStorage.setItem(SETTINGS_KEY, JSON.stringify({
       speak: els.optSpeak.checked, font: els.optFont.value, rate: els.optRate.value, pause: els.optPause.value, voice: els.optVoice.value, engine: els.optEngine.value,
     }));
-    localStorage.setItem('interp.openaiKey', els.optKey.value.trim());
+    const k = els.optKey.value.trim();
+    if (!k || !/^AIza/.test(k)) localStorage.setItem('interp.openaiKey', k);
   } catch {}
 }
-function apiKey() { return els.optKey.value.trim(); }
+function apiKey() { try { return (localStorage.getItem('interp.openaiKey') || '').trim(); } catch { return ''; } }
+const keyTail = k => (k.length > 10 ? ` (${k.slice(0, 3)}…${k.slice(-4)})` : '');
 function applySettings() {
   document.documentElement.style.setProperty('--font', els.optFont.value + 'px');
-  const key = apiKey();
-  els.keyState.textContent = key ? '키가 저장돼 있어요. 자동 언어 감지로 통역해요.' : '키가 없으면 기본 모드(한국어와 영어를 번갈아 듣기)로 동작해요.';
-  els.keyState.classList.toggle('ok', !!key);
+  const key = apiKey(), typed = els.optKey.value.trim();
+  const wrongKind = /^AIza/.test(typed);
+  els.keyState.textContent = wrongKind ? '이건 Google 지도 키예요(AIza로 시작). 아래 "Google 지도 키" 칸에 넣어 주세요. OpenAI 키는 sk-로 시작해요.'
+    : key ? `키가 저장돼 있어요${keyTail(key)}. 자동 언어 감지로 통역해요.` + (/^sk-/.test(key) ? '' : ' OpenAI 키는 보통 sk-로 시작해요. 맞는지 확인해 주세요.')
+    : '키가 없으면 기본 모드(한국어와 영어를 번갈아 듣기)로 동작해요.';
+  els.keyState.classList.toggle('ok', !!key && !wrongKind && /^sk-/.test(key));
   if (!key) {
     els.notice.hidden = false;
     els.notice.innerHTML = '<b>기본 모드</b>예요. 한국어와 영어를 번갈아 들어요. 순서 없이 알아듣게 하려면 OpenAI 키를 넣어 주세요.'
@@ -619,15 +629,14 @@ loadSettings();
 renderHistory();
 // ---------- phone back button ----------
 // 통역 is home: the app always opens there, and back walks home step by step
-// (open window → previous screen → 통역). Back on 통역 itself closes the app.
+// (menu or open window → the screen under it → 통역). Back on 통역 closes the app.
 // While away from home one extra history entry is kept; back pops it and we
 // take one step instead of leaving the page.
-const SUB_OF = { cards: 'more', tools: 'more', settings: 'more' };
 const overlays = () => [$('foodPage'), $('spotPage')].filter(el => el && !el.hidden);
 const back = {
   armed: false, eating: false,
   atHome() {
-    return currentTab === 'interpret' && els.stage.hidden && !viewLog && $('showCard').hidden
+    return currentTab === 'interpret' && els.stage.hidden && !viewLog && $('showCard').hidden && !sidebar.classList.contains('open')
       && !document.querySelector('dialog[open]') && !overlays().length;
   },
   sync() {
@@ -636,6 +645,7 @@ const back = {
     } else if (!this.armed) { this.armed = true; window.history.pushState({ away: true }, ''); }
   },
   step() {
+    if (sidebar.classList.contains('open')) return closeSidebar();
     const dlg = document.querySelector('dialog[open]');
     if (dlg) return dlg.close();
     if (!$('showCard').hidden) return $('showClose').click();
@@ -643,7 +653,7 @@ const back = {
     const top = overlays()[0];
     if (top) return top.querySelector('[data-close]') ? top.querySelector('[data-close]').click() : (top.hidden = true);
     if (viewLog) return els.logBtn.click();
-    if (currentTab !== 'interpret') return showTab(SUB_OF[currentTab] || 'interpret');
+    if (currentTab !== 'interpret') return showTab('interpret');
   },
 };
 window.addEventListener('popstate', () => {

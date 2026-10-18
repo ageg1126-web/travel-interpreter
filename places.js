@@ -77,15 +77,20 @@ window.Places = (() => {
     const k = $('optMapKey'), id = $('optMapId'), state = $('mapKeyState');
     if (!k) return;
     k.value = key(); id.value = read(MAPID);
+    const tail = v => (v.length > 10 ? ` (${v.slice(0, 4)}…${v.slice(-4)})` : '');
     const show = () => {
-      state.textContent = key() ? '키가 저장돼 있어요. 지도 탭에서 Google 지도가 열려요.' : '키가 없어도 장소 설명과 길찾기는 쓸 수 있어요.';
-      state.classList.toggle('ok', !!key());
+      const typed = k.value.trim();
+      state.textContent = /^sk-/.test(typed) ? '이건 OpenAI 키예요(sk-로 시작). 위 "OpenAI 키" 칸에 넣어 주세요. Google 지도 키는 AIza로 시작해요.'
+        : key() ? `키가 저장돼 있어요${tail(key())}. 지도 탭에서 Google 지도가 열려요.` : '키가 없어도 장소 설명과 길찾기는 쓸 수 있어요.';
+      state.classList.toggle('ok', !!key() && !/^sk-/.test(typed));
     };
     const save = () => {
-      try { localStorage.setItem(KEY, k.value.trim()); localStorage.setItem(MAPID, id.value.trim()); } catch {}
+      const v = k.value.trim();
+      try { if (!/^sk-/.test(v)) localStorage.setItem(KEY, v); localStorage.setItem(MAPID, id.value.trim()); } catch {}
       show();
       document.dispatchEvent(new Event('mapkeychange'));
     };
+    k.addEventListener('input', show);
     k.addEventListener('change', save); id.addEventListener('change', save);
     show();
   }
