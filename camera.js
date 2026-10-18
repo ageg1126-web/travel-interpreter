@@ -62,12 +62,12 @@
           temperature: 0.2,
           response_format: { type: 'json_object' },
           messages: [
-            { role: 'system', content: 'You help a Korean woman in her 60s traveling in Canada read text around her. '
+            { role: 'system', content: 'You help Korean parents traveling in Canada read text around them. '
               + 'Read all text in the photo (English or French) and translate it into natural Korean. '
               + 'Return JSON: {"summary": one or two Korean sentences saying what this is and what matters most, '
               + '"items": [{"original": text as written, "korean": Korean translation, "note": short Korean explanation or empty}]}. '
               + 'For menus, put each dish as an item with price in "original" and explain the dish in "note". '
-              + 'For signs or notices, explain what she should do. If there is no readable text, say so in summary and return no items.' },
+              + 'For signs or notices, explain what they should do. If there is no readable text, say so in summary and return no items.' },
             { role: 'user', content: [
               { type: 'text', text: '이 사진의 글자를 한국어로 번역해 주세요.' },
               { type: 'image_url', image_url: { url: dataUrl, detail: 'high' } },

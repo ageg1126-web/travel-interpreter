@@ -1,5 +1,5 @@
 {
- "title": "엄마의 캐나다 로키 기차여행",
+ "title": "엄빠의 캐나다 로키 기차여행",
  "timezone": "auto",
  "timezones": {
   "2027-07-18": "America/Vancouver",
@@ -320,5 +320,5 @@
    "memo": ""
   }
  ],
- "version": 1
+ "version": 2
 }
