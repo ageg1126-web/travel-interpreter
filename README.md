@@ -63,6 +63,10 @@ https://ageg1126-web.github.io/travel-interpreter/ (GitHub Pages, 저장소 `age
 - `stt.js` — OpenAI 음성인식
 - `orb.js` — 소리에 맞춰 움직이는 원 애니메이션
 - `ai.js` — 모든 기능이 쓰는 AI 모델 설정(gpt-6.1-sol, medium)
+- `cards.js` — 보여 주는 카드 (호텔로 데려다 주세요, 영어 못해요, 길 잃음, 가이드 전화, 알레르기·약, 911 등 큰 글씨 영어 화면. 내 정보와 직접 만든 카드는 이 폰에만 저장)
+- `weather.js` — 여행지별 날씨(Open-Meteo)와 옷차림 팁, 7월 평균 기온
+- `packing.js` — 짐 체크리스트 (출국 전, 옷, 기차 1박, 호텔 나올 때, 귀국 전)
+- `tools.js` — 여행 도구 화면의 도구 전환
 - `tips.js` — 팁·세금 계산 (밴쿠버 BC주 / 로키·캘거리 앨버타주, 식당·쇼핑)
 - `assistant.js` — 통역 중단 후 한국어 AI 비서
 - `schedule.js`, `schedule.json` — 일정 화면과 여행 일정 데이터

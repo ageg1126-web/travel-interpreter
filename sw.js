@@ -1,6 +1,6 @@
 // Caches the app shell so it opens instantly. Translation still needs internet.
-const CACHE = 'interp-v12';
-const FILES = ['./', 'index.html', 'style.css', 'app.js', 'translate.js', 'audio.js', 'stt.js', 'orb.js', 'ai.js', 'assistant.js', 'schedule.js', 'camera.js', 'currency.js', 'tips.js', 'manifest.json', 'icon.svg', 'icon-192.png'];
+const CACHE = 'interp-v13';
+const FILES = ['./', 'index.html', 'style.css', 'app.js', 'translate.js', 'audio.js', 'stt.js', 'orb.js', 'ai.js', 'assistant.js', 'schedule.js', 'camera.js', 'currency.js', 'tips.js', 'tools.js', 'weather.js', 'packing.js', 'cards.js', 'manifest.json', 'icon.svg', 'icon-192.png'];
 self.addEventListener('install', e => e.waitUntil(caches.open(CACHE).then(c => c.addAll(FILES))));
 self.addEventListener('activate', e => e.waitUntil(
   caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
