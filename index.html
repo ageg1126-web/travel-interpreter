@@ -245,6 +245,11 @@
     </div>
     <div class="card">
       <div class="card-head"><svg class="ico tint" aria-hidden="true"><use href="#i-interpret"/></svg><h2>통역</h2></div>
+      <label class="row"><span>통역 방식</span><select id="optEngine" class="row-select">
+        <option value="live">실시간 동시통역 (빠름)</option>
+        <option value="classic">문장 단위 (느림, 저렴)</option>
+      </select></label>
+      <p class="muted small row-note">실시간 동시통역은 말하는 도중에 바로 통역해요. 통역 화면을 켜 둔 동안 1분에 약 100원(0.07달러)이 들고, 5분 동안 조용하면 저절로 꺼져요. 목소리는 말하는 사람 목소리를 닮게 나와요.</p>
       <label class="row"><span>번역 결과 소리로 읽어주기</span><input type="checkbox" id="optSpeak" class="switch" checked></label>
       <label class="row"><span>목소리</span><select id="optVoice" class="row-select">
         <option value="marin">OpenAI 마린 (추천)</option>
@@ -281,6 +286,7 @@
 <script src="translate.js"></script>
 <script src="orb.js"></script>
 <script src="ai.js"></script>
+<script src="realtime.js"></script>
 <script src="assistant.js"></script>
 <script src="app.js"></script>
 <script src="schedule.js"></script>

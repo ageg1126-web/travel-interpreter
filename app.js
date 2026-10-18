@@ -13,7 +13,7 @@ const els = {
   main: $('mainBtn'), logView: $('logView'), startBar: $('startBar'), logBtn: $('logBtn'), stage: $('stage'), stageMode: $('stageMode'), status: $('liveStatus'),
   stageSrc: $('stageSrc'), stageDst: $('stageDst'), hero: $('interpHero'), mic: $('micBtn'),
   heroQ: $('heroQ'), heroA: $('heroA'),
-  optKey: $('optKey'), keyState: $('keyState'), optSpeak: $('optSpeak'), optVoice: $('optVoice'),
+  optKey: $('optKey'), keyState: $('keyState'), optSpeak: $('optSpeak'), optVoice: $('optVoice'), optEngine: $('optEngine'),
   optFont: $('optFont'), optRate: $('optRate'), optPause: $('optPause'),
 };
 const orb = new VoiceOrb($('orb'));
@@ -59,7 +59,7 @@ function loadSettings() {
   try {
     const s = JSON.parse(localStorage.getItem(SETTINGS_KEY) || '{}');
     if ('speak' in s) els.optSpeak.checked = s.speak;
-    for (const k of ['font', 'rate', 'pause', 'voice']) if (s[k]) els['opt' + k[0].toUpperCase() + k.slice(1)].value = s[k];
+    for (const k of ['font', 'rate', 'pause', 'voice', 'engine']) if (s[k]) els['opt' + k[0].toUpperCase() + k.slice(1)].value = s[k];
     els.optKey.value = localStorage.getItem('interp.openaiKey') || '';
   } catch {}
   applySettings();
@@ -67,7 +67,7 @@ function loadSettings() {
 function saveSettings() {
   try {
     localStorage.setItem(SETTINGS_KEY, JSON.stringify({
-      speak: els.optSpeak.checked, font: els.optFont.value, rate: els.optRate.value, pause: els.optPause.value, voice: els.optVoice.value,
+      speak: els.optSpeak.checked, font: els.optFont.value, rate: els.optRate.value, pause: els.optPause.value, voice: els.optVoice.value, engine: els.optEngine.value,
     }));
     localStorage.setItem('interp.openaiKey', els.optKey.value.trim());
   } catch {}
@@ -87,7 +87,7 @@ function applySettings() {
     els.notice.hidden = true;
   }
 }
-for (const el of [els.optSpeak, els.optVoice, els.optFont, els.optRate, els.optPause, els.optKey]) {
+for (const el of [els.optSpeak, els.optVoice, els.optEngine, els.optFont, els.optRate, els.optPause, els.optKey]) {
   el.addEventListener('change', () => { saveSettings(); applySettings(); });
   el.addEventListener('input', applySettings);
 }
@@ -318,6 +318,7 @@ const ctl = {
     $('stageMute').classList.toggle('muted-on', m);
     $('stageMute').innerHTML = icon(m ? 'micoff' : 'mic');
     if (autoEngine.listener) autoEngine.listener.muted = m;
+    liveEngine.session?.setMuted(m);
     if (m) { basicEngine.stop(); this.status('마이크를 잠시 껐어요', 'idle'); }
     else { this.status('듣고 있어요'); if (this.mode === 'interpret' && !apiKey()) basicEngine.listen(); }
   },
@@ -346,7 +347,23 @@ const ctl = {
     orb.start();
     this.status('듣고 있어요');
     try {
-      if (apiKey()) { if (prev === 'off' || !autoEngine.listener) await autoEngine.start(); }
+      if (apiKey() && els.optEngine.value === 'live') {
+        // The live interpreter has its own mic; the sentence-by-sentence one rests meanwhile.
+        autoEngine.stop();
+        try {
+          this.status('연결하는 중…', 'thinking');
+          await liveEngine.start();
+          if (this.mode !== 'interpret') liveEngine.stop();
+          else this.status('듣고 있어요');
+          return;
+        } catch (e) {
+          console.warn('[live]', e);
+          if (this.mode !== 'interpret') return;
+          if (e.status === 401) { this.off(); return alert('API 키가 맞지 않아요. 설정을 확인해 주세요.'); }
+          this.status('실시간 통역을 못 켜서 문장 단위로 통역해요');
+        }
+      }
+      if (apiKey()) { if (!autoEngine.listener) await autoEngine.start(); }
       else await basicEngine.start();
     } catch (e) {
       console.warn(e);
@@ -358,6 +375,7 @@ const ctl = {
   // "통역 중단" (✕): back to the home screen with only the start button,
   // and the mic stays on there for the Korean-only AI helper.
   async stopInterpret() {
+    liveEngine.stop();
     this.setMuted(false);
     stopSpeaking();
     basicEngine.stop();
@@ -388,6 +406,7 @@ const ctl = {
 
   off() {
     this.mode = 'off';
+    liveEngine.stop();
     autoEngine.stop();
     basicEngine.stop();
     stopSpeaking();
@@ -486,6 +505,44 @@ const autoEngine = {
     this.listener?.stop();
     this.listener = null;
     this.queue = [];
+  },
+};
+
+// Live interpreting: speech is translated while it is still being spoken.
+const liveEngine = {
+  session: null,
+  async start() {
+    this.stop();
+    let entry = null;
+    const s = await LiveInterpreter.start(apiKey(), {
+      onLevel: v => { if (ctl.mode === 'interpret') orb.setLevel(v); },
+      onState: st => { if (ctl.mode === 'interpret') orb.setState(st); },
+      onCaption: (src, dst, from) => {
+        if (ctl.mode !== 'interpret') return;
+        caption(src, dst, from);
+        els.status.textContent = dst ? (from === 'ko' ? 'Speaking English' : '통역하는 중') : '듣고 있어요…';
+      },
+      onEntry: ({ from, to, src, dst }) => {
+        entry = { kind: 'interp', at: Date.now(), from, to, src, dst };
+        history.push(entry);
+        saveHistory();
+        if (ctl.mode === 'interpret') els.status.textContent = '듣고 있어요';
+      },
+      onError: e => {
+        console.warn('[live]', e);
+        if (ctl.mode !== 'interpret') return;
+        els.status.textContent = '연결이 끊겼어요. 다시 연결하는 중…';
+        this.stop();
+        setTimeout(() => { if (ctl.mode === 'interpret' && !this.session) this.start().then(() => { els.status.textContent = '듣고 있어요'; }).catch(() => ctl.stopInterpret()); }, 800);
+      },
+      onIdle: () => { if (ctl.mode === 'interpret') ctl.stopInterpret(); },
+    });
+    s.setMuted(ctl.userMuted);
+    this.session = s;
+  },
+  stop() {
+    this.session?.stop();
+    this.session = null;
   },
 };
 
