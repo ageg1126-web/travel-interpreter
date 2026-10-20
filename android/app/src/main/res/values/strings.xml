@@ -34,7 +34,7 @@
         \"relation\": [\"delegate_permission/common.handle_all_urls\"],
         \"target\": {
             \"namespace\": \"web\",
-            \"site\": \"https://ageg1126-web.github.io\"
+            \"site\": \"https://ageg1126.github.io\"
         }
     }]
     
