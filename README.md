@@ -18,7 +18,7 @@
 - **키가 없어도**: 날짜별 장소 카드, 설명, 주소 보여주기(운전기사용 흰 화면), 길찾기(Google 지도 앱으로 연결, 차/대중교통/걸어서 중 선택), Google 지도에서 근처 식당 찾기를 쓸 수 있어요.
 - **Google 지도 키를 넣으면** (설정 → Google 지도 키, Map ID는 선택): 번호 핀이 있는 지도와 카드 넘기기(◀ ▶ 버튼도 있음), ＋/－ 확대 버튼, 내 위치, 전체 일정 보기(날짜별 색), 근처 음식점(관광지 기준 가까운 순 5곳, 반경 800m → 1.5km → 3km)이 나와요.
 - 음식점은 Google Places(New)의 Nearby Search로 찾아요. 이름·평점·영업시간 같은 Google 정보는 저장하지 않고, 읽어 주지도 않아요(Google 약관). "자료: Google Maps"를 함께 보여 줘요. 거리는 직선거리예요.
-- 키는 브라우저용 키라서 Google Cloud에서 웹사이트(`https://ageg1126.github.io/*`)와 API(Maps JavaScript API, Places API (New))를 꼭 제한해 두세요. 예산 알림은 알림일 뿐 자동으로 막아 주지 않아요.
+- 키는 브라우저용 키라서 Google Cloud에서 웹사이트(`https://ageg1126-web.github.io/*`)와 API(Maps JavaScript API, Places API (New))를 꼭 제한해 두세요. 예산 알림은 알림일 뿐 자동으로 막아 주지 않아요.
 - 개인정보·이용 안내: `privacy.html` (설정 화면 맨 아래 링크)
 
 ## 사진 번역
@@ -78,7 +78,7 @@
 - 주변이 시끄러우면 말 끝을 늦게 알아챌 수 있어요. 설정의 "말 끝 감지"로 조절할 수 있어요.
 
 ## 주소
-https://ageg1126.github.io/travel-interpreter/ (GitHub Pages, 저장소 `ageg1126/travel-interpreter`의 main 브랜치)
+https://ageg1126-web.github.io/travel-interpreter/ (GitHub Pages, 저장소 `ageg1126-web/travel-interpreter`의 main 브랜치)
 
 ## 파일
 - `index.html`, `style.css` — 화면과 탭

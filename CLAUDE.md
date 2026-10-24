@@ -1,6 +1,6 @@
 # 여행 도우미 (엄빠의 캐나다 여행)
 
-부모님의 첫 캐나다 여행(2027년 7월 18~25일, 밴쿠버 → 로키 기차 → 재스퍼 → 밴프 → 캘거리)을 돕는 한국어 웹앱이자 갤럭시(Android) 앱이에요. 이 저장소(와 전체화면용 `ageg1126.github.io`)만으로 진행하는 독립 프로젝트라서, 다른 프로젝트의 코드나 저장소를 가져오거나 섞지 않아요.
+부모님의 첫 캐나다 여행(2027년 7월 18~25일, 밴쿠버 → 로키 기차 → 재스퍼 → 밴프 → 캘거리)을 돕는 한국어 웹앱이자 갤럭시(Android) 앱이에요. 이 저장소(와 전체화면용 `ageg1126-web.github.io`)만으로 진행하는 독립 프로젝트라서, 다른 프로젝트의 코드나 저장소를 가져오거나 섞지 않아요.
 
 ## 사용자와 대화 방식
 - 사용자와는 한국어로, 짧고 쉬운 말로 대화해요. 커밋 메시지는 영어로 써요.
@@ -13,10 +13,10 @@
 3. 원문(대화 기록)은 오른쪽 위 "원문 보기"에서만 보이고, 그 화면에서는 마이크가 완전히 꺼져요.
 
 ## 배포
-- 웹: GitHub Pages, `ageg1126/travel-interpreter`의 `main` 루트 → https://ageg1126.github.io/travel-interpreter/ (2026-10-20부터. 옛 계정 `ageg1126-web`은 GitHub 자동 감지로 정지돼 버렸어요. 새 계정에서는 짧은 시간에 몰아서 올리거나 API를 반복 조회하지 않아요.)
-- 앱: Trusted Web Activity(`android/`, bubblewrap로 생성). `android/**`가 바뀌면 GitHub Actions(`.github/workflows/android.yml`)가 APK를 빌드해서 Release `app-latest`에 올려요 → https://github.com/ageg1126/travel-interpreter/releases/download/app-latest/travel-helper.apk
+- 웹: GitHub Pages, `ageg1126-web/travel-interpreter`의 `main` 루트 → https://ageg1126-web.github.io/travel-interpreter/ (이 계정은 2026-10-18 GitHub 자동 감지로 정지됐다가 2026-10-24 복구됐어요. 짧은 시간에 몰아서 여러 번 올리거나 API·배포 상태를 반복 조회하지 않아요. 새 GitHub 계정을 만들지 않아요(두 번째 계정 `ageg1126`은 정지를 피한 것으로 보여 함께 정지됨, 쓰지 않음).)
+- 앱: Trusted Web Activity(`android/`, bubblewrap로 생성). `android/**`가 바뀌면 GitHub Actions(`.github/workflows/android.yml`)가 APK를 빌드해서 Release `app-latest`에 올려요 → https://github.com/ageg1126-web/travel-interpreter/releases/download/app-latest/travel-helper.apk
 - 웹 코드만 바꾸면 앱은 다시 설치할 필요 없어요. 아이콘, 앱 이름, 스플래시처럼 APK 안의 것을 바꿀 때만 새 APK가 필요하고, 그때는 `android/app/build.gradle`과 `android/twa-manifest.json`의 버전을 올려요.
-- 주소창 없는 전체화면을 위한 Digital Asset Links는 `ageg1126/ageg1126.github.io` 저장소의 `.well-known/assetlinks.json`(앱 서명 SHA-256 `FA:1F:9C:15:…:A0:BB`, 패키지 `io.github.ageg1126web.travelhelper`는 옛 이름 그대로)에 있어요.
+- 주소창 없는 전체화면을 위한 Digital Asset Links는 `ageg1126-web/ageg1126-web.github.io` 저장소의 `.well-known/assetlinks.json`(앱 서명 SHA-256 `FA:1F:9C:15:…:A0:BB`, 패키지 `io.github.ageg1126web.travelhelper`는 옛 이름 그대로)에 있어요.
 - 서명 키(`android/release.keystore`)와 비밀번호가 공개 저장소에 들어 있어요(Actions secrets API를 쓸 수 없어서). 사용자도 알고 있어요.
 
 ## 디자인 (2026-10-18 사용자 결정)
